@@ -1,6 +1,7 @@
 #include <unistd.h>
 
 #include "output.h"
+#include "terminal.h"
 
 void dashRefreshScreen() {
     write(STDOUT_FILENO, "\x1b[2J", 4); // Clear screen.
@@ -14,7 +15,9 @@ void dashRefreshScreen() {
 void dashDrawRows() {
     
     int y;
-    for (int y = 0; y < 12; y++) {
-        write(STDOUT_FILENO, "~\r\n", 3);
+
+    // For rows we want to write.
+    for (int y = 0; y < dashCon.dashrows; y++) {
+        write(STDOUT_FILENO, "0[     ]\r\n", sizeof("0[     ]\r\n"));
     }
 }

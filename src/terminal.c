@@ -3,21 +3,17 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <errno.h>
+#include <sys/ioctl.h>
 
 #include "terminal.h"
-
-struct dashConfig {
-    struct termios termiosOrig;
-    int dashrows;
-    int dashcols;
-};
+#include "init.h"
 
 struct dashConfig dashCon;
 
 void die(char *s) {
     write(STDOUT_FILENO, "\x1b[2J", 4); // Clear screen.
     write(STDOUT_FILENO, "\x1b[H", 3); // Cursor home.
-    
+
     perror(s);
     exit(1);
 }
@@ -43,10 +39,23 @@ void enableRawMode() {
 }
 
 char dashReadKey() {
+    
   int nread;
   char c;
   while ((nread = read(STDIN_FILENO, &c, 1)) != 1) {
-    if (nread == -1 && errno != EAGAIN) die("read");
+    if (nread == -1 && errno != EAGAIN) die("dashReadKey() -> read");
   }
   return c;
+}
+
+int getWindowSize(int *rows, int *cols) {
+
+  struct winsize ws;
+  if (ioctl(STDOUT_FILENO, TIOCGWINSZ, &ws) == -1 || ws.ws_col == 0) {
+    return -1;
+  } else {
+    *cols = ws.ws_col;
+    *rows = ws.ws_row;
+    return 0;
+  }
 }
