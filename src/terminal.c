@@ -12,23 +12,25 @@ struct dashConfig {
     int dashcols;
 };
 
-struct dashConfig dash;
+struct dashConfig dashCon;
 
 void die(char *s) {
-    dashRefreshScreen();
+    write(STDOUT_FILENO, "\x1b[2J", 4); // Clear screen.
+    write(STDOUT_FILENO, "\x1b[H", 3); // Cursor home.
+    
     perror(s);
     exit(1);
 }
 
 void disableRawMode() {
-    if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &dash.termiosOrig) == -1) die("disableRawMode() -> tcsetattr");
+    if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &dashCon.termiosOrig) == -1) die("disableRawMode() -> tcsetattr");
 }
 
 void enableRawMode() {
-    if (tcgetattr(STDIN_FILENO, &dash.termiosOrig) == -1) die("enableRawMode() -> tcgetattr");
+    if (tcgetattr(STDIN_FILENO, &dashCon.termiosOrig) == -1) die("enableRawMode() -> tcgetattr");
     atexit(disableRawMode);
 
-    struct termios termiosRaw = dash.termiosOrig;
+    struct termios termiosRaw = dashCon.termiosOrig;
     termiosRaw.c_iflag &= ~(BRKINT | ICRNL | INPCK | ISTRIP | IXON);
     termiosRaw.c_oflag &= ~(OPOST);
     termiosRaw.c_cflag |= (CS8);
@@ -40,11 +42,6 @@ void enableRawMode() {
     if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &termiosRaw) == -1) die("enableRawMode() -> tcgetattr");
 }
 
-void dashRefreshScreen() {
-    write(STDIN_FILENO, "\x1b[2J", 4); // Clear screen.
-    write(STDIN_FILENO, "\x1b[H", 3); // Cursor home.
-}
-
 char dashReadKey() {
   int nread;
   char c;
@@ -53,5 +50,3 @@ char dashReadKey() {
   }
   return c;
 }
-
-void getTerminalSize() {}

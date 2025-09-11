@@ -3,10 +3,11 @@
 
 #define CTRL_KEY(k) ((k) & 0x1f)
 
+struct dashConfig;
+
 void die(char *s);
 void disableRawMode();
 void enableRawMode();
-void dashRefreshScreen();
 char dashReadKey();
 
 #endif

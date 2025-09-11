@@ -5,6 +5,7 @@
 
 #include "terminal.h"
 #include "input.h"
+#include "output.h"
 
 int main(void) {
     enableRawMode();

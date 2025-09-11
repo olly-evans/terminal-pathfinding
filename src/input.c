@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <unistd.h>
 
 #include "terminal.h"
 #include "input.h"
@@ -8,7 +9,8 @@ void dashProcessKeypress() {
 
     switch (c) {
         case (CTRL_KEY('q')):
-            dashRefreshScreen();
+            write(STDOUT_FILENO, "\x1b[2J", 4); // Clear screen.
+            write(STDOUT_FILENO, "\x1b[H", 3); // Cursor home.
             exit(0);
             break;
     }
