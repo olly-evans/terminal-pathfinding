@@ -28,7 +28,7 @@ void dashRefreshScreen() {
 void dashDrawRows(struct abuf *ab) {
     int y;
     for (int y = 0; y < dashCon.dashrows; y++) {
-        abAppend(ab, "p", 1);
+        abAppend(ab, "~", 1);
         
         abAppend(ab, "\x1b[K", 3);
         if (y < dashCon.dashrows - 1) {
