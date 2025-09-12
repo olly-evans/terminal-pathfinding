@@ -16,8 +16,7 @@ void dashDrawRows() {
     
     int y;
 
-    // For rows we want to write.
     for (int y = 0; y < dashCon.dashrows; y++) {
-        write(STDOUT_FILENO, "0[     ]\r\n", sizeof("0[     ]\r\n"));
+        write(STDOUT_FILENO, "~\r\n", 3);
     }
 }

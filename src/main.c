@@ -16,6 +16,5 @@ int main(void) {
         dashRefreshScreen();
         dashProcessKeypress();
   }
-
     return 0;
 }
