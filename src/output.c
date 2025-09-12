@@ -16,7 +16,11 @@ void dashDrawRows() {
     
     int y;
 
-    for (int y = 0; y < dashCon.dashrows - 1; y++) {
-        write(STDOUT_FILENO, "~\r\n", 3);
+    for (int y = 0; y < dashCon.dashrows; y++) {
+        write(STDOUT_FILENO, "~", 1);
+
+        if (y < dashCon.dashrows - 1) {
+            write(STDOUT_FILENO, "\r\n", 2);
+        }
     }
 }

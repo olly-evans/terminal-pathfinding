@@ -9,8 +9,8 @@
 struct dashConfig {
     int dashrows;
     int dashcols;
+    int cx, cy;
     struct termios termiosOrig;
-    
 };
 
 extern struct dashConfig dashCon;
@@ -19,6 +19,7 @@ void die(char *s);
 void disableRawMode();
 void enableRawMode();
 char dashReadKey();
+int getCursorPosition(int *rows, int *cols);
 int getWindowSize(int *rows, int *cols);
 
 #endif

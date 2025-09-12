@@ -13,5 +13,9 @@ void dashProcessKeypress() {
             write(STDOUT_FILENO, "\x1b[H", 3); // Cursor home.
             exit(0);
             break;
+
+        case ('\x1b'):
+            write(STDOUT_FILENO, "Esc", sizeof("Esc"));
+
     }
 }
