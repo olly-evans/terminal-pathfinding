@@ -2,25 +2,29 @@
 
 #include "output.h"
 #include "terminal.h"
+#include "abuf.h"
 
 void dashRefreshScreen() {
-    write(STDOUT_FILENO, "\x1b[2J", 4); // Clear screen.
-    write(STDOUT_FILENO, "\x1b[H", 3); // Cursor home.
+    struct abuf ab = ABUF_INIT;
 
-    dashDrawRows();
+    abAppend(&ab, "\x1b[2J", 4);
+    abAppend(&ab, "\x1b[H", 3);
 
-    write(STDOUT_FILENO, "\x1b[H", 3);
+    dashDrawRows(&ab);
+
+    abAppend(&ab, "\x1b[H", 3);
+    write(STDOUT_FILENO, ab.b, ab.len);
 }
 
-void dashDrawRows() {
+void dashDrawRows(struct abuf *ab) {
     
     int y;
 
     for (int y = 0; y < dashCon.dashrows; y++) {
-        write(STDOUT_FILENO, "~", 1);
+        abAppend(ab, "~", 1);
 
         if (y < dashCon.dashrows - 1) {
-            write(STDOUT_FILENO, "\r\n", 2);
+            abAppend(ab, "\r\n", 2);
         }
     }
 }
