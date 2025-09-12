@@ -1,0 +1,14 @@
+# Ignore build files
+*.o
+*.out
+*.exe
+*.bin
+*.log
+
+# Ignore compiled binary
+dash
+
+# Editor-specific
+*.swp
+*.bak
+*.tmp
