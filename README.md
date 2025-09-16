@@ -1,7 +1,8 @@
 # Notes
 
-- May need a play zone so borders don't interact with drawing game. Maybe if i was smart this wouldn't be an issue.
-
+- Add in s for start point. copy code for e.
+- Could also add fn + arrkey to skip to top/bottom and far left/right.
+- need to think about how user can draw blockers in a quick fashion one by one too slow and tedious to draw something meaningful.
 
 - Got rectangle working. But it wont suffice. Need to get it to work with erow struct.
 - Create the struct like in kilo.c and get it to work for one row.

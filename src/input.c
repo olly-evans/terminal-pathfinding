@@ -13,7 +13,8 @@ void dashMoveCursor(int key) {
             }
             break;
         case ARROW_DOWN:
-            if (Con.cy != Con.screenrows - 2) {
+            // -2 to account for bar at bottom. Not done yet.
+            if (Con.cy != Con.screenrows - 2) { 
                 Con.cy++;
             }
             break;
