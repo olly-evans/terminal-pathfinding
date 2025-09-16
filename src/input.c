@@ -1,49 +1,63 @@
 #include <stdlib.h>
 #include <unistd.h>
+#include <stdio.h>
 
 #include "terminal.h"
 #include "input.h"
 
-void dashMoveCursor(char key) {
+void dashMoveCursor(int key) {
     switch (key) {
-        case 'w':
-            if (dashCon.cy != 0) {
-                dashCon.cy--;
+        case ARROW_UP:
+            if (Con.cy != 0) {
+                Con.cy--;
             }
             break;
-        case 's':
-            if (dashCon.cy != dashCon.dashrows - 1) {
-                dashCon.cy++;
+        case ARROW_DOWN:
+            if (Con.cy != Con.screenrows - 2) {
+                Con.cy++;
             }
             break;
-        case 'd':
-            if (dashCon.cx != dashCon.dashcols - 1) {
-                dashCon.cx++;
+        case ARROW_RIGHT:
+            if (Con.cx != Con.screencols - 1) {
+                Con.cx++;
             }
             break;
-        case 'a':
-            if (dashCon.cx != 0) {
-                dashCon.cx--;
+        case ARROW_LEFT:
+            if (Con.cx != 0) {
+                Con.cx--;
             }
             break;
     }
 }
 
 void dashProcessKeypress() {
-    char c = dashReadKey();
+    int c = dashReadKey();
 
     switch (c) {
         case (CTRL_KEY('q')):
             write(STDOUT_FILENO, "\x1b[2J", 4); // Clear screen.
             write(STDOUT_FILENO, "\x1b[H", 3); // Cursor home.
-            write(STDOUT_FILENO, "\x1b[3J", 4); // Clear Scrollback buffer
+            write(STDOUT_FILENO, "\x1b[3J", 4); // Clear scrollback buffer.
             exit(0);
             break;
+        
+        case ('e'):
+            int row;
+            int col;
+            getCursorPosition(&row, &col);
 
-        case 'w':
-        case 's':
-        case 'd':
-        case 'a':
+            if (Con.ey != -1 && Con.ex != -1) Con.row[Con.ey].chars[Con.ex] = ' '; // Free old position.
+
+            Con.row[row-1].chars[col-1] = 'E';
+
+            Con.ey = row-1;
+            Con.ex = col-1;
+            break;
+
+        case ARROW_UP:
+        case ARROW_DOWN:
+        case ARROW_RIGHT:
+        case ARROW_LEFT:
             dashMoveCursor(c);
             break;
 

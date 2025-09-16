@@ -1,6 +1,7 @@
 #ifndef INIT_H
 #define INIT_H
 
-void initDash();
+void init();
+void initRowsStruct();
 
 #endif

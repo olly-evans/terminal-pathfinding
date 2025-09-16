@@ -10,7 +10,7 @@
 
 int main(void) {
     enableRawMode();
-    initDash();
+    init();
 
     while (1) {
         dashRefreshScreen();

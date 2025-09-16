@@ -8,8 +8,9 @@
 
 #include "terminal.h"
 #include "init.h"
+#include "input.h"
 
-struct dashConfig dashCon;
+struct Config Con;
 
 void die(char *s) {
     write(STDOUT_FILENO, "\x1b[2J", 4); // Clear screen.
@@ -22,14 +23,14 @@ void die(char *s) {
 }
 
 void disableRawMode() {
-    if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &dashCon.termiosOrig) == -1) die("disableRawMode() -> tcsetattr");
+    if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &Con.termiosOrig) == -1) die("disableRawMode() -> tcsetattr");
 }
 
 void enableRawMode() {
-    if (tcgetattr(STDIN_FILENO, &dashCon.termiosOrig) == -1) die("enableRawMode() -> tcgetattr");
+    if (tcgetattr(STDIN_FILENO, &Con.termiosOrig) == -1) die("enableRawMode() -> tcgetattr");
     atexit(disableRawMode);
 
-    struct termios termiosRaw = dashCon.termiosOrig;
+    struct termios termiosRaw = Con.termiosOrig;
     termiosRaw.c_iflag &= ~(BRKINT | ICRNL | INPCK | ISTRIP | IXON);
     termiosRaw.c_oflag &= ~(OPOST);
     termiosRaw.c_cflag |= (CS8);
@@ -41,14 +42,33 @@ void enableRawMode() {
     if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &termiosRaw) == -1) die("enableRawMode() -> tcgetattr");
 }
 
-char dashReadKey() {
+int dashReadKey() {
     
   int nread;
   char c;
   while ((nread = read(STDIN_FILENO, &c, 1)) != 1) {
     if (nread == -1 && errno != EAGAIN) die("dashReadKey() -> read");
   }
-  return c;
+
+  if (c == '\x1b') {
+	char seq[2];
+
+	if (read(STDIN_FILENO, &seq[0], 1) != 1) return '\x1b';
+	if (read(STDIN_FILENO, &seq[1], 1) != 1) return '\x1b';
+
+	if (seq[0] == '[') {
+		switch (seq[1]) {
+			case 'A': return ARROW_UP;
+			case 'B': return ARROW_DOWN;
+			case 'C': return ARROW_RIGHT;
+			case 'D': return ARROW_LEFT;
+		}
+	}
+
+	return '\x1b';
+  } else {
+	return c;
+  }
 }
 
 int getCursorPosition(int *rows, int *cols) {

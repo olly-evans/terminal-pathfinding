@@ -5,20 +5,30 @@
 
 #define CTRL_KEY(k) ((k) & 0x1f)
 
+typedef struct lrow {
+    int size;
+    char *chars;
+} lrow;
 
-struct dashConfig {
-    int dashrows;
-    int dashcols;
+struct Config {
+    int screenrows;
+    int screencols;
+    
     int cx, cy;
+    int ex, ey;
+
+    lrow *row;
+    int numrows;
+
     struct termios termiosOrig;
 };
 
-extern struct dashConfig dashCon;
+extern struct Config Con;
 
 void die(char *s);
 void disableRawMode();
 void enableRawMode();
-char dashReadKey();
+int dashReadKey();
 int getCursorPosition(int *rows, int *cols);
 int getWindowSize(int *rows, int *cols);
 
