@@ -14,7 +14,7 @@ void dashMoveCursor(int key) {
             break;
         case ARROW_DOWN:
             // -2 to account for bar at bottom. Not done yet.
-            if (Con.cy != Con.screenrows - 2) { 
+            if (Con.cy != Con.screenrows - 1) { 
                 Con.cy++;
             }
             break;
@@ -33,7 +33,9 @@ void dashMoveCursor(int key) {
 
 void dashProcessKeypress() {
     int c = dashReadKey();
-
+    int row;
+    int col;
+    
     switch (c) {
         case (CTRL_KEY('q')):
             write(STDOUT_FILENO, "\x1b[2J", 4); // Clear screen.
@@ -43,17 +45,7 @@ void dashProcessKeypress() {
             break;
         
         case ('e'):
-            int row;
-            int col;
             getCursorPosition(&row, &col);
-
-            if (Con.ey != -1 && Con.ex != -1) Con.row[Con.ey].chars[Con.ex] = ' '; // Free old position.
-
-            Con.row[row-1].chars[col-1] = 'E';
-
-            Con.ey = row-1;
-            Con.ex = col-1;
-            break;
 
         case ARROW_UP:
         case ARROW_DOWN:

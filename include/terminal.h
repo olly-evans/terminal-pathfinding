@@ -15,10 +15,6 @@ struct Config {
     int screencols;
     
     int cx, cy;
-    int ex, ey;
-
-    lrow *row;
-    int numrows;
 
     struct termios termiosOrig;
 };

@@ -3,31 +3,48 @@
 
 #include "terminal.h"
 #include "init.h"
+#include "output.h"
+
+struct Grid *g = NULL;
 
 void init() {
-	Con.cx = 0;
-	Con.cy = 0;
-
-	Con.ey = -1;
-	Con.ex = -1;
+	Con.cx = 1;
+	Con.cy = 1;
+	
 
 	if (getWindowSize(&Con.screenrows, &Con.screencols) == -1) die("getWindowSize");
-
-	// Con.borderrows = Con.screenrows - 1; Here for old printing hashes code.
-
-	initRowsStruct();
+	
+	initGrid(g, Con.screenrows, Con.screencols);
 	
 }
 
-void initRowsStruct() {
-	// Make room for playablerows
-	Con.row = malloc(sizeof(lrow) * Con.screenrows);
+void initGrid(struct Grid *g, int rows, int cols) {
+	// 	Set the grid’s number of rows and cols
+	g = malloc(sizeof(struct Grid));
 
-	for (int i = 0; i < Con.screenrows; i++) {
-		// Go into each .chars and make enough space for playablecols
-		Con.row[i].chars = malloc(Con.screencols + 1);
-		memset(Con.row[i].chars, ' ', Con.screencols);
+	g->rows = rows;
+	g->cols = cols;
+
+	// Allocate memory for an array of row pointers, sized for rows
+	g->cells = malloc(sizeof(struct Cell*) * rows);
+
+	for (int y = 0; y < rows - 1; y++) {
+		// Allocate memory for a row of cells, sized for cols
+		g->cells[y] = malloc(sizeof(struct Cell) * cols);
+		// For each column index from 0 to cols - 1:
+		for (int x = 0; x < cols - 1; x++) {
+			g->cells[y][x].type = EMPTY;
+			g->cells[y][x].x = x;
+			g->cells[y][x].y = y;
+		}
 	}
-	
+}
 
+void freeGrid(struct Grid *g) {
+	
+	for (int y = 0; y < g->rows; y++) {
+		free(g->cells[y]);
+	}
+
+	free(g->cells);
 }

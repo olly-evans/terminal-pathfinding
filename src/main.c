@@ -15,6 +15,7 @@ int main(void) {
     while (1) {
         dashRefreshScreen();
         dashProcessKeypress();
-  }
+    }
+    freeGrid(g);
     return 0;
 }
