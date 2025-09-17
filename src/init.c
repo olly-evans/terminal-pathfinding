@@ -34,8 +34,8 @@ struct Grid* initGrid(struct Grid *g, int rows, int cols) {
 		g->cells[y] = malloc(sizeof(struct Cell) * cols);
 		if (!g->cells[y]) die("g->cells[y] not allocated");
 
-		// For each column index from 0 to cols - 1:
 		for (int x = 0; x < cols; x++) {
+			// Initialise Cells in row.
 			g->cells[y][x].type = BORDER;
 			g->cells[y][x].x = x;
 			g->cells[y][x].y = y;
