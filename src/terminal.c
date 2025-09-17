@@ -16,7 +16,7 @@ void die(char *s) {
     write(STDOUT_FILENO, "\x1b[2J", 4); // Clear screen.
     write(STDOUT_FILENO, "\x1b[H", 3); // Cursor home.
 	write(STDOUT_FILENO, "\x1b[3J", 4); // Clear scrollback buffer.
-
+	
 
     perror(s);
     exit(1);

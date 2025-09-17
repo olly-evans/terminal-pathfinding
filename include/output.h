@@ -11,10 +11,10 @@ enum CellTypes {
     EMPTY
 };  
 
-
 struct Cell {
     enum CellTypes type;
     int x, y;
+    char buf;
 };
 
 struct Grid {
@@ -26,7 +26,6 @@ extern struct Grid *g;
 
 void dashRefreshScreen();
 void dashDrawRows();
-void dashAppendRow(char *s, size_t len);
-void drawRows(struct abuf *ab);
+void drawGrid(struct abuf *ab);
 
 #endif

@@ -15,7 +15,7 @@ void dashRefreshScreen() {
     abAppend(&ab, "\x1b[2J", 4);
     abAppend(&ab, "\x1b[3J", 4);
 
-    // dashDrawRows(&ab);
+    drawGrid(&ab);
 
     char buf[32];
     snprintf(buf, sizeof(buf), "\x1b[%d;%dH", Con.cy + 1, Con.cx + 1);
@@ -51,3 +51,19 @@ void dashRefreshScreen() {
 //         if (y < Con.screenrows - 1) abAppend(ab, "\r\n", 2); // Don't \n last row.
 //     }
 // }
+
+void drawGrid(struct abuf *ab) {
+    
+
+    // Get the right row from the pointer...
+    // G->cells, an array of row pointers.
+    
+    int y;
+    int x;
+    for (y = 0; y < g->rows; y++) {
+        for (x = 0; x < g->cols; x++) {
+            abAppend(ab, &g->cells[y][x].buf, 1); // Should just be a char.
+        }
+        abAppend(ab, "\r\n", 2);
+    }
+}
