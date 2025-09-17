@@ -4,6 +4,7 @@
 
 #include "terminal.h"
 #include "input.h"
+#include "output.h"
 
 void dashMoveCursor(int key) {
     switch (key) {
@@ -13,7 +14,6 @@ void dashMoveCursor(int key) {
             }
             break;
         case ARROW_DOWN:
-            // -2 to account for bar at bottom. Not done yet.
             if (Con.cy != Con.screenrows - 1) { 
                 Con.cy++;
             }
@@ -33,6 +33,7 @@ void dashMoveCursor(int key) {
 
 void dashProcessKeypress() {
     int c = dashReadKey();
+
     int row;
     int col;
     
@@ -44,8 +45,55 @@ void dashProcessKeypress() {
             exit(0);
             break;
         
-        case ('e'):
+        case (' '): 
+            // answer is use one button, if not start, make start, elif not end. make end.
+            // then one button to remove them too.
+
+            int placedE = 0;
+            int placedS = 0;
+
             getCursorPosition(&row, &col);
+            // Cursor 1-indexed, must subtract one to align with grid.
+            // also want to be able to hold down button and arrow key for drawing hashtags.
+
+            struct Cell *curr_cell = &g->cells[row-1][col-1];
+            
+
+            if (g->start_cell == NULL) {
+                // make this the start cell!
+                g->start_cell = curr_cell;
+
+                g->start_cell->type = START;
+                g->start_cell->buf = 'S';
+            } else {
+                // then make start_cell.buf = ' '.
+                // make new start cell.
+                g->start_cell->type = EMPTY;
+                g->start_cell->buf = ' ';
+
+                curr_cell->type = START;
+                curr_cell->buf = 'S';
+            }
+
+            // if (end_cell == NULL) {
+
+            //     end_cell = curr_cell;
+            //     end_cell->type = END;
+            //     end_cell->buf = 'E';
+            // } else {
+            //     // then make end_cell.buf = ' '.
+            //     // make new end cell.
+            //     end_cell->type = EMPTY;
+            //     end_cell->buf = ' ';
+
+            //     curr_cell->type = START;
+            //     curr_cell->buf = 'S';
+            // }
+
+            break;
+            // make space make a barrier too why not.
+
+            
 
         case ARROW_UP:
         case ARROW_DOWN:

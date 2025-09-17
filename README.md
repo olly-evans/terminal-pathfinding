@@ -1,4 +1,5 @@
 # Notes
+- prio no.1 is think of a good way to place e and s.
 
 - Add in s for start point. copy code for e.
 - Could also add fn + arrkey to skip to top/bottom and far left/right.

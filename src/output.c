@@ -31,15 +31,13 @@ void dashRefreshScreen() {
 
 void drawGrid(struct abuf *ab) {
     
-
-    // Get the right row from the pointer...
-    // G->cells, an array of row pointers.
+    /* Loop through the Cells in the row pointers and append their char to terminal */
     
     int y;
     int x;
     for (y = 0; y < g->rows; y++) {
         for (x = 0; x < g->cols; x++) {
-            abAppend(ab, &g->cells[y][x].buf, 1); // Should just be a char.
+            abAppend(ab, &g->cells[y][x].buf, 1); // .buf just a char, but abAppend() takes char* hence &.
         }
         if (y < g->rows - 1) abAppend(ab, "\r\n", 2);
     }
