@@ -33,25 +33,28 @@ void dashMoveCursor(int key) {
 
 void dashProcessKeypress() {
     int c = dashReadKey();
-    struct Cell *curr_cell = &g->cells[Con.cy][Con.cx];
 
+    struct Cell *curr_cell = &g->cells[Con.cy][Con.cx];
 
     switch (c) {
         case (CTRL_KEY('q')):
             write(STDOUT_FILENO, "\x1b[2J", 4); // Clear screen.
             write(STDOUT_FILENO, "\x1b[H", 3); // Cursor home.
             write(STDOUT_FILENO, "\x1b[3J", 4); // Clear scrollback buffer.
+            write(STDOUT_FILENO, "\x1b[0m", 4); // Reset terminal text-styles just in case.
+
             exit(0);
             break;
         
         case (' '): 
+            // Places start, end and barrier cells one by one.
             handleSpacePress(curr_cell);
             break;
 
         case 'r':
+            // r press removes starts/ends or non-permanent barriers at cursor location.
             handleRPress(curr_cell);
             break;
-            
 
         case ARROW_UP:
         case ARROW_DOWN:
@@ -94,20 +97,24 @@ void handleSpacePress(struct Cell *curr_cell) {
 }
 
 void handleRPress(struct Cell *curr_cell) {
+    /* Handles an r press, by updating start and end cells and then barrier cells in that order. */
 
     if (curr_cell->type == START) {
         curr_cell->type = EMPTY;
         curr_cell->ch = ' ';
         g->start_cell = NULL; // Remove start ptr.
         return;
+
     } else if (curr_cell->type == END) {
         curr_cell->type = EMPTY;
         curr_cell->ch = ' ';
         g->end_cell = NULL; // Remove end ptr.
+
         return;
     } else if (curr_cell->type == BARRIER) {
         curr_cell->type = EMPTY;
         curr_cell->ch = ' ';
         return;
+
     }
 }

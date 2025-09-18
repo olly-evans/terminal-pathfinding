@@ -16,7 +16,8 @@ void die(char *s) {
     write(STDOUT_FILENO, "\x1b[2J", 4); // Clear screen.
     write(STDOUT_FILENO, "\x1b[H", 3); // Cursor home.
 	write(STDOUT_FILENO, "\x1b[3J", 4); // Clear scrollback buffer.
-	
+	write(STDOUT_FILENO, "\x1b[0m", 4); // Reset terminal colors.
+
 
     perror(s);
     exit(1);

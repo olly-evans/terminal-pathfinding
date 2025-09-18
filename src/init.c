@@ -47,7 +47,7 @@ struct Grid* initGrid(struct Grid *g, int rows, int cols) {
 
 			// Make terminal edges borders by default.
 			if (y == 0 || x == 0 || y == Con.screenrows - 1 || x == Con.screencols - 1) {
-				// Don't need to init .x .y here as these won't change.
+				// Don't need to init .x .y here as we won't change them ever.
 				g->cells[y][x].type = PERM_BARRIER;
 				g->cells[y][x].ch = '#';
 			} else {
