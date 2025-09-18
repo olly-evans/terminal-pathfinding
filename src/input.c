@@ -33,10 +33,8 @@ void dashMoveCursor(int key) {
 
 void dashProcessKeypress() {
     int c = dashReadKey();
-
-    int row;
-    int col;
     
+
     switch (c) {
         case (CTRL_KEY('q')):
             write(STDOUT_FILENO, "\x1b[2J", 4); // Clear screen.
@@ -46,13 +44,10 @@ void dashProcessKeypress() {
             break;
         
         case (' '): 
-
-            getCursorPosition(&row, &col);
-            // Cursor 1-indexed, must subtract one to align with grid.
-            // also want to be able to hold down button and arrow key for drawing hashtags.
-
-            struct Cell *curr_cell = &g->cells[row-1][col-1];
             
+            struct Cell *curr_cell = &g->cells[Con.cy][Con.cx];
+
+            // If no start cell, init one.
             if (g->start_cell == NULL) {
                 g->start_cell = curr_cell;
 
@@ -61,6 +56,7 @@ void dashProcessKeypress() {
                 break;
             } 
 
+            // If no end cell, init one.
             if (g->end_cell == NULL && curr_cell->type != START) {
                 g->end_cell = curr_cell;
 
@@ -69,9 +65,18 @@ void dashProcessKeypress() {
                 break;
             }
             
+            // Make anything that isn't start/end cell a border thereafter.
             if (curr_cell->type != START && curr_cell->type != END) {
                 curr_cell->type = BORDER;
                 curr_cell->ch = '#';
+                break;
+            }
+            
+        case '\b':
+            
+            if (curr_cell->type != EMPTY) {
+                curr_cell->type = EMPTY;
+                curr_cell->ch = ' ';
                 break;
             }
             
