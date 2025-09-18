@@ -45,47 +45,12 @@ void dashProcessKeypress() {
             break;
         
         case (' '): 
-            
-
-            // If no start cell, init one.
-            if (g->start_cell == NULL) {
-                g->start_cell = curr_cell;
-
-                g->start_cell->type = START;
-                g->start_cell->ch = 'S';
-                break;
-            } 
-
-            // If no end cell, init one.
-            if (g->end_cell == NULL && curr_cell->type != START) {
-                g->end_cell = curr_cell;
-
-                g->end_cell->type = END;
-                g->end_cell->ch = 'E';
-                break;
-            }
-            
-            // Make anything that isn't start/end cell a border thereafter.
-            if (curr_cell->type != START && curr_cell->type != END) {
-                curr_cell->type = BORDER;
-                curr_cell->ch = '#';
-                break;
-            }
+            handleSpacePress(curr_cell);
             break;
-            
+
         case 'r':
-            
-            if (curr_cell->type == START) {
-                curr_cell->type = EMPTY;
-                curr_cell->ch = ' ';
-                g->start_cell = NULL;
-                break;
-            } else if (curr_cell->type == END) {
-                curr_cell->type = EMPTY;
-                curr_cell->ch = ' ';
-                g->end_cell = NULL;
-                break;
-            }
+            handleRPress(curr_cell);
+            break;
             
 
         case ARROW_UP:
@@ -95,5 +60,54 @@ void dashProcessKeypress() {
             dashMoveCursor(c);
             break;
 
+    }
+}
+
+void handleSpacePress(struct Cell *curr_cell) {
+    /* Handles a space press, by updating start and end cells and then barrier cells in that order. */
+
+    // If no start cell, init one.
+    if (g->start_cell == NULL) {
+        g->start_cell = curr_cell;
+
+        g->start_cell->type = START;
+        g->start_cell->ch = 'S';
+        return;
+    } 
+
+    // If no end cell, init one.
+    if (g->end_cell == NULL && curr_cell->type != START) {
+        g->end_cell = curr_cell;
+
+        g->end_cell->type = END;
+        g->end_cell->ch = 'E';
+        return;
+    }
+    
+    // Make anything that isn't start/end cell a border thereafter.
+    if (curr_cell->type != START && curr_cell->type != END) {
+        curr_cell->type = BARRIER;
+        curr_cell->ch = '#';
+        return;
+    }
+    
+}
+
+void handleRPress(struct Cell *curr_cell) {
+
+    if (curr_cell->type == START) {
+        curr_cell->type = EMPTY;
+        curr_cell->ch = ' ';
+        g->start_cell = NULL; // Remove start ptr.
+        return;
+    } else if (curr_cell->type == END) {
+        curr_cell->type = EMPTY;
+        curr_cell->ch = ' ';
+        g->end_cell = NULL; // Remove end ptr.
+        return;
+    } else if (curr_cell->type == BARRIER) {
+        curr_cell->type = EMPTY;
+        curr_cell->ch = ' ';
+        return;
     }
 }

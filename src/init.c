@@ -15,7 +15,7 @@ void init() {
 	
 	// Allocate rows and cols of terminal, initialise grid with these values.
 	if (getWindowSize(&Con.screenrows, &Con.screencols) == -1) die("getWindowSize");
-	
+
 	g = initGrid(g, Con.screenrows, Con.screencols);
 	if (!g) die("Couldn't initialise the grid.");
 
@@ -48,7 +48,7 @@ struct Grid* initGrid(struct Grid *g, int rows, int cols) {
 			// Make terminal edges borders by default.
 			if (y == 0 || x == 0 || y == Con.screenrows - 1 || x == Con.screencols - 1) {
 				// Don't need to init .x .y here as these won't change.
-				g->cells[y][x].type = BORDER;
+				g->cells[y][x].type = PERM_BARRIER;
 				g->cells[y][x].ch = '#';
 			} else {
 				g->cells[y][x].type = EMPTY;
