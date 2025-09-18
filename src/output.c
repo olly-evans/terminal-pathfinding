@@ -37,7 +37,7 @@ void drawGrid(struct abuf *ab) {
     int x;
     for (y = 0; y < g->rows; y++) {
         for (x = 0; x < g->cols; x++) {
-            abAppend(ab, &g->cells[y][x].buf, 1); // .buf just a char, but abAppend() takes char* hence &.
+            abAppend(ab, &g->cells[y][x].ch, 1); // .buf just a char, but abAppend() takes char* hence &.
         }
         if (y < g->rows - 1) abAppend(ab, "\r\n", 2);
     }

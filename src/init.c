@@ -9,15 +9,19 @@ struct Grid *g = NULL;
 
 
 void init() {
-	Con.cx = 0;
-	Con.cy = 0;
+	// Initial cursor pos
+	Con.cx = 1;
+	Con.cy = 1;
 	
 	// Allocate rows and cols of terminal, initialise grid with these values.
 	if (getWindowSize(&Con.screenrows, &Con.screencols) == -1) die("getWindowSize");
-	g = initGrid(g, Con.screenrows, Con.screencols);
 	
-	struct Cell *start_cell = NULL;
-    struct Cell *end_cell = NULL;
+	g = initGrid(g, Con.screenrows, Con.screencols);
+	if (!g) die("Couldn't initialise the grid.");
+
+	// Pointers to start/end cell.
+	g->start_cell = NULL;
+    g->end_cell = NULL;
 	
 }
 
@@ -33,17 +37,26 @@ struct Grid* initGrid(struct Grid *g, int rows, int cols) {
 	g->cells = malloc(sizeof(struct Cell*) * rows);
 	if (!g->cells) die("g->cells not allocated.");
 
+	// Lord forgive me.
 	for (int y = 0; y < rows; y++) {
 		// Allocate memory for a row of cells, sized for cols
 		g->cells[y] = malloc(sizeof(struct Cell) * cols);
 		if (!g->cells[y]) die("g->cells[y] not allocated");
 
 		for (int x = 0; x < cols; x++) {
-			// Initialise Cells in row.
-			g->cells[y][x].type = EMPTY;
-			g->cells[y][x].x = x;
-			g->cells[y][x].y = y;
-			g->cells[y][x].buf = ' ';
+
+			// Make terminal edges borders by default.
+			if (y == 0 || x == 0 || y == Con.screenrows - 1 || x == Con.screencols - 1) {
+				// Don't need to init .x .y here as these won't change.
+				g->cells[y][x].type = BORDER;
+				g->cells[y][x].ch = '#';
+			} else {
+				g->cells[y][x].type = EMPTY;
+				g->cells[y][x].x = x;
+				g->cells[y][x].y = y;
+				g->cells[y][x].ch = ' ';
+			}
+			
 		}
 	}
 	return g;

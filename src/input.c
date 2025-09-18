@@ -46,11 +46,6 @@ void dashProcessKeypress() {
             break;
         
         case (' '): 
-            // answer is use one button, if not start, make start, elif not end. make end.
-            // then one button to remove them too.
-
-            int placedE = 0;
-            int placedS = 0;
 
             getCursorPosition(&row, &col);
             // Cursor 1-indexed, must subtract one to align with grid.
@@ -58,41 +53,27 @@ void dashProcessKeypress() {
 
             struct Cell *curr_cell = &g->cells[row-1][col-1];
             
-
             if (g->start_cell == NULL) {
-                // make this the start cell!
                 g->start_cell = curr_cell;
 
                 g->start_cell->type = START;
-                g->start_cell->buf = 'S';
-            } else {
-                // then make start_cell.buf = ' '.
-                // make new start cell.
-                g->start_cell->type = EMPTY;
-                g->start_cell->buf = ' ';
+                g->start_cell->ch = 'S';
+                break;
+            } 
 
-                curr_cell->type = START;
-                curr_cell->buf = 'S';
+            if (g->end_cell == NULL && curr_cell->type != START) {
+                g->end_cell = curr_cell;
+
+                g->end_cell->type = END;
+                g->end_cell->ch = 'E';
+                break;
             }
-
-            // if (end_cell == NULL) {
-
-            //     end_cell = curr_cell;
-            //     end_cell->type = END;
-            //     end_cell->buf = 'E';
-            // } else {
-            //     // then make end_cell.buf = ' '.
-            //     // make new end cell.
-            //     end_cell->type = EMPTY;
-            //     end_cell->buf = ' ';
-
-            //     curr_cell->type = START;
-            //     curr_cell->buf = 'S';
-            // }
-
-            break;
-            // make space make a barrier too why not.
-
+            
+            if (curr_cell->type != START && curr_cell->type != END) {
+                curr_cell->type = BORDER;
+                curr_cell->ch = '#';
+                break;
+            }
             
 
         case ARROW_UP:

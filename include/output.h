@@ -14,7 +14,7 @@ enum CellTypes {
 struct Cell {
     enum CellTypes type;
     int x, y;
-    char buf;
+    char ch;
 };
 
 struct Grid {

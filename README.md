@@ -1,5 +1,7 @@
 # Notes
 - prio no.1 is think of a good way to place e and s.
+- think about just and algo selection screen that runs before the actual grid with the cursor taking up whole row
+for each option.  (after base algo setup.)
 
 - Add in s for start point. copy code for e.
 - Could also add fn + arrkey to skip to top/bottom and far left/right.
