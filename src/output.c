@@ -24,6 +24,7 @@ void drawWelcomeScreen() {
     
     write(STDOUT_FILENO, wel_ab.b, wel_ab.len);
 
+    // if algo chosen in cursor row, proceed.
     abFree(&wel_ab);
 }
 
