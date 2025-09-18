@@ -33,7 +33,8 @@ void dashMoveCursor(int key) {
 
 void dashProcessKeypress() {
     int c = dashReadKey();
-    
+    struct Cell *curr_cell = &g->cells[Con.cy][Con.cx];
+
 
     switch (c) {
         case (CTRL_KEY('q')):
@@ -45,7 +46,6 @@ void dashProcessKeypress() {
         
         case (' '): 
             
-            struct Cell *curr_cell = &g->cells[Con.cy][Con.cx];
 
             // If no start cell, init one.
             if (g->start_cell == NULL) {
@@ -71,12 +71,19 @@ void dashProcessKeypress() {
                 curr_cell->ch = '#';
                 break;
             }
+            break;
             
-        case '\b':
+        case 'r':
             
-            if (curr_cell->type != EMPTY) {
+            if (curr_cell->type == START) {
                 curr_cell->type = EMPTY;
                 curr_cell->ch = ' ';
+                g->start_cell = NULL;
+                break;
+            } else if (curr_cell->type == END) {
+                curr_cell->type = EMPTY;
+                curr_cell->ch = ' ';
+                g->end_cell = NULL;
                 break;
             }
             
