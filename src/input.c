@@ -31,6 +31,8 @@ void dashMoveCursor(int key) {
     }
 }
 
+// May need to change to just visualizer processkeypress
+// and have seperate one for welcome screen or perhaps keep but with checks for visualizer keys.
 void dashProcessKeypress() {
     int c = dashReadKey();
 

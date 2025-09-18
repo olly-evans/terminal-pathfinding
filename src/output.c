@@ -17,6 +17,7 @@ void drawWelcomeScreen() {
     abAppend(&wel_ab, "\x1b[3J", 4);
 
     // Draw something?
+    // need to append using a row struct i think for this.
 
     // Cursor stuff, want it to take up whole row.
 

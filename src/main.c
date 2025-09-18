@@ -13,8 +13,9 @@ int main(void) {
     init();
 
     while (1) {
-        drawWelcomeScreen();
+        drawWelcomeScreen(); // maybe in seperate loop???
         // going to need keypress recog here for enter and arrow keys.
+        // or in the welcomeScreen function.
         drawPathfindingVisualizer();
         dashProcessKeypress();
     }
