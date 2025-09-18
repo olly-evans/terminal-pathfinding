@@ -7,26 +7,47 @@
 #include "terminal.h"
 #include "abuf.h"
 
-void dashRefreshScreen() {
-    struct abuf ab = ABUF_INIT; // hmmm could prob be in the init section
+void drawWelcomeScreen() {
+    // Define abuf for this welcome menu.
+    struct abuf wel_ab = ABUF_INIT;
 
-    abAppend(&ab, "\x1b[?25l", 6);
-    abAppend(&ab, "\x1b[H", 4);
-    abAppend(&ab, "\x1b[2J", 4);
-    abAppend(&ab, "\x1b[3J", 4);
+    abAppend(&wel_ab, "\x1b[?25l", 6);
+    abAppend(&wel_ab, "\x1b[H", 4);
+    abAppend(&wel_ab, "\x1b[2J", 4);
+    abAppend(&wel_ab, "\x1b[3J", 4);
 
-    drawGrid(&ab);
+    // Draw something?
+
+    // Cursor stuff, want it to take up whole row.
+
+    abAppend(&wel_ab, "\x1b[?25h", 6);
+    
+    write(STDOUT_FILENO, wel_ab.b, wel_ab.len);
+
+    abFree(&wel_ab);
+}
+
+void drawPathfindingVisualizer() {
+    // Perhaps make this refresh grid function instead then have seperate function for drawing welcome menu.
+    struct abuf vis_ab = ABUF_INIT; // hmmm could prob be in the init section
+
+    abAppend(&vis_ab, "\x1b[?25l", 6);
+    abAppend(&vis_ab, "\x1b[H", 4);
+    abAppend(&vis_ab, "\x1b[2J", 4);
+    abAppend(&vis_ab, "\x1b[3J", 4);
+
+    drawGrid(&vis_ab);
 
     char buf[32];
     snprintf(buf, sizeof(buf), "\x1b[%d;%dH", Con.cy + 1, Con.cx + 1);
-    abAppend(&ab, buf, strlen(buf)); 
+    abAppend(&vis_ab, buf, strlen(buf)); 
 
 
-    abAppend(&ab, "\x1b[?25h", 6);
+    abAppend(&vis_ab, "\x1b[?25h", 6);
     
-    write(STDOUT_FILENO, ab.b, ab.len);
+    write(STDOUT_FILENO, vis_ab.b, vis_ab.len);
 
-    abFree(&ab);
+    abFree(&vis_ab);
 }
 
 void drawGrid(struct abuf *ab) {

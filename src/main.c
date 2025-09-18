@@ -13,7 +13,8 @@ int main(void) {
     init();
 
     while (1) {
-        dashRefreshScreen();
+        drawWelcomeScreen();
+        drawPathfindingVisualizer();
         dashProcessKeypress();
     }
     freeGrid(g);

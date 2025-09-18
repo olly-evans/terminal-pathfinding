@@ -28,8 +28,8 @@ struct Grid {
 
 extern struct Grid *g;
 
-void dashRefreshScreen();
-void dashDrawRows();
+void drawPathfindingVisualizer();
+void drawWelcomeScreen();
 void drawGrid(struct abuf *ab);
 
 #endif
