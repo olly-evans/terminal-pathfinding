@@ -11,6 +11,7 @@ void init() {
 	// Init cursor pos
 	Con.cx = 0;
 	Con.cy = 0;
+	Con.wel_voffset = Con.screenrows / 3;
 	
 	// Allocate rows and cols of terminal, initialise grid with these values.
 	if (getWindowSize(&Con.screenrows, &Con.screencols) == -1) die("getWindowSize");

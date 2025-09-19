@@ -16,21 +16,27 @@ void drawWelcomeScreen() {
     struct abuf wel_ab = ABUF_INIT;
 
     abAppend(&wel_ab, "\x1b[?25l", 6);
-    abAppend(&wel_ab, "\x1b[H", 4);
-
     abAppend(&wel_ab, "\x1b[2J", 4);
     abAppend(&wel_ab, "\x1b[3J", 4);
-    abAppend(&wel_ab, "\x1b[47m", 4); // trying to change cursor color.
+    abAppend(&wel_ab, "\x1b[H", 3);
+
+
+    // abAppend(&wel_ab, "\x1b[37m", 4); // trying to change cursor color.
 
     // Draw something?
     drawWelcomeRows(&wel_ab);
 
     // Append cursor movement to abuf.
-    char buf[32];
-    snprintf(buf, sizeof(buf), "\x1b[%d;%dH", Con.cy + 1, Con.cx + 1);
-    abAppend(&wel_ab, buf, strlen(buf));
+    char mcursor[32];
+    snprintf(mcursor, sizeof(mcursor), "\x1b[%d;%dH", Con.cy + 1, Con.cx + 1); // good i think to not include cx here.
+    abAppend(&wel_ab, mcursor, strlen(mcursor));
 
     abAppend(&wel_ab, "\x1b[?25h", 6);
+    // abAppend(&wel_ab, "\x1b[5;1H", 6);
+    
+    
+
+    
     
     write(STDOUT_FILENO, wel_ab.b, wel_ab.len);
 
@@ -42,7 +48,7 @@ void drawPathfindingVisualizer() {
     Con.app_state = STATE_VISUALIZATION;
 
     // Perhaps make this refresh grid function instead then have seperate function for drawing welcome menu.
-    struct abuf vis_ab = ABUF_INIT; // hmmm could prob be in the init section
+    struct abuf vis_ab = ABUF_INIT; // hmmm could prob be in the init section.
 
     abAppend(&vis_ab, "\x1b[?25l", 6);
     abAppend(&vis_ab, "\x1b[H", 4);
@@ -104,29 +110,31 @@ void drawGrid(struct abuf *ab) {
 
 void drawWelcomeRows(struct abuf *ab) {
 
-    int voffset = Con.screenrows / 3;
+    // Change to use con.wel_voffset
+    int voffset = Con.screenrows / 3; // should truncate or round
 
     for (int y = 0; y < Con.screenrows; y++) {
+
         if (y == voffset) {
-            // draw this at Con.cy makes sense
+            // Draw this at Con.cy makes sense.
             // abAppend() want cursor at voffset at run.
             
             abAppend(ab, "\x1b[47m", 5); // Paint background.
             abAppend(ab, ">", 1);
-            
-            abAppend(ab, "\x1b[K", 3); // clear line
-            abAppend(ab, "\033[0m", 4); // reset background.
-        } else {
-            abAppend(ab, "\r\n", 2);
-        }
-    }
 
+            abAppend(ab, "\x1b[K", 3); // clear line.
+            abAppend(ab, "\x1b[0m", 4); // reset background.
+
+        }
+
+        if (y != Con.screenrows -1) abAppend(ab, "\r\n", 2);
+    }
 
     // After drawing return cursor to home and down to voffset.
     // dunno why this doesnt work yet.
+    int size = snprintf(NULL, 0, "\x1b[%d;1H", voffset);
+    char rcursor[size + 1];
+    snprintf(rcursor, size + 1, "\x1b[%d;1H", voffset); 
+    abAppend(ab, rcursor, size);
     
-    int size = snprintf(NULL, 0, "\x1b[1;%dH", voffset);
-    char buf[size + 1];
-    snprintf(buf, size + 1, "\x1b[1;%dH", voffset);
-    abAppend(ab, buf, size); // move cursor to voffset
 }

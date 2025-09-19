@@ -13,6 +13,7 @@ enum appState {
 struct Config {
     int screenrows;
     int screencols;
+    int wel_voffset;
     int cx, cy;
 
     enum appState app_state;
