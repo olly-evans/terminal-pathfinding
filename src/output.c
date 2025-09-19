@@ -32,8 +32,9 @@ void drawWelcomeScreen() {
     abAppend(&wel_ab, mcursor, strlen(mcursor));
 
     abAppend(&wel_ab, "\x1b[?25h", 6);
-    // abAppend(&wel_ab, "\x1b[5;1H", 6);
-    
+    // abAppend(&wel_ab, "\x1b[5;1H", 7);
+    // this places the cursor correctly after revealing it which makes sense
+    // i think before i added cursor logic above this worked.
     
 
     
@@ -136,5 +137,7 @@ void drawWelcomeRows(struct abuf *ab) {
     char rcursor[size + 1];
     snprintf(rcursor, size + 1, "\x1b[%d;1H", voffset); 
     abAppend(ab, rcursor, size);
+
+    // WORKING IF CURSOR SHIT ISNT IMPLEMENTED  IN DRAWWELSCREEN()
     
 }
