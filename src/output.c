@@ -26,18 +26,14 @@ void drawWelcomeScreen() {
     // Draw something?
     drawWelcomeRows(&wel_ab);
 
-    // Append cursor movement to abuf.
+    // sets pos, but also means itll be set in visualizer which isnt a massive problem rn.
     char mcursor[32];
-    snprintf(mcursor, sizeof(mcursor), "\x1b[%d;%dH", Con.cy + 1, Con.cx + 1); // good i think to not include cx here.
+    snprintf(mcursor, sizeof(mcursor), "\x1b[%d;%dH", Con.cy + 1, Con.cx + 1); // adding offset could be close
     abAppend(&wel_ab, mcursor, strlen(mcursor));
 
-    abAppend(&wel_ab, "\x1b[?25h", 6);
-    // abAppend(&wel_ab, "\x1b[5;1H", 7);
-    // this places the cursor correctly after revealing it which makes sense
-    // i think before i added cursor logic above this worked.
-    
+    // i think cursor is init by this ^^ to 0,0 i think. its definitely fucking with it.
 
-    
+    abAppend(&wel_ab, "\x1b[?25h", 6);
     
     write(STDOUT_FILENO, wel_ab.b, wel_ab.len);
 
@@ -133,10 +129,10 @@ void drawWelcomeRows(struct abuf *ab) {
 
     // After drawing return cursor to home and down to voffset.
     // dunno why this doesnt work yet.
-    int size = snprintf(NULL, 0, "\x1b[%d;1H", voffset);
-    char rcursor[size + 1];
-    snprintf(rcursor, size + 1, "\x1b[%d;1H", voffset); 
-    abAppend(ab, rcursor, size);
+    // int size = snprintf(NULL, 0, "\x1b[%d;1H", voffset);
+    // char rcursor[size + 1];
+    // snprintf(rcursor, size + 1, "\x1b[%d;1H", voffset); 
+    // abAppend(ab, rcursor, size);
 
     // WORKING IF CURSOR SHIT ISNT IMPLEMENTED  IN DRAWWELSCREEN()
     
