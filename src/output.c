@@ -108,8 +108,8 @@ void drawWelcomeRows(struct abuf *ab) {
     abAppend(ab, "\x1b[H", 3); // Cursor home.
 
     int size = snprintf(NULL, 0, "\x1b[%dB", voffset);
-    char buf[size];
-    snprintf(buf, size, "\x1b[%dB", voffset); // snprintf appends null term.
+    char buf[size + 1];
+    snprintf(buf, size + 1, "\x1b[%dB", voffset); // snprintf appends null term.
 
     abAppend(ab, buf, size);
 }
