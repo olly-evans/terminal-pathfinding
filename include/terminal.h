@@ -5,11 +5,6 @@
 
 #define CTRL_KEY(k) ((k) & 0x1f)
 
-typedef struct lrow {
-    int size;
-    char *chars;
-} lrow;
-
 struct Config {
     int screenrows;
     int screencols;

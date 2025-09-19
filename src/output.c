@@ -17,6 +17,7 @@ void drawWelcomeScreen() {
     abAppend(&wel_ab, "\x1b[3J", 4);
 
     // Draw something?
+    drawWelcomeRows(&wel_ab);
     // need to append using a row struct i think for this.
 
     // Cursor stuff, want it to take up whole row.
@@ -90,4 +91,25 @@ void drawGrid(struct abuf *ab) {
         }
         if (y < g->rows - 1) abAppend(ab, "\r\n", 2);
     }
+}
+
+void drawWelcomeRows(struct abuf *ab) {
+
+    int voffset = Con.screenrows / 3;
+
+    for (int y = 0; y < Con.screenrows; y++) {
+
+        if (y == voffset) {
+            abAppend(ab, ">", 1), abAppend(ab, "\x1b[K", 3);
+        } else {
+            abAppend(ab, "\r\n", 2);
+        }
+    }
+    abAppend(ab, "\x1b[H", 3); // Cursor home.
+
+    int size = snprintf(NULL, 0, "\x1b[%dB", voffset);
+    char buf[size];
+    snprintf(buf, size, "\x1b[%dB", voffset); // snprintf appends null term.
+
+    abAppend(ab, buf, size);
 }

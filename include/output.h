@@ -31,5 +31,6 @@ extern struct Grid *g;
 void drawPathfindingVisualizer();
 void drawWelcomeScreen();
 void drawGrid(struct abuf *ab);
+void drawWelcomeRows(struct abuf *ab);
 
 #endif
