@@ -19,7 +19,7 @@ int main(void) {
 
         // if algo selected
             // draw the visualizer.
-        // drawPathfindingVisualizer();
+        //drawPathfindingVisualizer();
         dashProcessKeypress();
     }
     freeGrid(g);

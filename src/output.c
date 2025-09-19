@@ -100,16 +100,21 @@ void drawWelcomeRows(struct abuf *ab) {
     for (int y = 0; y < Con.screenrows; y++) {
 
         if (y == voffset) {
-            abAppend(ab, ">", 1), abAppend(ab, "\x1b[K", 3);
+            abAppend(ab, "\x1b[47m", 5);
+            abAppend(ab, ">", 1);
+            abAppend(ab, "\x1b[K", 3);
+            
+
         } else {
             abAppend(ab, "\r\n", 2);
         }
     }
-    abAppend(ab, "\x1b[H", 3); // Cursor home.
-
+    abAppend(ab, "\x1b[H", 3);
+    
     int size = snprintf(NULL, 0, "\x1b[%dB", voffset);
     char buf[size + 1];
-    snprintf(buf, size + 1, "\x1b[%dB", voffset); // snprintf appends null term.
+    snprintf(buf, size + 1, "\x1b[%dB", voffset); // snprintf appends string null term.
 
     abAppend(ab, buf, size);
+    // abAppend(ab, "\033[0m", 4); // 
 }

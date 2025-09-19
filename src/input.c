@@ -38,6 +38,9 @@ void dashProcessKeypress() {
 
     struct Cell *curr_cell = &g->cells[Con.cy][Con.cx];
 
+    int algo = 0;
+    if (algo != 1) return;
+
     switch (c) {
         case (CTRL_KEY('q')):
             write(STDOUT_FILENO, "\x1b[2J", 4); // Clear screen.
@@ -47,7 +50,12 @@ void dashProcessKeypress() {
 
             exit(0);
             break;
-        
+
+        case ('\n'):
+            algo = 1;
+            break;
+
+
         case (' '): 
             // Places start, end and barrier cells one by one.
             handleSpacePress(curr_cell);
