@@ -19,12 +19,16 @@ void drawWelcomeScreen() {
     abAppend(&wel_ab, "\x1b[H", 4);
     abAppend(&wel_ab, "\x1b[2J", 4);
     abAppend(&wel_ab, "\x1b[3J", 4);
+    abAppend(&wel_ab, "\x1b[47m", 4);
 
     // Draw something?
     drawWelcomeRows(&wel_ab);
     // need to append using a row struct i think for this.
 
     // Cursor stuff, want it to take up whole row.
+    char buf[32];
+    snprintf(buf, sizeof(buf), "\x1b[%d;%dH", Con.cy + 1, Con.cx + 1);
+    abAppend(&wel_ab, buf, strlen(buf));
 
     abAppend(&wel_ab, "\x1b[?25h", 6);
     
@@ -106,6 +110,7 @@ void drawWelcomeRows(struct abuf *ab) {
     for (int y = 0; y < Con.screenrows; y++) {
 
         if (y == voffset) {
+            // draw this at Con.cy hmm makes sense
             abAppend(ab, "\x1b[47m", 5);
             abAppend(ab, ">", 1);
             abAppend(ab, "\x1b[K", 3);

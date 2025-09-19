@@ -9,9 +9,9 @@ struct Grid *g = NULL;
 
 
 void init() {
-	// Initial cursor pos
-	Con.cx = 1;
-	Con.cy = 1;
+	// Init cursor pos
+	Con.cx = 0;
+	Con.cy = 0;
 	
 	// Allocate rows and cols of terminal, initialise grid with these values.
 	if (getWindowSize(&Con.screenrows, &Con.screencols) == -1) die("getWindowSize");

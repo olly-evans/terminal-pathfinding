@@ -71,13 +71,10 @@ void dashProcessKeypress() {
 
         case ARROW_UP:
         case ARROW_DOWN:
+            if (Con.app_state == STATE_WELCOME || Con.app_state == STATE_VISUALIZATION) dashMoveCursor(c);
+            break;
         case ARROW_RIGHT:
         case ARROW_LEFT:
-            // what i was actually tryna do before i got into this rabbit-hole.
-            if ((c == ARROW_DOWN || c == ARROW_UP) && (Con.app_state == STATE_WELCOME)) {
-                dashMoveCursor(c);
-                break;
-            }
             if (Con.app_state == STATE_VISUALIZATION) dashMoveCursor(c);
             break;
 
@@ -86,10 +83,10 @@ void dashProcessKeypress() {
 }
 
 void handleSpacePress(struct Cell *curr_cell) {
-    /* Handles a space press, by updating start and end cells and then barrier cells in that order. */
+    /* Handles a space press, by updating start, end and then barrier cells in that order. */
 
     bool isPermBarrier = (curr_cell->type == PERMANENT_BARRIER);
-    
+
     // If no start cell, init one.
     if ((g->start_cell == NULL) && (!isPermBarrier)) {
         g->start_cell = curr_cell;
