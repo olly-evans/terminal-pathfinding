@@ -62,7 +62,6 @@ void dashProcessKeypress() {
             // Places start, end and barrier cells one by one.
             if (Con.app_state == STATE_VISUALIZATION) handleSpacePress(curr_cell);
             break;
-           
 
         case 'r':
             // r press removes starts/ends or non-permanent barriers at cursor location.

@@ -7,7 +7,6 @@
 
 struct Grid *g = NULL;
 
-
 void init() {
 	// Init cursor pos
 	Con.cx = 0;
