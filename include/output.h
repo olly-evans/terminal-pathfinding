@@ -8,7 +8,7 @@ enum CellTypes {
     START,
     END,
     BARRIER,
-    PERM_BARRIER,
+    PERMANENT_BARRIER,
     EMPTY
 };  
 

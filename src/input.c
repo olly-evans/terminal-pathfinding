@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <stdio.h>
+#include <stdbool.h>
 
 #include "terminal.h"
 #include "input.h"
@@ -38,21 +39,20 @@ void dashProcessKeypress() {
 
     struct Cell *curr_cell = &g->cells[Con.cy][Con.cx];
 
-
-
     switch (c) {
         case (CTRL_KEY('q')):
             write(STDOUT_FILENO, "\x1b[2J", 4); // Clear screen.
             write(STDOUT_FILENO, "\x1b[H", 3); // Cursor home.
             write(STDOUT_FILENO, "\x1b[3J", 4); // Clear scrollback buffer.
-            write(STDOUT_FILENO, "\x1b[0m", 4); // Reset terminal text-styles just in case.
+            write(STDOUT_FILENO, "\x1b[0m", 4); // Reset terminal text-styles.
 
             exit(0);
             break;
 
         // case for up/down arrow keys.
+        // ah can't do that rip.
 
-        // enter is carriage return in raw mode.
+        // Enter is a carriage return in raw mode.
         case ('\r'):
             if (Con.app_state == STATE_WELCOME) Con.app_state = STATE_VISUALIZATION;
             break;
@@ -73,6 +73,11 @@ void dashProcessKeypress() {
         case ARROW_DOWN:
         case ARROW_RIGHT:
         case ARROW_LEFT:
+            // what i was actually tryna do before i got into this rabbit-hole.
+            if ((c == ARROW_DOWN || c == ARROW_UP) && (Con.app_state == STATE_WELCOME)) {
+                dashMoveCursor(c);
+                break;
+            }
             if (Con.app_state == STATE_VISUALIZATION) dashMoveCursor(c);
             break;
 
@@ -83,8 +88,10 @@ void dashProcessKeypress() {
 void handleSpacePress(struct Cell *curr_cell) {
     /* Handles a space press, by updating start and end cells and then barrier cells in that order. */
 
+    bool isPermBarrier = (curr_cell->type == PERMANENT_BARRIER);
+    
     // If no start cell, init one.
-    if (g->start_cell == NULL) {
+    if ((g->start_cell == NULL) && (!isPermBarrier)) {
         g->start_cell = curr_cell;
 
         g->start_cell->type = START;
@@ -93,7 +100,7 @@ void handleSpacePress(struct Cell *curr_cell) {
     } 
 
     // If no end cell, init one.
-    if (g->end_cell == NULL && curr_cell->type != START) {
+    if ((g->end_cell == NULL) && (curr_cell->type != START) && (!isPermBarrier)) {
         g->end_cell = curr_cell;
 
         g->end_cell->type = END;
@@ -102,7 +109,7 @@ void handleSpacePress(struct Cell *curr_cell) {
     }
     
     // Make anything that isn't start/end cell a border thereafter.
-    if (curr_cell->type != START && curr_cell->type != END) {
+    if (curr_cell->type != START && curr_cell->type != END && (!isPermBarrier)) {
         curr_cell->type = BARRIER;
         curr_cell->ch = '#';
         return;

@@ -83,7 +83,7 @@ void drawGrid(struct abuf *ab) {
                 break;
 
             case BARRIER:
-            case PERM_BARRIER:
+            case PERMANENT_BARRIER:
                 abAppend(ab, "\x1b[37m", 5); // White
                 abAppend(ab, &c->ch, 1);
                 
