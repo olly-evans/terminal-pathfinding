@@ -6,8 +6,12 @@
 #include "output.h"
 #include "terminal.h"
 #include "abuf.h"
+#include "input.h"
 
 void drawWelcomeScreen() {
+
+    Con.app_state = STATE_WELCOME;
+
     // Define abuf for this welcome menu.
     struct abuf wel_ab = ABUF_INIT;
 
@@ -31,6 +35,8 @@ void drawWelcomeScreen() {
 }
 
 void drawPathfindingVisualizer() {
+    Con.app_state = STATE_VISUALIZATION;
+
     // Perhaps make this refresh grid function instead then have seperate function for drawing welcome menu.
     struct abuf vis_ab = ABUF_INIT; // hmmm could prob be in the init section
 
@@ -103,8 +109,7 @@ void drawWelcomeRows(struct abuf *ab) {
             abAppend(ab, "\x1b[47m", 5);
             abAppend(ab, ">", 1);
             abAppend(ab, "\x1b[K", 3);
-            
-
+            abAppend(ab, "\033[0m", 4);
         } else {
             abAppend(ab, "\r\n", 2);
         }
@@ -116,5 +121,4 @@ void drawWelcomeRows(struct abuf *ab) {
     snprintf(buf, size + 1, "\x1b[%dB", voffset); // snprintf appends string null term.
 
     abAppend(ab, buf, size);
-    // abAppend(ab, "\033[0m", 4); // 
 }

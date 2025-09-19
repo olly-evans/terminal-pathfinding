@@ -13,15 +13,12 @@ int main(void) {
     init();
 
     while (1) {
-        drawWelcomeScreen(); // maybe in seperate loop???
-        // going to need keypress recog here for enter and arrow keys.
-        // or in the welcomeScreen function.
-
-        // if algo selected
-            // draw the visualizer.
-        //drawPathfindingVisualizer();
+        if (Con.app_state == STATE_WELCOME) drawWelcomeScreen();
+        if (Con.app_state == STATE_VISUALIZATION) drawPathfindingVisualizer();
+        
         dashProcessKeypress();
     }
+
     freeGrid(g);
     return 0;
 }

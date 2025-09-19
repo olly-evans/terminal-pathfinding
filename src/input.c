@@ -38,8 +38,7 @@ void dashProcessKeypress() {
 
     struct Cell *curr_cell = &g->cells[Con.cy][Con.cx];
 
-    int algo = 0;
-    if (algo != 1) return;
+
 
     switch (c) {
         case (CTRL_KEY('q')):
@@ -51,29 +50,34 @@ void dashProcessKeypress() {
             exit(0);
             break;
 
-        case ('\n'):
-            algo = 1;
+        // case for up/down arrow keys.
+
+        // enter is carriage return in raw mode.
+        case ('\r'):
+            if (Con.app_state == STATE_WELCOME) Con.app_state = STATE_VISUALIZATION;
             break;
 
 
-        case (' '): 
+        case (' '):
             // Places start, end and barrier cells one by one.
-            handleSpacePress(curr_cell);
+            if (Con.app_state == STATE_VISUALIZATION) handleSpacePress(curr_cell);
             break;
+           
 
         case 'r':
             // r press removes starts/ends or non-permanent barriers at cursor location.
-            handleRPress(curr_cell);
+            if (Con.app_state == STATE_VISUALIZATION) handleRPress(curr_cell);
             break;
 
         case ARROW_UP:
         case ARROW_DOWN:
         case ARROW_RIGHT:
         case ARROW_LEFT:
-            dashMoveCursor(c);
+            if (Con.app_state == STATE_VISUALIZATION) dashMoveCursor(c);
             break;
 
     }
+
 }
 
 void handleSpacePress(struct Cell *curr_cell) {

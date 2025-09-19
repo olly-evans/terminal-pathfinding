@@ -5,12 +5,17 @@
 
 #define CTRL_KEY(k) ((k) & 0x1f)
 
+enum appState {
+	STATE_WELCOME,
+	STATE_VISUALIZATION
+};
+
 struct Config {
     int screenrows;
     int screencols;
-    
     int cx, cy;
 
+    enum appState app_state;
     struct termios termiosOrig;
 };
 
