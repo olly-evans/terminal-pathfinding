@@ -13,6 +13,8 @@ int main(void) {
     init();
 
     while (1) {
+        // Con global instance of config struct.
+        // Con.app_state changed upon enter keypress in STATE_WELCOME.
         if (Con.app_state == STATE_WELCOME) drawWelcomeScreen();
         if (Con.app_state == STATE_VISUALIZATION) drawPathfindingVisualizer();
         
