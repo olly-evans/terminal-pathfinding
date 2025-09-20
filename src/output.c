@@ -21,6 +21,7 @@ void drawWelcomeScreen() {
     abAppend(&wel_ab, "\x1b[H", 3);
 
 
+
     // abAppend(&wel_ab, "\x1b[37m", 4); // trying to change cursor color.
 
     // Draw something?
@@ -34,7 +35,7 @@ void drawWelcomeScreen() {
     // i think cursor is init by this ^^ to 0,0 i think. its definitely fucking with it.
 
     abAppend(&wel_ab, "\x1b[?25h", 6);
-    
+
     write(STDOUT_FILENO, wel_ab.b, wel_ab.len);
 
     // if algo chosen in cursor row, proceed.
@@ -106,34 +107,13 @@ void drawGrid(struct abuf *ab) {
 }
 
 void drawWelcomeRows(struct abuf *ab) {
-
-    // Change to use con.wel_voffset
-    int voffset = Con.screenrows / 3; // should truncate or round
-
     for (int y = 0; y < Con.screenrows; y++) {
-
-        if (y == voffset) {
-            // Draw this at Con.cy makes sense.
-            // abAppend() want cursor at voffset at run.
-            
-            abAppend(ab, "\x1b[47m", 5); // Paint background.
+        if (y == Con.cy) {
             abAppend(ab, ">", 1);
-
+            abAppend(ab, "\x1b[47m", 5); // Paint background.
             abAppend(ab, "\x1b[K", 3); // clear line.
             abAppend(ab, "\x1b[0m", 4); // reset background.
-
         }
-
         if (y != Con.screenrows -1) abAppend(ab, "\r\n", 2);
     }
-
-    // After drawing return cursor to home and down to voffset.
-    // dunno why this doesnt work yet.
-    // int size = snprintf(NULL, 0, "\x1b[%d;1H", voffset);
-    // char rcursor[size + 1];
-    // snprintf(rcursor, size + 1, "\x1b[%d;1H", voffset); 
-    // abAppend(ab, rcursor, size);
-
-    // WORKING IF CURSOR SHIT ISNT IMPLEMENTED  IN DRAWWELSCREEN()
-    
 }

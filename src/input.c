@@ -10,6 +10,8 @@
 void dashMoveCursor(int key) {
     switch (key) {
         case ARROW_UP:
+            if (Con.app_state == STATE_WELCOME && Con.cy == Con.wel_voffset) break;
+
             if (Con.cy != 0) {
                 Con.cy--;
             }
