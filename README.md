@@ -1,5 +1,10 @@
 ## IN-PROGRESS
+
 # Notes 
+- make data struct for welcome row data.
+- make this print in a dynamic manor.
+- Add Con.vis_cy and Con.vis_cx.
+
 - setup welcome menu with algorithm selection using cursor.
 
 - Could also add fn + arrkey to skip to top/bottom and far left/right.

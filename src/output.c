@@ -112,9 +112,10 @@ void drawWelcomeRows(struct abuf *ab) {
         // PATHFINDING VISUALIZER!
         // SOME FANCY FONT TEEHEE
 
+        // So happy with this, so simple but effective.
         if (y == Con.cy) {
             abAppend(ab, ">", 1);
-            abAppend(ab, "\x1b[47m", 5); // Paint background.
+            abAppend(ab, "\x1b[47m", 5);
             abAppend(ab, "\x1b[K", 3); // clear line.
             abAppend(ab, "\x1b[0m", 4); // reset background.
         }
