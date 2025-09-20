@@ -108,6 +108,10 @@ void drawGrid(struct abuf *ab) {
 
 void drawWelcomeRows(struct abuf *ab) {
     for (int y = 0; y < Con.screenrows; y++) {
+        // WELCOME!
+        // PATHFINDING VISUALIZER!
+        // SOME FANCY FONT TEEHEE
+
         if (y == Con.cy) {
             abAppend(ab, ">", 1);
             abAppend(ab, "\x1b[47m", 5); // Paint background.
