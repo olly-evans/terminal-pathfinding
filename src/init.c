@@ -72,3 +72,11 @@ void freeGrid(struct Grid *g) {
 	}
 	free(g->cells);
 }
+
+// void initAlgoDisplayData(algoDisplayData *dat) {
+// 	return;
+// }
+
+// void freeAlgoDisplayData(algoDisplayData *dat) {
+// 	return;
+// }

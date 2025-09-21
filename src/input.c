@@ -34,8 +34,6 @@ void dashMoveCursor(int key) {
     }
 }
 
-// May need to change to just visualizer processkeypress
-// and have seperate one for welcome screen or perhaps keep but with checks for visualizer keys.
 void dashProcessKeypress() {
     int c = dashReadKey();
 
@@ -51,17 +49,13 @@ void dashProcessKeypress() {
             exit(0);
             break;
 
-        // case for up/down arrow keys.
-        // ah can't do that rip.
-
         // Enter is a carriage return in raw mode.
         case ('\r'):
             if (Con.app_state == STATE_WELCOME) Con.app_state = STATE_VISUALIZATION, Con.cy = 1, Con.cx = 1;
             break;
 
-
         case (' '):
-            // Places start, end and barrier cells one by one.
+            // Place start, end and barrier cells one by one.
             if (Con.app_state == STATE_VISUALIZATION) handleSpacePress(curr_cell);
             break;
 
@@ -78,9 +72,7 @@ void dashProcessKeypress() {
         case ARROW_LEFT:
             if (Con.app_state == STATE_VISUALIZATION) dashMoveCursor(c);
             break;
-
     }
-
 }
 
 void handleSpacePress(struct Cell *curr_cell) {
@@ -112,7 +104,6 @@ void handleSpacePress(struct Cell *curr_cell) {
         curr_cell->ch = '#';
         return;
     }
-    
 }
 
 void handleRPress(struct Cell *curr_cell) {
@@ -128,12 +119,11 @@ void handleRPress(struct Cell *curr_cell) {
         curr_cell->type = EMPTY;
         curr_cell->ch = ' ';
         g->end_cell = NULL; // Remove end ptr.
-
         return;
+
     } else if (curr_cell->type == BARRIER) {
         curr_cell->type = EMPTY;
         curr_cell->ch = ' ';
         return;
-
     }
 }

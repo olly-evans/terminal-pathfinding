@@ -4,6 +4,8 @@
 #include "abuf.h"
 #include "terminal.h"
 
+/* Grid */
+
 enum CellTypes {
     START,
     END,
@@ -27,6 +29,15 @@ struct Grid {
 };
 
 extern struct Grid *g;
+
+/* Algorithm Welcome Screen Display Info */
+
+typedef struct {
+    char *name;
+    char *description;
+    char *speed;
+    int len;
+} algoDisplayData;
 
 void drawPathfindingVisualizer();
 void drawWelcomeScreen();

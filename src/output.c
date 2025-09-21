@@ -111,6 +111,7 @@ void drawWelcomeRows(struct abuf *ab) {
         // SOME FANCY FONT TEEHEE
 
         // So happy with this, so simple but effective.
+        if (y == Con.wel_voffset - 1) abAppend(ab, "\x1b[46m\x1b[K\x1b[0m", 12);
         if (y == Con.cy) {
             abAppend(ab, ">", 1);
             abAppend(ab, "\x1b[47m", 5);
