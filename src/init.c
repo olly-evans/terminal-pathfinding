@@ -7,11 +7,17 @@
 
 struct Grid *g = NULL;
 
+// Len of chars for each obj assigned at runtime, array length is also.
+algoInfo algorithmTable[] = {
+    {"A*", "Weighted and direction-based algorithm. A* is guaranteed to find the shortest path.", "Fast", 0},
+    {"Dijkstra", "Unweighted, but guarantees the shortest path.", "Medium", 0},
+    {"BFS", "Breadth-first search. Explores equally in all directions.", "Slow", 0},
+};
+
 void init() {
 	// Init cursor pos
 	Con.cx = 0;
 	Con.cy = 0;
-
 
 	// Allocate rows and cols of terminal, initialise grid with these values.
 	if (getWindowSize(&Con.screenrows, &Con.screencols) == -1) die("getWindowSize");
@@ -25,7 +31,8 @@ void init() {
 	// Pointers to start/end cell.
 	g->start_cell = NULL;
     g->end_cell = NULL;
-	
+
+	initAlgoDisplayInfo();
 }
 
 struct Grid* initGrid(struct Grid *g, int rows, int cols) {
@@ -50,7 +57,6 @@ struct Grid* initGrid(struct Grid *g, int rows, int cols) {
 
 			// Make terminal edges borders by default.
 			if (y == 0 || x == 0 || y == Con.screenrows - 1 || x == Con.screencols - 1) {
-				// Don't need to init .x .y here as we won't change them ever.
 				g->cells[y][x].type = PERMANENT_BARRIER;
 				g->cells[y][x].ch = '#';
 			} else {
@@ -73,10 +79,15 @@ void freeGrid(struct Grid *g) {
 	free(g->cells);
 }
 
-// void initAlgoDisplayData(algoDisplayData *dat) {
-// 	return;
-// }
+void initAlgoDisplayInfo() {
+	int algoCount = sizeof(algorithmTable) / sizeof(algorithmTable[0]);
+	if (!algoCount) die("algoDisplayInfo failed to initialize."); // truncate?
 
-// void freeAlgoDisplayData(algoDisplayData *dat) {
-// 	return;
-// }
+	for (int i = 0; i < algoCount; i++) {
+		algorithmTable[i].len = strlen(algorithmTable[i].name) + 
+								strlen(algorithmTable[i].description) + 
+								strlen(algorithmTable[i].speed);
+
+		algorithmTable[i].padding = Con.screencols - algorithmTable[i].len;
+	}
+}

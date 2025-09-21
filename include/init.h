@@ -5,5 +5,6 @@
 void init();
 struct Grid* initGrid(struct Grid *g, int rows, int cols);
 void freeGrid(struct Grid *g);
+void initAlgoDisplayInfo();
 
 #endif

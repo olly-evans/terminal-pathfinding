@@ -4,6 +4,17 @@
 #include "abuf.h"
 #include "terminal.h"
 
+/* Algorithm Welcome Screen Display Info */
+
+typedef struct {
+    char *name;
+    char *description;
+    char *speed;
+
+    int len; // length of all char* to be printed on row.
+    int padding; // horizontal padding given Con.screencols.
+} algoInfo;
+
 /* Grid */
 
 enum CellTypes {
@@ -29,15 +40,6 @@ struct Grid {
 };
 
 extern struct Grid *g;
-
-/* Algorithm Welcome Screen Display Info */
-
-typedef struct {
-    char *name;
-    char *description;
-    char *speed;
-    int len;
-} algoDisplayData;
 
 void drawPathfindingVisualizer();
 void drawWelcomeScreen();
