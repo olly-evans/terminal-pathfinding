@@ -4,6 +4,8 @@
 - make data struct for welcome row data.
 - make this print in a dynamic manor.
 
+- print the data from algorithm tables in output.c.
+
 - setup welcome menu with algorithm selection using cursor.
 
 - Could also add fn + arrkey to skip to top/bottom and far left/right.
