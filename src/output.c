@@ -20,8 +20,6 @@ void drawWelcomeScreen() {
     abAppend(&wel_ab, "\x1b[3J", 4);
     abAppend(&wel_ab, "\x1b[H", 3);
 
-
-
     // abAppend(&wel_ab, "\x1b[37m", 4); // trying to change cursor color.
 
     // Draw something?

@@ -56,7 +56,7 @@ void dashProcessKeypress() {
 
         // Enter is a carriage return in raw mode.
         case ('\r'):
-            if (Con.app_state == STATE_WELCOME) Con.app_state = STATE_VISUALIZATION;
+            if (Con.app_state == STATE_WELCOME) Con.app_state = STATE_VISUALIZATION, Con.cy = 1, Con.cx = 1;
             break;
 
 
