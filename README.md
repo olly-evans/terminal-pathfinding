@@ -3,6 +3,8 @@
 # Notes 
 
 - print info with correct padding for terminal cols.
+- HORIZONTAL SCROLLING FOR SMALLER TERMINAL WIDTHS. START CURSOR AT SCREENCOLS-1.
+- POTENTIALLY MAKE CX INCREMENT BY 10 OR SOMETHING OTHERWISE.
 
 - setup welcome menu with algorithm selection using cursor.
 

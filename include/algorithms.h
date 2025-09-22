@@ -3,7 +3,6 @@
 
 #include "output.h"
 
-
 /* Welcome Info */
 typedef struct {
     char *name;

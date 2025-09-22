@@ -113,7 +113,6 @@ void drawWelcomeRows(struct abuf *ab) {
         }
         
         if (isCursorRow(y)) {
-            abAppend(ab, ">", 1);
             abAppend(ab, "\x1b[47m", 5);
 
             padAppendData(ab, y - Con.headerrow);
@@ -150,16 +149,11 @@ void padAppendData(struct abuf *ab, int row) {
        and adjust based on terminal width 
     */
 
+    abAppend(ab, "\x1b[?7l", 6); // MAY NEED TO REASSIGN AUTO WRAP IN VISUALIZER.
+
     int maxName = (int)strlen(Con.maxName);
     int maxDesc = (int)strlen(Con.maxDesc);
     int maxSpeed = (int)strlen(Con.maxSpeed);
-
-    // int totalColsRequired = maxName + maxDesc + maxSpeed;
-    // int offset = abs(Con.screencols = totalColsRequired);
-
-    // if (Con.screencols - totalColsRequired < 0) {
-    //     // append description to
-    // }
 
     int sz = snprintf(NULL, 0, " %-*s %-*s %-*s", 
                 maxName, algoTab[row].name,
@@ -170,6 +164,6 @@ void padAppendData(struct abuf *ab, int row) {
                 maxName, algoTab[row].name,
                 maxDesc, algoTab[row].description,
                 maxSpeed, algoTab[row].speed);
-
+    
     abAppend(ab, buf, strlen(buf));
     }
