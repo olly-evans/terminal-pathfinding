@@ -13,8 +13,13 @@ enum appState {
 struct Config {
     int screenrows;
     int screencols;
-    int wel_voffset;
+    int headerrow;
     int cx, cy;
+
+    int algoCount;
+    char *maxName;
+    char *maxDesc;
+    char *maxSpeed;
 
     enum appState app_state;
     struct termios termiosOrig;

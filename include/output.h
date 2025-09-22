@@ -1,19 +1,11 @@
 #ifndef OUTPUT_H
 #define OUTPUT_H
 
+#include <stdbool.h>
+
 #include "abuf.h"
 #include "terminal.h"
 
-/* Algorithm Welcome Screen Display Info */
-
-typedef struct {
-    char *name;
-    char *description;
-    char *speed;
-
-    int len; // length of all char* to be printed on row.
-    int padding; // horizontal padding given Con.screencols.
-} algoInfo;
 
 /* Grid */
 
@@ -45,5 +37,9 @@ void drawPathfindingVisualizer();
 void drawWelcomeScreen();
 void drawGrid(struct abuf *ab);
 void drawWelcomeRows(struct abuf *ab);
+void drawWelcomeRowData(struct abuf *ab, int idx);
+bool isHeaderRow(int row);
+bool isDataRow(int row); 
+bool isCursorRow(int row);
 
 #endif

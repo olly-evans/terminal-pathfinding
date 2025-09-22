@@ -4,11 +4,13 @@
 #include "terminal.h"
 #include "init.h"
 #include "output.h"
+#include "algorithms.h"
 
 struct Grid *g = NULL;
 
 // Len of chars for each obj assigned at runtime, array length is also.
-algoInfo algorithmTable[] = {
+algoTable algoTab[] = {
+	{"Name", "Description", "Speed", 0},
     {"A*", "Weighted and direction-based algorithm. A* is guaranteed to find the shortest path.", "Fast", 0},
     {"Dijkstra", "Unweighted, but guarantees the shortest path.", "Medium", 0},
     {"BFS", "Breadth-first search. Explores equally in all directions.", "Slow", 0},
@@ -18,12 +20,13 @@ void init() {
 	// Init cursor pos
 	Con.cx = 0;
 	Con.cy = 0;
+	Con.algoCount = sizeof(algoTab) / sizeof(algoTab[0]);
 
 	// Allocate rows and cols of terminal, initialise grid with these values.
 	if (getWindowSize(&Con.screenrows, &Con.screencols) == -1) die("getWindowSize");
 
-	Con.wel_voffset = Con.screenrows / 3; // Assign after screenrows value retrieved.
-	Con.cy = Con.wel_voffset; // Assign after wel_offset assigned.
+	Con.headerrow = (Con.screenrows / 3 ) - 1; // Assign after screenrows value retrieved.
+	Con.cy = Con.headerrow + 1; // Assign after wel_offset assigned.
 
 	g = initGrid(g, Con.screenrows, Con.screencols);
 	if (!g) die("Couldn't initialise the grid.");
@@ -80,14 +83,24 @@ void freeGrid(struct Grid *g) {
 }
 
 void initAlgoDisplayInfo() {
-	int algoCount = sizeof(algorithmTable) / sizeof(algorithmTable[0]);
-	if (!algoCount) die("algoDisplayInfo failed to initialize."); // truncate?
 
-	for (int i = 0; i < algoCount; i++) {
-		algorithmTable[i].len = strlen(algorithmTable[i].name) + 
-								strlen(algorithmTable[i].description) + 
-								strlen(algorithmTable[i].speed);
+	Con.maxName = "";
+	Con.maxDesc = "";
+	Con.maxSpeed = "";
 
-		algorithmTable[i].padding = Con.screencols - algorithmTable[i].len;
+	for (int i = 0; i < Con.algoCount; i++) {
+
+		// Get name, description and speed that will take the most cols.
+		if (strlen(Con.maxName) < strlen(algoTab[i].name)) Con.maxName = algoTab[i].name;
+		if (strlen(Con.maxDesc) < strlen(algoTab[i].description)) Con.maxDesc = algoTab[i].description;
+		if (strlen(Con.maxSpeed) < strlen(algoTab[i].speed)) Con.maxSpeed = algoTab[i].speed;
+
+		// Get total length of all info, so we can test against screenrows.
+		algoTab[i].len = strlen(algoTab[i].name) + 
+						 strlen(algoTab[i].description) + 
+						 strlen(algoTab[i].speed);
+
+		// Calculate padding leftover.
+		algoTab[i].padding = Con.screencols - algoTab[i].len;
 	}
 }

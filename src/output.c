@@ -2,11 +2,13 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 #include "output.h"
 #include "terminal.h"
 #include "abuf.h"
 #include "input.h"
+#include "algorithms.h"
 
 void drawWelcomeScreen() {
 
@@ -106,18 +108,49 @@ void drawGrid(struct abuf *ab) {
 
 void drawWelcomeRows(struct abuf *ab) {
     for (int y = 0; y < Con.screenrows; y++) {
-        // WELCOME!
-        // PATHFINDING VISUALIZER!
-        // SOME FANCY FONT TEEHEE
+        
 
         // So happy with this, so simple but effective.
-        if (y == Con.wel_voffset - 1) abAppend(ab, "\x1b[46m\x1b[K\x1b[0m", 12);
-        if (y == Con.cy) {
+        if (isHeaderRow(y)) {
+            abAppend(ab, "\x1b[46m\x1b[K", 8);
+            drawWelcomeRowData(ab, y - Con.headerrow);
+            abAppend(ab, "\x1b[0m", 4);
+        }
+
+        // if is cursor row and data row?
+        if (isCursorRow(y)) {
             abAppend(ab, ">", 1);
             abAppend(ab, "\x1b[47m", 5);
             abAppend(ab, "\x1b[K", 3); // clear line.
             abAppend(ab, "\x1b[0m", 4); // reset background.
         }
+
+        if (isDataRow(y)) {
+            drawWelcomeRowData(ab, y - Con.headerrow);
+        }
+
         if (y != Con.screenrows -1) abAppend(ab, "\r\n", 2);
     }
+}
+
+bool isHeaderRow(int row) {
+    if (row == Con.headerrow) return true;
+    return false;
+}
+
+bool isDataRow(int row) {
+    int idx = row - Con.headerrow;
+    if (idx < Con.algoCount && idx >0) return true;
+    return false;
+}
+
+bool isCursorRow(int row) {
+    if (row == Con.cy) return true;
+    return false;
+}
+
+void drawWelcomeRowData(struct abuf *ab, int idx) {
+        abAppend(ab, algoTab[idx].name, strlen(algoTab[idx].name));
+        abAppend(ab, algoTab[idx].description, strlen(algoTab[idx].description));
+        abAppend(ab, algoTab[idx].speed, strlen(algoTab[idx].speed));
 }
