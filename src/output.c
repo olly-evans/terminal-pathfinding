@@ -147,16 +147,26 @@ bool isCursorRow(int row) {
 
 void padAppendData(struct abuf *ab, int row) {
     /* Pad table based on the widest column entries */
-    
+    int maxName = (int)strlen(Con.maxName);
+    int maxDesc = (int)strlen(Con.maxDesc);
+    int maxSpeed = (int)strlen(Con.maxSpeed);
+
+    int totalCols = maxName + maxDesc + maxSpeed;
+    if (Con.screenrows - totalCols < 0) {
+        // adjust for this lol
+        return;
+    }
+
+
     int sz = snprintf(NULL, 0, " %-*s %-*s %-*s", 
-                (int)strlen(Con.maxName), algoTab[row].name,
-                (int)strlen(Con.maxDesc), algoTab[row].description,
-                (int)strlen(Con.maxSpeed), algoTab[row].speed);
+                maxName, algoTab[row].name,
+                maxDesc, algoTab[row].description,
+                maxSpeed, algoTab[row].speed);
     char buf[sz + 1];
     snprintf(buf, sizeof(buf), " %-*s %-*s %-*s", 
-                (int)strlen(Con.maxName), algoTab[row].name,
-                (int)strlen(Con.maxDesc), algoTab[row].description,
-                (int)strlen(Con.maxSpeed), algoTab[row].speed);
+                maxName, algoTab[row].name,
+                maxDesc, algoTab[row].description,
+                maxSpeed, algoTab[row].speed);
 
     abAppend(ab, buf, strlen(buf));
     }
