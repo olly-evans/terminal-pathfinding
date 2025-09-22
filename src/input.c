@@ -10,6 +10,7 @@
 void dashMoveCursor(int key) {
     switch (key) {
         case ARROW_UP:
+            // If on top datarow don't go above that.
             if (Con.app_state == STATE_WELCOME && Con.cy == Con.headerrow + 1) break;
 
             if (Con.cy != 0) {
@@ -17,6 +18,9 @@ void dashMoveCursor(int key) {
             }
             break;
         case ARROW_DOWN:
+            // If on bottom datarow don't go below that.
+            if (Con.app_state == STATE_WELCOME && Con.cy == Con.headerrow + Con.algoCount - 1) break;
+
             if (Con.cy != Con.screenrows - 1) { 
                 Con.cy++;
             }
@@ -67,6 +71,7 @@ void dashProcessKeypress() {
         case ARROW_UP:
         case ARROW_DOWN:
             if (Con.app_state == STATE_WELCOME || Con.app_state == STATE_VISUALIZATION) dashMoveCursor(c);
+
             break;
         case ARROW_RIGHT:
         case ARROW_LEFT:

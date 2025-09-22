@@ -109,14 +109,11 @@ void drawGrid(struct abuf *ab) {
 void drawWelcomeRows(struct abuf *ab) {
     for (int y = 0; y < Con.screenrows; y++) {
         
-
-        // So happy with this, so simple but effective.
         if (isHeaderRow(y)) {
             abAppend(ab, "\x1b[46m\x1b[K", 8);
-            drawData(ab, y - Con.headerrow);
+            drawData(ab, y - Con.headerrow); 
             abAppend(ab, "\x1b[0m", 4);
         }
-
         
         // // if is cursor row and data row?
         if (isCursorRow(y)) {
@@ -124,11 +121,11 @@ void drawWelcomeRows(struct abuf *ab) {
             abAppend(ab, "\x1b[47m", 5);
             drawData(ab, y - Con.headerrow);
             abAppend(ab, "\x1b[K", 3); // clear line.
-
             abAppend(ab, "\x1b[0m", 4); // reset background.
         } else if (isDataRow(y)) {
-            drawData(ab, y - Con.headerrow);
+            drawData(ab, y - Con.headerrow); 
         }
+
         // if cy goes past algocount get seg fault.
         if (y != Con.screenrows -1) abAppend(ab, "\r\n", 2);
     }
