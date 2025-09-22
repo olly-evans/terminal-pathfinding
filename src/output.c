@@ -107,11 +107,12 @@ void drawGrid(struct abuf *ab) {
 }
 
 void drawWelcomeRows(struct abuf *ab) {
+
     for (int y = 0; y < Con.screenrows; y++) {
         
         if (isHeaderRow(y)) {
             abAppend(ab, "\x1b[46m\x1b[K", 8);
-            drawData(ab, y - Con.headerrow); 
+            padAppendData(ab, y - Con.headerrow);
             abAppend(ab, "\x1b[0m", 4);
         }
         
@@ -119,11 +120,14 @@ void drawWelcomeRows(struct abuf *ab) {
         if (isCursorRow(y)) {
             abAppend(ab, ">", 1);
             abAppend(ab, "\x1b[47m", 5);
-            drawData(ab, y - Con.headerrow);
+
+            // drawData(ab, y - Con.headerrow);
+            padAppendData(ab, y - Con.headerrow);
+
             abAppend(ab, "\x1b[K", 3); // clear line.
             abAppend(ab, "\x1b[0m", 4); // reset background.
         } else if (isDataRow(y)) {
-            drawData(ab, y - Con.headerrow); 
+            padAppendData(ab, y - Con.headerrow);
         }
 
         // if cy goes past algocount get seg fault.
@@ -152,3 +156,30 @@ void drawData(struct abuf *ab, int idx) {
         abAppend(ab, algoTab[idx].description, strlen(algoTab[idx].description));
         abAppend(ab, algoTab[idx].speed, strlen(algoTab[idx].speed));
 }
+
+// void padHeaderRow(struct abuf *ab) {
+//     int sz = snprintf(NULL, 0, " %-*s %-*s %-*s", 
+//                     (int)strlen(Con.maxName), algoTab[0].name,
+//                     (int)strlen(Con.maxDesc), algoTab[0].description,
+//                     (int)strlen(Con.maxSpeed), algoTab[0].speed);
+//     char buf[sz + 1];
+//     snprintf(buf, sizeof(buf), " %-*s %-*s %-*s", 
+//                     (int)strlen(Con.maxName), algoTab[0].name,
+//                     (int)strlen(Con.maxDesc), algoTab[0].description,
+//                     (int)strlen(Con.maxSpeed), algoTab[0].speed);
+//     abAppend(ab, buf, strlen(buf));
+// }
+
+void padAppendData(struct abuf *ab, int row) {
+    
+    int sz = snprintf(NULL, 0, " %-*s %-*s %-*s", 
+                (int)strlen(Con.maxName), algoTab[row].name,
+                (int)strlen(Con.maxDesc), algoTab[row].description,
+                (int)strlen(Con.maxSpeed), algoTab[row].speed);
+    char buf[sz + 1];
+    snprintf(buf, sizeof(buf), " %-*s %-*s %-*s", 
+                    (int)strlen(Con.maxName), algoTab[row].name,
+                    (int)strlen(Con.maxDesc), algoTab[row].description,
+                    (int)strlen(Con.maxSpeed), algoTab[row].speed);
+    abAppend(ab, buf, strlen(buf));
+    }

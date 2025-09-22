@@ -41,5 +41,7 @@ void drawData(struct abuf *ab, int idx);
 bool isHeaderRow(int row);
 bool isDataRow(int row); 
 bool isCursorRow(int row);
+void padHeaderRow(struct abuf *ab);
+void padAppendData(struct abuf *ab, int row);
 
 #endif
