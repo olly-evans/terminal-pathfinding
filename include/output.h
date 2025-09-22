@@ -37,7 +37,7 @@ void drawPathfindingVisualizer();
 void drawWelcomeScreen();
 void drawGrid(struct abuf *ab);
 void drawWelcomeRows(struct abuf *ab);
-void drawWelcomeRowData(struct abuf *ab, int idx);
+void drawData(struct abuf *ab, int idx);
 bool isHeaderRow(int row);
 bool isDataRow(int row); 
 bool isCursorRow(int row);

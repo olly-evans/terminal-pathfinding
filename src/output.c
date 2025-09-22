@@ -113,22 +113,23 @@ void drawWelcomeRows(struct abuf *ab) {
         // So happy with this, so simple but effective.
         if (isHeaderRow(y)) {
             abAppend(ab, "\x1b[46m\x1b[K", 8);
-            drawWelcomeRowData(ab, y - Con.headerrow);
+            drawData(ab, y - Con.headerrow);
             abAppend(ab, "\x1b[0m", 4);
         }
 
-        // if is cursor row and data row?
+        
+        // // if is cursor row and data row?
         if (isCursorRow(y)) {
             abAppend(ab, ">", 1);
             abAppend(ab, "\x1b[47m", 5);
+            drawData(ab, y - Con.headerrow);
             abAppend(ab, "\x1b[K", 3); // clear line.
+
             abAppend(ab, "\x1b[0m", 4); // reset background.
+        } else if (isDataRow(y)) {
+            drawData(ab, y - Con.headerrow);
         }
-
-        if (isDataRow(y)) {
-            drawWelcomeRowData(ab, y - Con.headerrow);
-        }
-
+        // if cy goes past algocount get seg fault.
         if (y != Con.screenrows -1) abAppend(ab, "\r\n", 2);
     }
 }
@@ -149,7 +150,7 @@ bool isCursorRow(int row) {
     return false;
 }
 
-void drawWelcomeRowData(struct abuf *ab, int idx) {
+void drawData(struct abuf *ab, int idx) {
         abAppend(ab, algoTab[idx].name, strlen(algoTab[idx].name));
         abAppend(ab, algoTab[idx].description, strlen(algoTab[idx].description));
         abAppend(ab, algoTab[idx].speed, strlen(algoTab[idx].speed));
