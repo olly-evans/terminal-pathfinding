@@ -10,7 +10,7 @@ struct Grid *g = NULL;
 
 // Len of chars for each obj assigned at runtime, array length is also.
 algoTable algoTab[] = {
-	{"Name", "Description", "Speed", 0},
+	{"Algorithm Name", "Description", "Speed", 0},
     {"A*", "Weighted and direction-based algorithm. A* is guaranteed to find the shortest path.", "Fast", 0},
     {"Dijkstra", "Unweighted, but guarantees the shortest path.", "Medium", 0},
     {"BFS", "Breadth-first search. Explores equally in all directions.", "Slow", 0},

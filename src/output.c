@@ -22,17 +22,11 @@ void drawWelcomeScreen() {
     abAppend(&wel_ab, "\x1b[3J", 4);
     abAppend(&wel_ab, "\x1b[H", 3);
 
-    // abAppend(&wel_ab, "\x1b[37m", 4); // trying to change cursor color.
-
-    // Draw something?
     drawWelcomeRows(&wel_ab);
 
-    // sets pos, but also means itll be set in visualizer which isnt a massive problem rn.
     char mcursor[32];
     snprintf(mcursor, sizeof(mcursor), "\x1b[%d;%dH", Con.cy + 1, Con.cx + 1); // adding offset could be close
     abAppend(&wel_ab, mcursor, strlen(mcursor));
-
-    // i think cursor is init by this ^^ to 0,0 i think. its definitely fucking with it.
 
     abAppend(&wel_ab, "\x1b[?25h", 6);
 
@@ -112,16 +106,16 @@ void drawWelcomeRows(struct abuf *ab) {
         
         if (isHeaderRow(y)) {
             abAppend(ab, "\x1b[46m\x1b[K", 8);
+
             padAppendData(ab, y - Con.headerrow);
+
             abAppend(ab, "\x1b[0m", 4);
         }
         
-        // // if is cursor row and data row?
         if (isCursorRow(y)) {
             abAppend(ab, ">", 1);
             abAppend(ab, "\x1b[47m", 5);
 
-            // drawData(ab, y - Con.headerrow);
             padAppendData(ab, y - Con.headerrow);
 
             abAppend(ab, "\x1b[K", 3); // clear line.
@@ -151,26 +145,8 @@ bool isCursorRow(int row) {
     return false;
 }
 
-void drawData(struct abuf *ab, int idx) {
-        abAppend(ab, algoTab[idx].name, strlen(algoTab[idx].name));
-        abAppend(ab, algoTab[idx].description, strlen(algoTab[idx].description));
-        abAppend(ab, algoTab[idx].speed, strlen(algoTab[idx].speed));
-}
-
-// void padHeaderRow(struct abuf *ab) {
-//     int sz = snprintf(NULL, 0, " %-*s %-*s %-*s", 
-//                     (int)strlen(Con.maxName), algoTab[0].name,
-//                     (int)strlen(Con.maxDesc), algoTab[0].description,
-//                     (int)strlen(Con.maxSpeed), algoTab[0].speed);
-//     char buf[sz + 1];
-//     snprintf(buf, sizeof(buf), " %-*s %-*s %-*s", 
-//                     (int)strlen(Con.maxName), algoTab[0].name,
-//                     (int)strlen(Con.maxDesc), algoTab[0].description,
-//                     (int)strlen(Con.maxSpeed), algoTab[0].speed);
-//     abAppend(ab, buf, strlen(buf));
-// }
-
 void padAppendData(struct abuf *ab, int row) {
+    /* Pad table based on the widest column entries */
     
     int sz = snprintf(NULL, 0, " %-*s %-*s %-*s", 
                 (int)strlen(Con.maxName), algoTab[row].name,
@@ -178,8 +154,9 @@ void padAppendData(struct abuf *ab, int row) {
                 (int)strlen(Con.maxSpeed), algoTab[row].speed);
     char buf[sz + 1];
     snprintf(buf, sizeof(buf), " %-*s %-*s %-*s", 
-                    (int)strlen(Con.maxName), algoTab[row].name,
-                    (int)strlen(Con.maxDesc), algoTab[row].description,
-                    (int)strlen(Con.maxSpeed), algoTab[row].speed);
+                (int)strlen(Con.maxName), algoTab[row].name,
+                (int)strlen(Con.maxDesc), algoTab[row].description,
+                (int)strlen(Con.maxSpeed), algoTab[row].speed);
+
     abAppend(ab, buf, strlen(buf));
     }
