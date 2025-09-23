@@ -29,7 +29,6 @@ void drawWelcomeScreen() {
     snprintf(mcursor, sizeof(mcursor), "\x1b[%d;%dH", Con.cy + 1, (Con.cx - Con.coloff)+ 1); // adding offset could be close
     abAppend(&wel_ab, mcursor, strlen(mcursor));
 
-    abAppend(&wel_ab, "\x1b[?25h", 6);
 
     write(STDOUT_FILENO, wel_ab.b, wel_ab.len);
 
@@ -106,7 +105,7 @@ void drawWelcomeRows(struct abuf *ab) {
     for (int y = 0; y < Con.screenrows; y++) {
 
         if (isHeaderRow(y)) {
-            abAppend(ab, "\x1b[46m\x1b[K", 8);
+            abAppend(ab, "\x1b[46m", 5);
 
             padAppendData(ab, y - Con.headerrow);
 
@@ -115,7 +114,6 @@ void drawWelcomeRows(struct abuf *ab) {
         
         if (isCursorRow(y)) {
             abAppend(ab, "\x1b[7m\x1b[K", 7); // not extending to end of row.
-
             padAppendData(ab, y - Con.headerrow);
 
             abAppend(ab, "\x1b[0m", 4); // Reset background.
@@ -143,12 +141,15 @@ bool isCursorRow(int row) {
 }
 
 void padAppendData(struct abuf *ab, int row) {
-    /* Pad table based on the widest column entries */
+    /* Pad table based on the widest column entries 
+    
+        this whole function needs to be refactored to actually do one thing.
+    */
 
     // Disable terminal auto-wrap. Might be able to do this in disableRawMode().
     abAppend(ab, "\x1b[?7l", 5); // MAY NEED TO REASSIGN AUTO WRAP IN VISUALIZER.
 
-    // Lord forgive me, not for what I've done but for what I'm about to do.
+    // Lord forgive me. Not for what I've done but for what I'm about to do.
     int maxName = (int)strlen(Con.maxName);
     int maxDesc = (int)strlen(Con.maxDesc);
     int maxSpeed = (int)strlen(Con.maxSpeed);
@@ -158,7 +159,11 @@ void padAppendData(struct abuf *ab, int row) {
                 maxDesc, algoTab[row].description,
                 maxSpeed, algoTab[row].speed);
     char buf[sz + 1];
+    
+    // absolutely vile find a better way.
     Con.totalcols = sz + 1;
+    
+    
     snprintf(buf, sizeof(buf), " %-*s %-*s %-*s", 
                 maxName, algoTab[row].name,
                 maxDesc, algoTab[row].description,
@@ -168,7 +173,7 @@ void padAppendData(struct abuf *ab, int row) {
     int len = strlen(buf) - Con.coloff;
     if (len < 0) len = 0;
     if (len > Con.screencols) len = Con.screencols;
-    abAppend(ab, &buf[Con.coloff], len);
+    abAppend(ab, &buf[Con.coloff], len);    
     }
 
 void checkScroll() {

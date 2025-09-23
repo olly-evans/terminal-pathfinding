@@ -57,6 +57,7 @@ void dashProcessKeypress() {
             write(STDOUT_FILENO, "\x1b[H", 3); // Cursor home.
             write(STDOUT_FILENO, "\x1b[3J", 4); // Clear scrollback buffer.
             write(STDOUT_FILENO, "\x1b[0m", 4); // Reset terminal text-styles.
+            write(STDOUT_FILENO, "\x1b[?25h", 6); // Give user their cursor back.
 
             exit(0);
             break;
