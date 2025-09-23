@@ -26,11 +26,11 @@ void dashMoveCursor(int key) {
             }
             break;
         case ARROW_RIGHT:
-            if (Con.app_state == STATE_WELCOME) {
+            if (Con.app_state == STATE_WELCOME && Con.cx != Con.totalcols) {
                 Con.cx++;
             }
 
-            if (Con.cx != Con.screencols - 1) {
+            if (Con.app_state == STATE_VISUALIZATION && Con.cx != Con.screencols - 1) {
                 Con.cx++;
             }
             break;

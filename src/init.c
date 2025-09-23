@@ -21,7 +21,7 @@ void init() {
 	Con.cx = 0;
 	Con.cy = 0;
 	Con.coloff = 0;
-	
+
 	Con.algoCount = sizeof(algoTab) / sizeof(algoTab[0]);
 
 	// Allocate rows and cols of terminal, initialise grid with these values.
@@ -85,7 +85,7 @@ void freeGrid(struct Grid *g) {
 }
 
 void initAlgoDisplayInfo() {
-
+	// dogshit and makes me sick.
 	Con.maxName = "";
 	Con.maxDesc = "";
 	Con.maxSpeed = "";
@@ -103,6 +103,6 @@ void initAlgoDisplayInfo() {
 						 strlen(algoTab[i].speed);
 
 		// Calculate padding leftover.
-		algoTab[i].padding = Con.screencols - algoTab[i].len;
+		algoTab[i].padding = Con.screencols - algoTab[i].len; // not using.
 	}
 }

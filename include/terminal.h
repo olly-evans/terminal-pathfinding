@@ -17,6 +17,7 @@ struct Config {
     int cx, cy;
 
     int coloff;
+    int totalcols;
 
     int algoCount;
     char *maxName;
