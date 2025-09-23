@@ -6,6 +6,9 @@
 - HORIZONTAL SCROLLING FOR SMALLER TERMINAL WIDTHS. START CURSOR AT SCREENCOLS-1.
 - POTENTIALLY MAKE CX INCREMENT BY 10 OR SOMETHING OTHERWISE.
 
+- better way to get the maximum width Con.cx can scroll.
+- Better data structure i think for table data.
+
 
 - Might be able to disable auto-wrap in disableRawMode(), but this will affect visualizer.
 - setup welcome menu with algorithm selection using cursor.
