@@ -16,6 +16,8 @@ struct Config {
     int headerrow;
     int cx, cy;
 
+    int coloff;
+
     int algoCount;
     char *maxName;
     char *maxDesc;

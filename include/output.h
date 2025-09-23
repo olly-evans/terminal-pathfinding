@@ -43,5 +43,6 @@ bool isDataRow(int row);
 bool isCursorRow(int row);
 void padHeaderRow(struct abuf *ab);
 void padAppendData(struct abuf *ab, int row);
+void checkScroll();
 
 #endif

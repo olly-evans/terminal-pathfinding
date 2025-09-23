@@ -13,6 +13,7 @@
 void drawWelcomeScreen() {
 
     Con.app_state = STATE_WELCOME;
+    checkScroll();
 
     // Define abuf for this welcome menu.
     struct abuf wel_ab = ABUF_INIT;
@@ -103,7 +104,7 @@ void drawGrid(struct abuf *ab) {
 void drawWelcomeRows(struct abuf *ab) {
 
     for (int y = 0; y < Con.screenrows; y++) {
-        
+
         if (isHeaderRow(y)) {
             abAppend(ab, "\x1b[46m\x1b[K", 8);
 
@@ -113,17 +114,14 @@ void drawWelcomeRows(struct abuf *ab) {
         }
         
         if (isCursorRow(y)) {
-            abAppend(ab, "\x1b[47m", 5);
+            abAppend(ab, "\x1b[7m\x1b[K", 7); // not extending to end of row.
 
             padAppendData(ab, y - Con.headerrow);
 
-            abAppend(ab, "\x1b[K", 3); // clear line.
-            abAppend(ab, "\x1b[0m", 4); // reset background.
+            abAppend(ab, "\x1b[0m", 4); // Reset background.
         } else if (isDataRow(y)) {
             padAppendData(ab, y - Con.headerrow);
         }
-
-        // if cy goes past algocount get seg fault.
         if (y != Con.screenrows -1) abAppend(ab, "\r\n", 2);
     }
 }
@@ -145,11 +143,10 @@ bool isCursorRow(int row) {
 }
 
 void padAppendData(struct abuf *ab, int row) {
-    /* Pad table based on the widest column entries 
-       and adjust based on terminal width 
-    */
+    /* Pad table based on the widest column entries */
 
-    abAppend(ab, "\x1b[?7l", 6); // MAY NEED TO REASSIGN AUTO WRAP IN VISUALIZER.
+    // Disable terminal auto-wrap. Might be able to do this in disableRawMode().
+    abAppend(ab, "\x1b[?7l", 5); // MAY NEED TO REASSIGN AUTO WRAP IN VISUALIZER.
 
     int maxName = (int)strlen(Con.maxName);
     int maxDesc = (int)strlen(Con.maxDesc);
@@ -164,6 +161,22 @@ void padAppendData(struct abuf *ab, int row) {
                 maxName, algoTab[row].name,
                 maxDesc, algoTab[row].description,
                 maxSpeed, algoTab[row].speed);
-    
-    abAppend(ab, buf, strlen(buf));
+
+
+    int len = strlen(buf) - Con.coloff;
+    if (len < 0) len = 0;
+    if (len > Con.screencols) len = Con.screencols;
+    abAppend(ab, &buf[Con.coloff], len);
+
+    // abAppend(ab, buf, strlen(buf));
     }
+
+void checkScroll() {
+    if (Con.cx < Con.coloff) {
+        Con.coloff = Con.cx;
+    }
+    if (Con.cx >= Con.coloff + Con.screencols) {
+        Con.coloff = Con.cx - Con.screencols + 1;
+    }
+
+}

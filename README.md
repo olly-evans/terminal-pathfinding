@@ -6,6 +6,8 @@
 - HORIZONTAL SCROLLING FOR SMALLER TERMINAL WIDTHS. START CURSOR AT SCREENCOLS-1.
 - POTENTIALLY MAKE CX INCREMENT BY 10 OR SOMETHING OTHERWISE.
 
+
+- Might be able to disable auto-wrap in disableRawMode(), but this will affect visualizer.
 - setup welcome menu with algorithm selection using cursor.
 
 - Could also add fn + arrkey to skip to top/bottom and far left/right.

@@ -26,11 +26,19 @@ void dashMoveCursor(int key) {
             }
             break;
         case ARROW_RIGHT:
+            if (Con.app_state == STATE_WELCOME) {
+                Con.cx++;
+            }
+
             if (Con.cx != Con.screencols - 1) {
                 Con.cx++;
             }
             break;
         case ARROW_LEFT:
+            if (Con.app_state == STATE_WELCOME && Con.cx != 0) {
+                Con.cx--;
+            }
+
             if (Con.cx != 0) {
                 Con.cx--;
             }
@@ -70,12 +78,9 @@ void dashProcessKeypress() {
 
         case ARROW_UP:
         case ARROW_DOWN:
-            if (Con.app_state == STATE_WELCOME || Con.app_state == STATE_VISUALIZATION) dashMoveCursor(c);
-
-            break;
         case ARROW_RIGHT:
         case ARROW_LEFT:
-            if (Con.app_state == STATE_VISUALIZATION) dashMoveCursor(c);
+            dashMoveCursor(c);
             break;
     }
 }

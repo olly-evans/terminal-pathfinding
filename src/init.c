@@ -20,6 +20,8 @@ void init() {
 	// Init cursor pos
 	Con.cx = 0;
 	Con.cy = 0;
+	Con.coloff = 0;
+	
 	Con.algoCount = sizeof(algoTab) / sizeof(algoTab[0]);
 
 	// Allocate rows and cols of terminal, initialise grid with these values.
