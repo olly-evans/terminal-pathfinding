@@ -11,10 +11,9 @@ typedef struct {
 
     int len;     // length of all char* to be printed on row.
     int padding; // horizontal padding given Con.screencols.
-} algoTable;
+} tablerow;
 
-/* Declarations only */
-extern algoTable algoTab[];
+extern tablerow algoTab[];
 
 
 #endif

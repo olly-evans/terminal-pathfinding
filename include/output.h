@@ -6,7 +6,6 @@
 #include "abuf.h"
 #include "terminal.h"
 
-
 /* Grid */
 
 enum CellTypes {

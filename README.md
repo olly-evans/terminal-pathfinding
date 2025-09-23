@@ -1,6 +1,9 @@
 ## IN-PROGRESS
 
 # Notes 
+<!-- - all initAlgoTable needs to do is get the longest string in at each index.
+- make algotable a struct to contain the maxName, maxDesc maxSpeed etc.. makes a lot more sense. -->
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 - print info with correct padding for terminal cols.
 - HORIZONTAL SCROLLING FOR SMALLER TERMINAL WIDTHS. START CURSOR AT SCREENCOLS-1.
