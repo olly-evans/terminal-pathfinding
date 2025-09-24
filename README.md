@@ -4,6 +4,12 @@
 - vertical scrolling for welcome screen and edge stuff vertical then done w welcome screen i think.
 - make headerrow just below printed bits not rows/3 doesnt make sense.
 
+- I want vertical scrolling to work but the welcomeRows function is a complete fucking mess and so
+are all of its constituent functions, work on the algorithms and have fun before coming back to fix
+that shit, and really think about the logic for vertical scrolling.
+
+
+
 - testing new branch.
 
 - print info with correct padding for terminal cols.
