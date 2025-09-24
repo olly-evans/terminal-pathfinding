@@ -13,6 +13,14 @@ typedef struct {
     int padding; // horizontal padding given Con.screencols.
 } tablerow;
 
+typedef struct {
+    int lName;
+    int lDesc;
+    int lSpeed;
+
+    tablerow rows;
+} table;
+
 extern tablerow algoTab[];
 
 
