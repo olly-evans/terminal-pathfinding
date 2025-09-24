@@ -15,6 +15,7 @@ typedef struct {
     int lDesc;
     int lSpeed;
 
+    int tablewidth;
     int algoCount;
     tablerow *rows;
 } table;

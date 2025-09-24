@@ -6,11 +6,12 @@
 #include "terminal.h"
 #include "input.h"
 #include "output.h"
+#include "algorithms.h"
 
 void dashMoveCursor(int key) {
     switch (key) {
         case ARROW_UP:
-            // If on top datarow don't go above that.
+            // If on top datarow don't go above it.
             if (Con.app_state == STATE_WELCOME && Con.cy == Con.headerrow + 1) break;
 
             if (Con.cy != 0) {
@@ -19,14 +20,14 @@ void dashMoveCursor(int key) {
             break;
         case ARROW_DOWN:
             // If on bottom datarow don't go below that.
-            if (Con.app_state == STATE_WELCOME && Con.cy == Con.headerrow + Con.algoCount - 1) break;
+            if (Con.app_state == STATE_WELCOME && Con.cy == Con.headerrow + algos.algoCount - 1) break;
 
             if (Con.cy != Con.screenrows - 1) { 
                 Con.cy++;
             }
             break;
         case ARROW_RIGHT:
-            if (Con.app_state == STATE_WELCOME && Con.cx != Con.totalcols) {
+            if (Con.app_state == STATE_WELCOME && Con.cx != algos.tablewidth) {
                 Con.cx++;
             }
 

@@ -102,23 +102,38 @@ void drawGrid(struct abuf *ab) {
 
 void drawWelcomeRows(struct abuf *ab) {
 
+    abAppend(ab, "\x1b[?7l", 5); // Disable terminal auto-wrap.
+
     for (int y = 0; y < Con.screenrows; y++) {
 
         if (isHeaderRow(y)) {
             abAppend(ab, "\x1b[46m", 5);
 
-            padAppendData(ab, y - Con.headerrow);
+            int sz = getFormattedRowBufLen(y - Con.headerrow) + 1;
+            char buf[sz];
+
+            formatRow(buf, sz, y - Con.headerrow);
+            appendVisibleRow(ab, buf);
 
             abAppend(ab, "\x1b[0m", 4);
         }
         
         if (isCursorRow(y)) {
             abAppend(ab, "\x1b[7m\x1b[K", 7); // not extending to end of row.
-            padAppendData(ab, y - Con.headerrow);
 
+            int sz = getFormattedRowBufLen(y - Con.headerrow) + 1;
+            char buf[sz];
+
+            formatRow(buf, sz, y - Con.headerrow);
+            appendVisibleRow(ab, buf);
             abAppend(ab, "\x1b[0m", 4); // Reset background.
+
         } else if (isDataRow(y)) {
-            padAppendData(ab, y - Con.headerrow);
+            int sz = getFormattedRowBufLen(y - Con.headerrow) + 1;
+            char buf[sz];
+
+            formatRow(buf, sz, y - Con.headerrow);
+            appendVisibleRow(ab, buf);
         }
         if (y != Con.screenrows -1) abAppend(ab, "\r\n", 2);
     }
@@ -140,41 +155,6 @@ bool isCursorRow(int row) {
     return false;
 }
 
-void padAppendData(struct abuf *ab, int row) {
-    /* Pad table based on the widest column entries 
-    
-        this whole function needs to be refactored to actually do one thing.
-    */
-
-    // Disable terminal auto-wrap. Might be able to do this in disableRawMode().
-    abAppend(ab, "\x1b[?7l", 5); // MAY NEED TO REASSIGN AUTO WRAP IN VISUALIZER.
-
-    // Lord forgive me. Not for what I've done but for what I'm about to do.
-    int maxName = (int)strlen(Con.maxName); /////////////////////////////////////////////
-    int maxDesc = (int)strlen(Con.maxDesc);
-    int maxSpeed = (int)strlen(Con.maxSpeed);
-
-    int sz = snprintf(NULL, 0, " %-*s %-*s %-*s", 
-                maxName, algoTab[row].name,
-                maxDesc, algoTab[row].description,
-                maxSpeed, algoTab[row].speed);
-    char buf[sz + 1];
-    
-    // absolutely vile find a better way.
-    Con.totalcols = sz + 1;
-    
-    
-    snprintf(buf, sizeof(buf), " %-*s %-*s %-*s", 
-                maxName, algoTab[row].name,
-                maxDesc, algoTab[row].description,
-                maxSpeed, algoTab[row].speed);
-
-
-    int len = strlen(buf) - Con.coloff;
-    if (len < 0) len = 0;
-    if (len > Con.screencols) len = Con.screencols;
-    abAppend(ab, &buf[Con.coloff], len);    
-    }
 
 void checkScroll() {
     if (Con.cx < Con.coloff) {
@@ -184,4 +164,60 @@ void checkScroll() {
         Con.coloff = Con.cx - Con.screencols + 1;
     }
 
+}
+
+void formatAppendRows(struct abuf *ab, int row) {
+
+    // abAppend(ab, "\x1b[?7l", 5); // moved to top of drawwelcomerows.
+
+    // How many bytes to format row like this.
+    int sz = snprintf(NULL, 0, " %-*s %-*s %-*s", 
+                algos.lName, algos.rows[row].name,
+                algos.lDesc, algos.rows[row].description,
+                algos.lSpeed, algos.rows[row].speed);
+    char buf[sz + 1];
+    
+    ////////////////////////////////////////////////
+
+    // Format row like this.
+    snprintf(buf, sizeof(buf), " %-*s %-*s %-*s", 
+                algos.lName, algos.rows[row].name,
+                algos.lDesc, algos.rows[row].description,
+                algos.lSpeed, algos.rows[row].speed);
+    
+    ///////////////////////////////////////////////////////
+    algos.tablewidth = sz;
+    // Horizontal scrolling.
+
+    /////////////////////////////////////////////////////
+    int len = strlen(buf) - Con.coloff;
+    if (len < 0) len = 0;
+    if (len > Con.screencols) len = Con.screencols;
+
+    
+    abAppend(ab, &buf[Con.coloff], len);  
+}
+
+int getFormattedRowBufLen(int row) {
+    return snprintf(NULL, 0, " %-*s %-*s %-*s", 
+                algos.lName, algos.rows[row].name,
+                algos.lDesc, algos.rows[row].description,
+                algos.lSpeed, algos.rows[row].speed);
+}
+
+void formatRow(char * buf, size_t bufsize, int row) {
+    algos.tablewidth = bufsize - 1;
+    snprintf(buf, bufsize, " %-*s %-*s %-*s", 
+                algos.lName, algos.rows[row].name,
+                algos.lDesc, algos.rows[row].description,
+                algos.lSpeed, algos.rows[row].speed);
+}
+
+void appendVisibleRow(struct abuf *ab, char *buf) {
+    int len = strlen(buf) - Con.coloff;
+    if (len < 0) len = 0;
+    if (len > Con.screencols) len = Con.screencols;
+
+    
+    abAppend(ab, &buf[Con.coloff], len); 
 }

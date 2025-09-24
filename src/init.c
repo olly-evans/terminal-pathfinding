@@ -24,6 +24,7 @@ table algos = {
 };
 
 void init() {
+	
 	// Init cursor pos
 	Con.cx = 0;
 	Con.cy = 0;
@@ -42,7 +43,8 @@ void init() {
 	g->start_cell = NULL;
     g->end_cell = NULL;
 
-	initAlgoDisplayInfo();
+	getTableColWidths();
+
 }
 
 struct Grid* initGrid(struct Grid *g, int rows, int cols) {
@@ -89,17 +91,28 @@ void freeGrid(struct Grid *g) {
 	free(g->cells);
 }
 
-// void initAlgoDisplayInfo() {
-// 	// dogshit and makes me sick.
-// 	Con.maxName = "";
-// 	Con.maxDesc = "";
-// 	Con.maxSpeed = "";
+void getTableColWidths() {
+	/* Get the widest var in each column. */
 
-// 	for (int i = 0; i < Con.algoCount; i++) {
+	char *lNameStr = "";
+	char *lDescStr = "";
+	char *lSpeedStr = "";
 
-// 		// Get name, description and speed that will take the most cols.
-// 		if (strlen(Con.maxName) < strlen(algoTab[i].name)) Con.maxName = algoTab[i].name;
-// 		if (strlen(Con.maxDesc) < strlen(algoTab[i].description)) Con.maxDesc = algoTab[i].description;
-// 		if (strlen(Con.maxSpeed) < strlen(algoTab[i].speed)) Con.maxSpeed = algoTab[i].speed;
-// 	}
-// }
+	for (int y = 0; y < algos.algoCount; y++) {
+		if (strlen(lNameStr) < strlen(algos.rows[y].name)) {
+			lNameStr = algos.rows[y].name;
+		}
+
+		if (strlen(lDescStr) < strlen(algos.rows[y].description)) {
+			lDescStr = algos.rows[y].description;
+		}
+
+		if (strlen(lSpeedStr) < strlen(algos.rows[y].speed)) {
+			lSpeedStr = algos.rows[y].speed;
+		}
+	}
+
+	algos.lName = strlen(lNameStr);
+	algos.lDesc = strlen(lDescStr);
+	algos.lSpeed = strlen(lSpeedStr);
+}

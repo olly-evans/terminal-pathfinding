@@ -40,8 +40,11 @@ void drawData(struct abuf *ab, int idx);
 bool isHeaderRow(int row);
 bool isDataRow(int row); 
 bool isCursorRow(int row);
-void padHeaderRow(struct abuf *ab);
-void padAppendData(struct abuf *ab, int row);
 void checkScroll();
+void formatAppendRows(struct abuf *ab, int row);
+
+int getFormattedRowBufLen(int row);
+void formatRow(char * buf, size_t bufsize, int row);
+void appendVisibleRow(struct abuf *ab, char *buf);
 
 #endif
