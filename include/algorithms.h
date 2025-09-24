@@ -8,9 +8,6 @@ typedef struct {
     char *name;
     char *description;
     char *speed;
-
-    int len;     // length of all char* to be printed on row.
-    int padding; // horizontal padding given Con.screencols.
 } tablerow;
 
 typedef struct {
@@ -18,10 +15,12 @@ typedef struct {
     int lDesc;
     int lSpeed;
 
-    tablerow rows;
+    int algoCount;
+    tablerow *rows;
 } table;
 
-extern tablerow algoTab[];
+extern table algos;
+extern tablerow algoRows[];
 
 
 #endif

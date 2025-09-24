@@ -131,7 +131,7 @@ bool isHeaderRow(int row) {
 
 bool isDataRow(int row) {
     int idx = row - Con.headerrow;
-    if (idx < Con.algoCount && idx >0) return true;
+    if (idx < algos.algoCount && idx >0) return true; // <<<<<<<<<<<<<<<< change to algoCount.
     return false;
 }
 
@@ -150,7 +150,7 @@ void padAppendData(struct abuf *ab, int row) {
     abAppend(ab, "\x1b[?7l", 5); // MAY NEED TO REASSIGN AUTO WRAP IN VISUALIZER.
 
     // Lord forgive me. Not for what I've done but for what I'm about to do.
-    int maxName = (int)strlen(Con.maxName);
+    int maxName = (int)strlen(Con.maxName); /////////////////////////////////////////////
     int maxDesc = (int)strlen(Con.maxDesc);
     int maxSpeed = (int)strlen(Con.maxSpeed);
 

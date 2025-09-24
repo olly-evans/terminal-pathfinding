@@ -19,11 +19,6 @@ struct Config {
     int coloff;
     int totalcols;
 
-    int algoCount;
-    char *maxName;
-    char *maxDesc;
-    char *maxSpeed;
-
     enum appState app_state;
     struct termios termiosOrig;
 };
