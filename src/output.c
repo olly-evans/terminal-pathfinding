@@ -47,14 +47,16 @@ void drawWelcomeRows(struct abuf *ab) {
 
     abAppend(ab, "\x1b[?7l", 5); // Disable terminal auto-wrap.
 
-    char welcome[80];
-    int welcomelen = snprintf(welcome, sizeof(welcome), "Welcome to PATH -- Version %s", PATH_VERSION);
-    if (welcomelen > Con.screencols) welcomelen = Con.screencols;
-    abAppend(ab, welcome, welcomelen);
-
 
     for (int y = 0; y < Con.screenrows; y++) {
-        
+                
+        if (y == 0) {
+            // always at the top, stops scrolling.
+            char welcome[80];
+            int welcomelen = snprintf(welcome, sizeof(welcome), "Welcome to PATH -- Version %s", PATH_VERSION);
+            if (welcomelen > Con.screencols) welcomelen = Con.screencols;
+            abAppend(ab, welcome, welcomelen);
+        }
 
         if (isHeaderRow(y)) {
             abAppend(ab, "\x1b[46m", 5);
@@ -85,9 +87,10 @@ void drawWelcomeRows(struct abuf *ab) {
             formatRow(buf, sz, y - Con.headerrow);
             appendVisibleRow(ab, buf);
         }
-       
-        if (y != Con.screenrows -1) abAppend(ab, "\r\n", 2);
+    
+        if (y != Con.screenrows - 1) abAppend(ab, "\r\n", 2);
     }
+
     char controls[80];
     int controlslen = snprintf(controls, sizeof(controls), "%s", wel_controls_text);
 
@@ -102,12 +105,19 @@ bool isHeaderRow(int row) {
 }
 
 bool isDataRow(int row) {
+
     int idx = row - Con.headerrow;
-    if (idx < algos.algoCount && idx >0) return true; // <<<<<<<<<<<<<<<< change to algoCount.
+
+    if (row == Con.screenrows - 1) return false; // last row is always controls.
+
+    if (idx < algos.algoCount && idx >0) return true;
     return false;
 }
 
 bool isCursorRow(int row) {
+
+    if (row == Con.screenrows - 1) return false; // last row always controls.
+
     if (row == Con.cy) return true;
     return false;
 }
@@ -139,7 +149,6 @@ void formatRow(char * buf, size_t bufsize, int row) {
 }
 
 void appendVisibleRow(struct abuf *ab, char *buf) {
-
 
     int len = strlen(buf) - Con.coloff;
     if (len < 0) len = 0;

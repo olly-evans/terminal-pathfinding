@@ -20,7 +20,7 @@ void die(char *s) {
 	write(STDOUT_FILENO, "\x1b[?25h", 6);
 
 
-    perror(s);
+    fprintf(stderr, "%s", s);
     exit(1);
 }
 

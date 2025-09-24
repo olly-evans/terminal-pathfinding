@@ -17,7 +17,7 @@ struct Config {
     int cx, cy;
 
     int coloff;
-    int totalcols;
+    int rowoff;
 
     enum appState app_state;
     struct termios termiosOrig;
