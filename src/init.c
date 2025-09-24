@@ -12,7 +12,7 @@ tablerow algoRows[] = {
     { "Algorithm Name", "Description", "Speed" },
     { "A*", "Weighted and direction-based algorithm. A* is guaranteed to find the shortest path.", "Fast" },
     { "Dijkstra", "Unweighted, but guarantees the shortest path.", "Medium" },
-    { "BFS", "Breadth-first search. Explores equally in all directions.", "Slow" }
+    { "BFS", "Breadth-first search. Explores equally in all directions.", "Slow" },
 };
 
 table algos = {
@@ -33,7 +33,7 @@ void init() {
 	// Allocate rows and cols of terminal, initialise grid with these values.
 	if (getWindowSize(&Con.screenrows, &Con.screencols) == -1) die("getWindowSize");
 
-	Con.headerrow = (Con.screenrows / 3 ) - 1; // Assign after screenrows value retrieved.
+	Con.headerrow = 2; // Assign after screenrows value retrieved.
 	Con.cy = Con.headerrow + 1; // Assign after wel_offset assigned.
 
 	g = initGrid(g, Con.screenrows, Con.screencols);
@@ -92,13 +92,14 @@ void freeGrid(struct Grid *g) {
 }
 
 void getTableColWidths() {
-	/* Get the widest var in each column. */
+	/* Get the widest str in each column. */
 
 	char *lNameStr = "";
 	char *lDescStr = "";
 	char *lSpeedStr = "";
 
 	for (int y = 0; y < algos.algoCount; y++) {
+
 		if (strlen(lNameStr) < strlen(algos.rows[y].name)) {
 			lNameStr = algos.rows[y].name;
 		}

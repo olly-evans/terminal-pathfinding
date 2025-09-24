@@ -6,6 +6,8 @@
 #include "abuf.h"
 #include "terminal.h"
 
+#define PATH_VERSION "0.0.1"
+
 /* Grid */
 
 enum CellTypes {

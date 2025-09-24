@@ -1,10 +1,8 @@
 ## IN-PROGRESS
 
 # Notes 
-<!-- - all initAlgoTable needs to do is get the longest string in at each index.
-- make algotable a struct to contain the maxName, maxDesc maxSpeed etc.. makes a lot more sense. 
-MAKE TABLE STRUCT WITH A MULTIPLE ROW STRUCTS PTR MAYBE AND MAXDESC ETC..-->
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+- vertical scrolling for welcome screen and edge stuff vertical then done w welcome screen i think.
+- make headerrow just below printed bits not rows/3 doesnt make sense.
 
 - testing new branch.
 
