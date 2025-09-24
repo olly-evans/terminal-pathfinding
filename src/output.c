@@ -109,7 +109,7 @@ void drawWelcomeRows(struct abuf *ab) {
         if (isHeaderRow(y)) {
             abAppend(ab, "\x1b[46m", 5);
 
-            int sz = getFormattedRowBufLen(y - Con.headerrow) + 1;
+            int sz = getfRowLen(y - Con.headerrow) + 1;
             char buf[sz];
 
             formatRow(buf, sz, y - Con.headerrow);
@@ -121,7 +121,7 @@ void drawWelcomeRows(struct abuf *ab) {
         if (isCursorRow(y)) {
             abAppend(ab, "\x1b[7m\x1b[K", 7); // not extending to end of row.
 
-            int sz = getFormattedRowBufLen(y - Con.headerrow) + 1;
+            int sz = getfRowLen(y - Con.headerrow) + 1;
             char buf[sz];
 
             formatRow(buf, sz, y - Con.headerrow);
@@ -129,7 +129,7 @@ void drawWelcomeRows(struct abuf *ab) {
             abAppend(ab, "\x1b[0m", 4); // Reset background.
 
         } else if (isDataRow(y)) {
-            int sz = getFormattedRowBufLen(y - Con.headerrow) + 1;
+            int sz = getfRowLen(y - Con.headerrow) + 1;
             char buf[sz];
 
             formatRow(buf, sz, y - Con.headerrow);
@@ -166,39 +166,7 @@ void checkScroll() {
 
 }
 
-void formatAppendRows(struct abuf *ab, int row) {
-
-    // abAppend(ab, "\x1b[?7l", 5); // moved to top of drawwelcomerows.
-
-    // How many bytes to format row like this.
-    int sz = snprintf(NULL, 0, " %-*s %-*s %-*s", 
-                algos.lName, algos.rows[row].name,
-                algos.lDesc, algos.rows[row].description,
-                algos.lSpeed, algos.rows[row].speed);
-    char buf[sz + 1];
-    
-    ////////////////////////////////////////////////
-
-    // Format row like this.
-    snprintf(buf, sizeof(buf), " %-*s %-*s %-*s", 
-                algos.lName, algos.rows[row].name,
-                algos.lDesc, algos.rows[row].description,
-                algos.lSpeed, algos.rows[row].speed);
-    
-    ///////////////////////////////////////////////////////
-    algos.tablewidth = sz;
-    // Horizontal scrolling.
-
-    /////////////////////////////////////////////////////
-    int len = strlen(buf) - Con.coloff;
-    if (len < 0) len = 0;
-    if (len > Con.screencols) len = Con.screencols;
-
-    
-    abAppend(ab, &buf[Con.coloff], len);  
-}
-
-int getFormattedRowBufLen(int row) {
+int getfRowLen(int row) {
     return snprintf(NULL, 0, " %-*s %-*s %-*s", 
                 algos.lName, algos.rows[row].name,
                 algos.lDesc, algos.rows[row].description,

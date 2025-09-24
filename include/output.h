@@ -43,7 +43,7 @@ bool isCursorRow(int row);
 void checkScroll();
 void formatAppendRows(struct abuf *ab, int row);
 
-int getFormattedRowBufLen(int row);
+int getfRowLen(int row);
 void formatRow(char * buf, size_t bufsize, int row);
 void appendVisibleRow(struct abuf *ab, char *buf);
 
