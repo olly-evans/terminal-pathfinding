@@ -8,8 +8,11 @@
 are all of its constituent functions, work on the algorithms and have fun before coming back to fix
 that shit, and really think about the logic for vertical scrolling.
 
+# Binary Heap
 
+- need to go over the bubbleDown implementation, i think its okay but needs double checking when i'm less tired.
 
+# General
 - testing new branch.
 
 - print info with correct padding for terminal cols.

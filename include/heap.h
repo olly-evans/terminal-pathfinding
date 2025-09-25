@@ -9,6 +9,6 @@ typedef struct {
 
 extern Heap hp;
 
-void initHeap();
+void initBinaryHeap();
 
 #endif

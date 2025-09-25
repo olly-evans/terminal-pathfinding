@@ -48,7 +48,7 @@ void init() {
 
 	getTableColWidths();
 
-	initHeap();
+	initBinaryHeap();
 
 }
 
