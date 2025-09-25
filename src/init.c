@@ -5,6 +5,7 @@
 #include "init.h"
 #include "output.h"
 #include "algorithms.h"
+#include "heap.h"
 
 struct Grid *g = NULL;
 
@@ -47,6 +48,8 @@ void init() {
 
 	getTableColWidths();
 
+	initHeap();
+
 }
 
 struct Grid* initGrid(struct Grid *g, int rows, int cols) {
@@ -79,7 +82,6 @@ struct Grid* initGrid(struct Grid *g, int rows, int cols) {
 				g->cells[y][x].y = y;
 				g->cells[y][x].ch = ' ';
 			}
-			
 		}
 	}
 	return g;

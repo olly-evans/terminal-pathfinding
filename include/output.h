@@ -22,6 +22,11 @@ struct Cell {
     enum CellTypes type;
     int x, y;
     char ch;
+
+    int g;
+    int md;
+
+    int f; // f = g + manhattan distance (md)
 };
 
 struct Grid {
@@ -38,11 +43,12 @@ void drawPathfindingVisualizer();
 void drawWelcomeScreen();
 void drawGrid(struct abuf *ab);
 void drawWelcomeRows(struct abuf *ab);
-void drawData(struct abuf *ab, int idx);
 bool isHeaderRow(int row);
 bool isDataRow(int row); 
 bool isCursorRow(int row);
 void checkScroll();
+
+
 void formatAppendRows(struct abuf *ab, int row);
 
 int getfRowLen(int row);
