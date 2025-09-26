@@ -13,35 +13,35 @@ void dashMoveCursor(int key) {
     switch (key) {
         case ARROW_UP:
             // If on top datarow don't go above it.
-            if (Con.app_state == STATE_WELCOME && Con.cy > Con.headerrow + 1) Con.cy--;
+            if (Con.state == STATE_WELCOME && Con.cy > Con.headerrow + 1) Con.cy--;
 
-            if (Con.app_state == STATE_VISUALIZATION && Con.cy != 0) {
+            if (Con.state == STATE_VISUALIZATION && Con.cy != 0) {
                 Con.cy--;
             }
             break;
         case ARROW_DOWN:
             // If on bottom datarow don't go below that.
-            if (Con.app_state == STATE_WELCOME && Con.cy < Con.headerrow + algos.algoCount - 1) Con.cy++;
+            if (Con.state == STATE_WELCOME && Con.cy < Con.headerrow + algos.algoCount - 1) Con.cy++;
 
-            if (Con.app_state == STATE_VISUALIZATION && Con.cy != Con.screenrows - 1) { 
+            if (Con.state == STATE_VISUALIZATION && Con.cy != Con.screenrows - 1) { 
                 Con.cy++;
             }
             break;
         case ARROW_RIGHT:
-            if (Con.app_state == STATE_WELCOME && Con.cx != algos.tablewidth) {
+            if (Con.state == STATE_WELCOME && Con.cx != algos.tablewidth) {
                 Con.cx++;
             }
 
-            if (Con.app_state == STATE_VISUALIZATION && Con.cx != Con.screencols - 1) {
+            if (Con.state == STATE_VISUALIZATION && Con.cx != Con.screencols - 1) {
                 Con.cx++;
             }
             break;
         case ARROW_LEFT:
-            if (Con.app_state == STATE_WELCOME && Con.cx != 0) {
+            if (Con.state == STATE_WELCOME && Con.cx != 0) {
                 Con.cx--;
             }
 
-            if (Con.app_state == STATE_VISUALIZATION && Con.cx != 0) {
+            if (Con.state == STATE_VISUALIZATION && Con.cx != 0) {
                 Con.cx--;
             }
             break;
@@ -67,32 +67,30 @@ void dashProcessKeypress() {
             break;
 
         // case for a refresh button. ^
-        if (Con.app_state == STATE_RUN) return;
+        if (Con.state == STATE_RUN) return;
 
         // Enter is a carriage return in raw mode.
         case ('\r'):
-            if (Con.app_state == STATE_WELCOME) {
-                Con.app_state = STATE_VISUALIZATION;
+            if (Con.state == STATE_WELCOME) {
+                Con.state = STATE_VISUALIZATION;
                 Con.cy = 1;
                 Con.cx = 1;
                 break;
             }
-        if (Con.app_state == STATE_VISUALIZATION && g->end_cell != NULL && g->start_cell != NULL) {
-                Con.app_state = STATE_RUN;
-                enterRunState();
-                // hide the cursor
+        if (Con.state == STATE_VISUALIZATION && g->end_cell != NULL && g->start_cell != NULL) {
+                Con.state = STATE_RUN;
                 break;
             }
             
 
         case (' '):
             // Place start, end and barrier cells one by one.
-            if (Con.app_state == STATE_VISUALIZATION) handleSpacePress(curr_cell);
+            if (Con.state == STATE_VISUALIZATION) handleSpacePress(curr_cell);
             break;
 
         case 'r':
             // r press removes starts/ends or non-permanent barriers at cursor location.
-            if (Con.app_state == STATE_VISUALIZATION) handleRPress(curr_cell);
+            if (Con.state == STATE_VISUALIZATION) handleRPress(curr_cell);
             break;
 
         case ARROW_UP:
@@ -157,20 +155,3 @@ void handleRPress(struct Cell *curr_cell) {
     }
 }
 
-void enterRunState() {
-    /* 
-    Loop through all cells and give them manhattan dist to end cell.
-    Compute their respective f values. f = g + mh. 
-    */
-
-    for (int y = 0; y < Con.screenrows; y++) {
-        for (int x = 0; x < Con.screencols; x++) {
-
-            g->cells[y][x].md = getManhattanDist(&g->cells[y][x], g->end_cell);
-            g->cells[y][x].g = 1;
-
-            g->cells[y][x].f = g->cells[y][x].g + g->cells[y][x].md;
-            
-        }
-    }
-}

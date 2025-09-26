@@ -15,8 +15,9 @@ int main(void) {
     while (1) {
         // Con global instance of config struct.
         // Con.app_state changed upon enter keypress in STATE_WELCOME.
-        if (Con.app_state == STATE_WELCOME) drawWelcomeScreen();
-        if (Con.app_state == STATE_VISUALIZATION) drawPathfindingVisualizer();
+        if (Con.state == STATE_WELCOME) drawWelcomeScreen();
+        if (Con.state == STATE_VISUALIZATION) drawPathfindingVisualizer();
+        // if (Con.state == STATE_RUN) search();
         
         dashProcessKeypress();
     }

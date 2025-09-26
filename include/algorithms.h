@@ -24,5 +24,6 @@ typedef struct {
 extern table algos;
 extern tablerow algoRows[];
 
+void enterRunState();
 
 #endif

@@ -19,7 +19,7 @@ const char *wel_controls_text =
 
 void drawWelcomeScreen() {
 
-    Con.app_state = STATE_WELCOME;
+    Con.state = STATE_WELCOME;
     checkScroll();
 
     // Define abuf for this welcome menu.
@@ -161,7 +161,7 @@ void appendVisibleRow(struct abuf *ab, char *buf) {
 /* VISUALIZER */
 
 void drawPathfindingVisualizer() {
-    Con.app_state = STATE_VISUALIZATION;
+    Con.state = STATE_VISUALIZATION;
 
     struct abuf vis_ab = ABUF_INIT;
 

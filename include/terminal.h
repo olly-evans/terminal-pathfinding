@@ -20,7 +20,7 @@ struct Config {
     int coloff;
     int rowoff;
 
-    enum appState app_state;
+    enum appState state;
     struct termios termiosOrig;
 };
 
