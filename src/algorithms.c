@@ -1,6 +1,12 @@
+#include <unistd.h>
+
 #include "output.h"
+#include "abuf.h"
 
 void search() {
+    struct abuf s_ab = ABUF_INIT;
+
+    abAppend(&s_ab, "\x1b[?25l", 6);
     initRunState();
 }
 
@@ -8,7 +14,7 @@ void astar() {
     return;
 }
 
-void enterRunState() {
+void initRunState() {
     /* 
     Loop through all cells and give them manhattan dist to end cell.
     Compute their respective f values. f = g + mh. 

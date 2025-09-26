@@ -10,6 +10,8 @@
 #include "input.h"
 #include "algorithms.h"
 
+/* CONTROLS */
+
 const char *wel_controls_text =
     "Arrows"      "\x1b[46mMove/Scroll\x1b[0m"
     " Enter"          "\x1b[46mSelect Algorithm\x1b[0m"
@@ -161,7 +163,7 @@ void appendVisibleRow(struct abuf *ab, char *buf) {
 /* VISUALIZER */
 
 void drawPathfindingVisualizer() {
-    Con.state = STATE_VISUALIZATION;
+    // Con.state = STATE_VISUALIZATION;
 
     struct abuf vis_ab = ABUF_INIT;
 

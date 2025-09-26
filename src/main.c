@@ -7,6 +7,7 @@
 #include "input.h"
 #include "output.h"
 #include "init.h"
+#include "algorithms.h"
 
 int main(void) {
     enableRawMode();
@@ -17,7 +18,7 @@ int main(void) {
         // Con.app_state changed upon enter keypress in STATE_WELCOME.
         if (Con.state == STATE_WELCOME) drawWelcomeScreen();
         if (Con.state == STATE_VISUALIZATION) drawPathfindingVisualizer();
-        // if (Con.state == STATE_RUN) search();
+        if (Con.state == STATE_RUN) search();
         
         dashProcessKeypress();
     }

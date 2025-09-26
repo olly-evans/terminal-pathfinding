@@ -67,6 +67,8 @@ void dashProcessKeypress() {
             exit(0);
             break;
 
+        if (Con.state == STATE_RUN) return;
+
         case 'a':
             freeGrid(g);
             g = initGrid(g, Con.screenrows, Con.screencols);
@@ -74,8 +76,6 @@ void dashProcessKeypress() {
             g->start_cell = NULL;
 
             break;
-
-        if (Con.state == STATE_RUN) return;
 
         // Enter is a carriage return in raw mode.
         case ('\r'):
