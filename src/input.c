@@ -7,6 +7,7 @@
 #include "input.h"
 #include "output.h"
 #include "algorithms.h"
+#include "heap.h"
 
 void dashMoveCursor(int key) {
     switch (key) {
@@ -51,6 +52,8 @@ void dashProcessKeypress() {
     int c = dashReadKey();
 
     struct Cell *curr_cell = &g->cells[Con.cy][Con.cx];
+    
+    
 
     switch (c) {
         case (CTRL_KEY('q')):
@@ -63,10 +66,24 @@ void dashProcessKeypress() {
             exit(0);
             break;
 
+        // case for a refresh button. ^
+        if (Con.app_state == STATE_RUN) return;
+
         // Enter is a carriage return in raw mode.
         case ('\r'):
-            if (Con.app_state == STATE_WELCOME) Con.app_state = STATE_VISUALIZATION, Con.cy = 1, Con.cx = 1;
-            break;
+            if (Con.app_state == STATE_WELCOME) {
+                Con.app_state = STATE_VISUALIZATION;
+                Con.cy = 1;
+                Con.cx = 1;
+                break;
+            }
+            if (Con.app_state == STATE_VISUALIZATION) {
+                Con.app_state = STATE_RUN;
+                enterRunState();
+                // hide the cursor
+                break;
+            }
+            
 
         case (' '):
             // Place start, end and barrier cells one by one.
@@ -137,5 +154,23 @@ void handleRPress(struct Cell *curr_cell) {
         curr_cell->type = EMPTY;
         curr_cell->ch = ' ';
         return;
+    }
+}
+
+void enterRunState() {
+    /* 
+    Loop through all cells and give them manhattan dist to end cell.
+    Compute their respective f values. f = g + mh. 
+    */
+
+    for (int y = 0; y < Con.screenrows; y++) {
+        for (int x = 0; x < Con.screencols; x++) {
+
+            g->cells[y][x].md = getManhattanDist(&g->cells[y][x], g->end_cell);
+            g->cells[y][x].g = 1;
+
+            g->cells[y][x].f = g->cells[y][x].g + g->cells[y][x].md;
+            
+        }
     }
 }

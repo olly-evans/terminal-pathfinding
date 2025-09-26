@@ -7,7 +7,8 @@
 
 enum appState {
 	STATE_WELCOME,
-	STATE_VISUALIZATION
+	STATE_VISUALIZATION,
+    STATE_RUN
 };
 
 struct Config {

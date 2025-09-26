@@ -16,5 +16,6 @@ void dashMoveCursor(int key);
 void dashProcessKeypress();
 void handleSpacePress(struct Cell *curr_cell);
 void handleRPress(struct Cell *curr_cell);
+void enterRunState();
 
 #endif
