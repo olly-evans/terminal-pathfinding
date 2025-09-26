@@ -5,6 +5,7 @@
 
 #include "terminal.h"
 #include "input.h"
+#include "init.h"
 #include "output.h"
 #include "algorithms.h"
 #include "heap.h"
@@ -66,7 +67,14 @@ void dashProcessKeypress() {
             exit(0);
             break;
 
-        // case for a refresh button. ^
+        case 'a':
+            freeGrid(g);
+            g = initGrid(g, Con.screenrows, Con.screencols);
+            g->end_cell = NULL;
+            g->start_cell = NULL;
+
+            break;
+
         if (Con.state == STATE_RUN) return;
 
         // Enter is a carriage return in raw mode.
