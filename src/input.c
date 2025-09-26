@@ -77,7 +77,7 @@ void dashProcessKeypress() {
                 Con.cx = 1;
                 break;
             }
-            if (Con.app_state == STATE_VISUALIZATION) {
+        if (Con.app_state == STATE_VISUALIZATION && g->end_cell != NULL && g->start_cell != NULL) {
                 Con.app_state = STATE_RUN;
                 enterRunState();
                 // hide the cursor
