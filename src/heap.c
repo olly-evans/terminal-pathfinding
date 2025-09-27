@@ -50,28 +50,44 @@ void heapBubbleUp(Heap *hp, int childIdx) {
     }
 }
 
-void swap(struct Cell **a, struct Cell **b) {
-    struct Cell *tmp = *a;
-    *a = *b;
-    *b = tmp;
-}
-
-void heapBubbleDown(Heap *hp, int parentIdx) {
-    /* Bubble down new root for min-heap. */
+Heap* heapBubbleDown(Heap *hp, int parentIdx) {
+    /* 
+    Bubble down new root for min-heap. 
+    Works in my head but am having to reuse code here.
+    */
 
     int lchildIdx = (2*parentIdx + 1);
     int rchildIdx = (2*parentIdx + 2);
 
+    int parent_f = hp->bh[parentIdx]->f;
     int lchild_f = hp->bh[lchildIdx]->f;
     int rchild_f = hp->bh[rchildIdx]->f;
 
+    // If no left child, then no bubble required.
+    if (lchildIdx > hp->size) return hp;
+
+    // We have a left child if we get here, do we have a right.
+    if (rchildIdx > hp->size) {
+        if (lchild_f < parent_f) {
+            swap(&hp->bh[lchild_f], &hp->bh[parentIdx]);
+        }
+        return hp;
+    }
 
     int smallest_child = (lchild_f < rchild_f) ? lchildIdx : rchildIdx;
-
-    // Look over this, think this is right.
     while (smallest_child < hp->size && hp->bh[smallest_child]->f < hp->bh[parentIdx]->f) {
 
-        //unsure about what i actually need to pass in here.
+        // Which childs do we have.
+        if (lchildIdx > hp->size) return hp;
+
+        if (rchildIdx > hp->size) {
+            if (hp->bh[lchildIdx]->f < hp->bh[parentIdx]->f) {
+                swap(&hp->bh[lchildIdx], &hp->bh[parentIdx]);
+            } 
+            return hp;
+        }
+
+        // Need to check indexes again.
         swap(&hp->bh[smallest_child], &hp->bh[parentIdx]);
 
         parentIdx = smallest_child;
@@ -79,8 +95,15 @@ void heapBubbleDown(Heap *hp, int parentIdx) {
         rchildIdx = (2*parentIdx + 2);
 
         smallest_child = (hp->bh[lchildIdx]->f < hp->bh[rchildIdx]->f) ? lchildIdx : rchildIdx;
-        
     }
+
+    return hp;
+}
+
+void swap(struct Cell **a, struct Cell **b) {
+    struct Cell *tmp = *a;
+    *a = *b;
+    *b = tmp;
 }
 
 void initBinaryHeap() {
@@ -94,11 +117,5 @@ int getManhattanDist(struct Cell *c1, struct Cell *end) {
 }
 
 // get neighbours
-
-
-// // get cells total cost. (weight + manhattan dist.)
-// int getCellCost(struct Cell *cell, struct Cell *end_cell) {
-//     return cell->weight + getManhattanDistance(cell, end_cell);
-// }
 
 // we calculate function value for cell. we add it to min prio queue where lowest value chosen next.

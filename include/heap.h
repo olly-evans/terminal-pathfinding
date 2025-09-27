@@ -13,7 +13,7 @@ void heapExtract(Heap *hp);
 void heapInsert(Heap *hp, struct Cell *cell);
 void heapBubbleUp(Heap *hp, int childIdx);
 void swap(struct Cell **a, struct Cell **b);
-void heapBubbleDown(Heap *hp, int parentIdx);
+Heap* heapBubbleDown(Heap *hp, int parentIdx);
 void initBinaryHeap();
 int getManhattanDist(struct Cell *c1, struct Cell *end);
 

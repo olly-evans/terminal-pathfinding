@@ -35,6 +35,7 @@ struct Grid {
 
     struct Cell *start_cell;
     struct Cell *end_cell;
+
 };
 
 extern struct Grid *g;

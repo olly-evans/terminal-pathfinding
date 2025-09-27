@@ -25,6 +25,6 @@ extern table algos;
 extern tablerow algoRows[];
 
 void search();
-void initRunState();
+void initSearch();
 
 #endif
