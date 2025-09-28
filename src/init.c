@@ -81,6 +81,7 @@ struct Grid* initGrid(struct Grid *g, int rows, int cols) {
 				g->cells[y][x].x = x;
 				g->cells[y][x].y = y;
 				g->cells[y][x].ch = ' ';
+				g->cells[y][x].g = -1;
 			}
 		}
 	}

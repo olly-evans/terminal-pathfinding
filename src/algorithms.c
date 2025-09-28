@@ -17,10 +17,9 @@ void search() {
     abAppend(&s_ab, "\x1b[H", 4);
     abAppend(&s_ab, "\x1b[2J", 4);
     abAppend(&s_ab, "\x1b[3J", 4);
-    initSearch(); // Needed here as we could still refresh or change E/S position.
 
     drawGrid(&s_ab);
-
+    astar(&hp);
     
 
     write(STDOUT_FILENO, s_ab.b, s_ab.len);
@@ -50,26 +49,34 @@ void astar(Heap *hp) {
 
 }
 
-void initSearch() {
-    /* 
-    Loop through all cells and give them manhattan dist to end cell.
-    Compute their respective f values. f = g + mh. 
-    */
+// void initSearch() {
+//     /* 
+//     Loop through all cells and give them manhattan dist to end cell.
+//     Compute their respective f values. f = g + mh. 
+//     */
 
-    for (int y = 0; y < Con.screenrows; y++) {
-        for (int x = 0; x < Con.screencols; x++) {
+//     for (int y = 0; y < Con.screenrows; y++) {
+//         for (int x = 0; x < Con.screencols; x++) {
 
-            g->cells[y][x].md = getManhattanDist(&g->cells[y][x], g->end_cell);
+//             g->cells[y][x].md = getManhattanDist(&g->cells[y][x], g->end_cell);
             
-            if (x == g->start_cell->x && y == g->start_cell->y) {
-                g->cells[y][x].g = 0;
-            } else {
-                g->cells[y][x].g = -1;
-            }
-            g->cells[y][x].f = g->cells[y][x].g + g->cells[y][x].md;
+//             if (x == g->start_cell->x && y == g->start_cell->y) {
+//                 g->cells[y][x].g = 0;
+//             } else {
+//                 g->cells[y][x].g = -1;
+//             }
+//             g->cells[y][x].f = g->cells[y][x].g + g->cells[y][x].md;
             
-        }
-    }
+//         }
+//     }
+// }
+
+struct Cell* updateCellF(struct Cell *cell) {
+    cell->g = getManhattanDist(cell, g->start_cell);
+    cell->md = getManhattanDist(cell, g->end_cell);
+
+    cell->f = cell->g + cell->md;
+    return cell;
 }
 
 Heap* makeClosed(Heap *hp, struct Cell* curr) {
