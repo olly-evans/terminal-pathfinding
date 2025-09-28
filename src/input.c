@@ -66,7 +66,7 @@ void dashProcessKeypress() {
             
             disableRawMode(); // debugging.
             printf("Open set size: %i\n", hp.os_size);
-
+            printf("Closed set size: %i\n", hp.cs_size);
             exit(0);
             break;
 
@@ -86,11 +86,14 @@ void dashProcessKeypress() {
                 Con.state = STATE_VISUALIZATION;
                 Con.cy = 1;
                 Con.cx = 1;
+                break;
+
                 
             }
             if (Con.state == STATE_VISUALIZATION && g->end_cell != NULL && g->start_cell != NULL) {
                 Con.state = STATE_RUN;
-                
+                break;
+
             }
             break;
 

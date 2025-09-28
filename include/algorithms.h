@@ -2,6 +2,7 @@
 #define ALGORITHMS_H
 
 #include "output.h"
+#include "heap.h"
 
 /* Welcome Info */
 

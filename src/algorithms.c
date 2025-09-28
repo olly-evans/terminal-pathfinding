@@ -10,25 +10,33 @@
 // perhaps just search.c with algos elsewhere.
 
 void search() {
+
     struct abuf s_ab = ABUF_INIT;
 
-    abAppend(&s_ab, "\x1b[?25h", 6);
+    abAppend(&s_ab, "\x1b[?25l", 6);
+    abAppend(&s_ab, "\x1b[H", 4);
+    abAppend(&s_ab, "\x1b[2J", 4);
+    abAppend(&s_ab, "\x1b[3J", 4);
     initSearch(); // Needed here as we could still refresh or change E/S position.
 
-    astar(&hp);
+    drawGrid(&s_ab);
 
-    //write(stdout, &s_ab, )
+    
+
+    write(STDOUT_FILENO, s_ab.b, s_ab.len);
+    abFree(&s_ab);
 }
 
 // will return heap probably.
 void astar(Heap *hp) {
+
     // Add start to the openset.
     heapInsert(hp, g->start_cell);
 
 
     while (hp->os_size > 0) {
         struct Cell *current_cell = heapExtract(hp);     // Don't need to f check, done in bubbledown.
-        if (current_cell == NULL) return; // tmp
+        if (current_cell == NULL) exit(1); // tmp
 
         // Add current to closed set.
         hp = makeClosed(hp, current_cell);
@@ -38,10 +46,6 @@ void astar(Heap *hp) {
     // get neighbors
     // make neighbours g distance to start.
     // update f score.
-
-    // Closed set size of total cells.
-    struct Cell closed_set[Con.screenrows * Con.screencols];
-
 
 
 }
@@ -62,8 +66,6 @@ void initSearch() {
             } else {
                 g->cells[y][x].g = -1;
             }
-            
-
             g->cells[y][x].f = g->cells[y][x].g + g->cells[y][x].md;
             
         }
@@ -83,6 +85,7 @@ Heap* makeClosed(Heap *hp, struct Cell* curr) {
 
     // Make cell.ch something different.
     curr->ch = 'C'; 
+    curr->type = CLOSED;
 
     return hp;
 }

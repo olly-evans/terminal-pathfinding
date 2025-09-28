@@ -15,7 +15,8 @@ enum CellTypes {
     END,
     BARRIER,
     PERMANENT_BARRIER,
-    EMPTY
+    EMPTY,
+    CLOSED
 };  
 
 struct Cell {
