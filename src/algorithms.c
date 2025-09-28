@@ -29,16 +29,24 @@ void search() {
 // will return heap probably.
 void astar(Heap *hp) {
 
+    // set start cell g to zero.
+    // other cells g set in initGrid().
+    // This is me thinking i dont need to loop through grid again in initSearch().
+    // g->start_cell->g = 0;
+
     // Add start to the openset.
     heapInsert(hp, g->start_cell);
 
 
-    while (hp->os_size > 0) {
+    while (hp->os_size > 0 && hp->bh != NULL) {
+        // start cell not shown to be in closed set visually.
         struct Cell *current_cell = heapExtract(hp);     // Don't need to f check, done in bubbledown.
-        if (current_cell == NULL) exit(1); // tmp
+        if (current_cell == NULL) return; // tmp
 
         // Add current to closed set.
         hp = makeClosed(hp, current_cell);
+
+        // get the neighbours and update their f.
     }   
     
 
@@ -89,8 +97,11 @@ Heap* makeClosed(Heap *hp, struct Cell* curr) {
     // Add it.
     hp->cs[hp->cs_size++] = curr;
 
-
     // Make cell.ch something different.
+    if (curr == g->start_cell) {
+        return hp;
+    }
+
     curr->ch = 'C'; 
     curr->type = CLOSED;
 
