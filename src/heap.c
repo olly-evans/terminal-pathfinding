@@ -22,6 +22,9 @@ struct Cell* heapExtract(Heap *hp) {
 
     struct Cell **last = &hp->bh[hp->os_size - 1];
     swap(root, last);
+    
+    (*root)->inOpenSet = false;
+
     free(*root);
     hp->os_size--;
 
@@ -37,6 +40,8 @@ Heap* heapInsert(Heap *hp, struct Cell *cell) {
 
     hp->bh = realloc(hp->bh, (hp->os_size + 1) * sizeof(*hp->bh ));
     hp->bh[hp->os_size++] = cell;
+
+    cell->inOpenSet = true;
 
     // If one cell in queue we can just return no bubbling required.
     if (hp->os_size == 1) return hp;

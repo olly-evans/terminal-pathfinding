@@ -115,12 +115,9 @@ Heap* makeClosed(Heap *hp, struct Cell* curr) {
     // Add it.
     hp->cs[hp->cs_size++] = curr;
 
-    curr->inClosedSet = true;
-
     // Make cell.ch something different.
-    if (curr == g->start_cell) {
-        return hp;
-    }
+    if (curr == g->start_cell) return hp;
+    
 
     curr->ch = 'C'; 
     curr->type = CLOSED;
@@ -128,6 +125,15 @@ Heap* makeClosed(Heap *hp, struct Cell* curr) {
     return hp;
 }
 
-bool isValidNeighbour(struct Cell *cell) {
-    return (cell->type != PERMANENT_BARRIER && cell->type != BARRIER && !cell->inClosedSet);
+bool isValidNeighbour(Heap *hp, struct Cell *cell) {
+
+    if (cell->type != PERMANENT_BARRIER && cell->type != BARRIER) return false;
+    
+    for (int y = 0; y < hp->cs_size; y++) {
+        if (hp->cs[y] == cell) {
+            return false;
+        }
+    }
+
+    return true;
 }

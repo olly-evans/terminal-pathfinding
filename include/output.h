@@ -23,9 +23,8 @@ struct Cell {
     enum CellTypes type;
     int x, y;
     char ch;
-    struct Cell *neighbours[4];
 
-    bool inClosedSet;
+
     int g;
     int md;
     int f; // f = g + manhattan distance (md)
