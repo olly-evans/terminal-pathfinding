@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <string.h>
+#include <limits.h>
 
 #include "terminal.h"
 #include "init.h"
@@ -81,7 +82,9 @@ struct Grid* initGrid(struct Grid *g, int rows, int cols) {
 				g->cells[y][x].x = x;
 				g->cells[y][x].y = y;
 				g->cells[y][x].ch = ' ';
-				g->cells[y][x].g = -1;
+				g->cells[y][x].g = INT_MAX;
+				g->cells[y][x].weight = 1;
+				g->cells[y][x].inOpenSet = false;
 			}
 		}
 	}

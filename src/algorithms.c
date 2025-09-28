@@ -7,6 +7,13 @@
 #include "algorithms.h"
 #include "heap.h"
 
+const int DIRS[4][2] = {
+    { 0, -1 }, // Up
+    { 0, 1 },  // Down
+    { -1, 0 }, // Left
+    { 1, 0 }   // Right
+};
+
 // perhaps just search.c with algos elsewhere.
 
 void search() {
@@ -33,7 +40,7 @@ void astar(Heap *hp) {
     // other cells g set in initGrid().
     // This is me thinking i dont need to loop through grid again in initSearch().
     g->start_cell->g = 0;
-    g->start_cell->md = getManhattanDist(g->start_cell, g->end_cell);
+    g->start_cell->md = 0;
 
     // F = G + H
     g->start_cell->f = g->start_cell->g + g->start_cell->md;
@@ -46,33 +53,45 @@ void astar(Heap *hp) {
         // start cell not shown to be in closed set visually.
         struct Cell *current_cell = heapExtract(hp); // Don't need to f check, done in bubbledown.
 
-        if (current_cell == NULL) return; // we're finished here nothing to find.
-
-        // Add current to closed set.
         hp = makeClosed(hp, current_cell);
+        if (current_cell == g->end_cell) {
+            // highlight the cells in prev.
+            // backtrack();
+        } // we're finished here nothing to find.
 
         // get the neighbours and update their f.
 
-        // Cover eyes.
-        struct Cell *down = &g->cells[current_cell->y + 1][current_cell->x];
-        struct Cell *up = &g->cells[current_cell->y - 1][current_cell->x];
-        struct Cell *right = &g->cells[current_cell->y][current_cell->x + 1];
-        struct Cell *left = &g->cells[current_cell->y][current_cell->x - 1];
+        for (int i = 0; i < 4; i++) {
+            int nx = current_cell->x + DIRS[i][0];
+            int ny = current_cell->y + DIRS[i][1];
 
-        
-        if (isValidNeighbour(down)) hp = heapInsert(hp, down);
-        if (isValidNeighbour(up)) hp = heapInsert(hp, up);
-        if (isValidNeighbour(right)) hp = heapInsert(hp, right);
-        if (isValidNeighbour(left)) hp = heapInsert(hp, left);
-        break; // rm, tmp
+            // In grid.
+            if (nx < 0 || ny < 0 || nx >= g->cols || ny >= g->rows) continue;
+            
+            struct Cell *neighbour = &g->cells[ny][nx];
+            // G IS DIFFERENT FOR PATH, WHAT IS G UP TO THIS POINT? IN TOTAL?
+
+            if (!isValidNeighbour(hp, neighbour)) continue;
+
+            int tentative_g = current_cell->g + neighbour->weight;
+            
+            if (tentative_g < neighbour->g) {
+                neighbour->g = tentative_g;
+                neighbour->prev = current_cell;
+
+                neighbour->md = getManhattanDist(neighbour, g->end_cell);
+                neighbour->f = neighbour->g + neighbour->md;
+
+                if (!neighbour->inOpenSet) {
+                    hp = heapInsert(hp, neighbour);
+                    neighbour->inOpenSet = true;
+                }
+
+            }
+        }
+
+        // break;// rm, tmp
     }   
-    
-
-    // get neighbors
-    // make neighbours g distance to start.
-    // update f score.
-
-
 }
 
 // void initSearch() {
@@ -118,7 +137,6 @@ Heap* makeClosed(Heap *hp, struct Cell* curr) {
     // Make cell.ch something different.
     if (curr == g->start_cell) return hp;
     
-
     curr->ch = 'C'; 
     curr->type = CLOSED;
 
@@ -127,8 +145,9 @@ Heap* makeClosed(Heap *hp, struct Cell* curr) {
 
 bool isValidNeighbour(Heap *hp, struct Cell *cell) {
 
-    if (cell->type != PERMANENT_BARRIER && cell->type != BARRIER) return false;
+    if (cell->type == PERMANENT_BARRIER && cell->type == BARRIER) return false;
     
+    // maybe just change to bool.
     for (int y = 0; y < hp->cs_size; y++) {
         if (hp->cs[y] == cell) {
             return false;

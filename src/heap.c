@@ -22,10 +22,7 @@ struct Cell* heapExtract(Heap *hp) {
 
     struct Cell **last = &hp->bh[hp->os_size - 1];
     swap(root, last);
-    
-    (*root)->inOpenSet = false;
 
-    free(*root);
     hp->os_size--;
 
     // bubble down the new root.
@@ -40,8 +37,6 @@ Heap* heapInsert(Heap *hp, struct Cell *cell) {
 
     hp->bh = realloc(hp->bh, (hp->os_size + 1) * sizeof(*hp->bh ));
     hp->bh[hp->os_size++] = cell;
-
-    cell->inOpenSet = true;
 
     // If one cell in queue we can just return no bubbling required.
     if (hp->os_size == 1) return hp;
@@ -63,50 +58,35 @@ void heapBubbleUp(Heap *hp, int childIdx) {
 }
 
 Heap* heapBubbleDown(Heap *hp, int parentIdx) {
-    /* 
-    Bubble down new root for min-heap. 
-    Works in my head but am having to reuse code here.
-    */
+    int os_size = hp->os_size;
 
-    int lchildIdx = (2*parentIdx + 1);
-    int rchildIdx = (2*parentIdx + 2);
+    while (1) {
+        int lchildIdx = 2 * parentIdx + 1;
+        int rchildIdx = 2 * parentIdx + 2;
+        int smallestIdx = parentIdx;
 
-    int parent_f = hp->bh[parentIdx]->f;
-    int lchild_f = hp->bh[lchildIdx]->f;
-    int rchild_f = hp->bh[rchildIdx]->f;
-
-    // If no left child, then no bubble required.
-    if (lchildIdx > hp->os_size) return hp;
-
-    // We have a left child if we get here, do we have a right.
-    if (rchildIdx > hp->os_size) {
-        if (lchild_f < parent_f) {
-            swap(&hp->bh[lchild_f], &hp->bh[parentIdx]);
+        // Check if left child exists and has lower f
+        if (lchildIdx < os_size && hp->bh[lchildIdx]->f < hp->bh[smallestIdx]->f) {
+            smallestIdx = lchildIdx;
         }
-        return hp;
-    }
 
-    int smallest_child = (lchild_f < rchild_f) ? lchildIdx : rchildIdx;
-    while (smallest_child < hp->os_size && hp->bh[smallest_child]->f < hp->bh[parentIdx]->f) {
+        // Check if right child exists and has lower f
+        if (rchildIdx < os_size && hp->bh[rchildIdx]->f < hp->bh[smallestIdx]->f) {
+            smallestIdx = rchildIdx;
+        }
 
-        // Which childs do we have.
-        if (lchildIdx > hp->os_size) return hp;
+        // If no swap needed, break
+        if (smallestIdx == parentIdx) break;
 
-        if (rchildIdx > hp->os_size) {
-            if (hp->bh[lchildIdx]->f < hp->bh[parentIdx]->f) {
-                swap(&hp->bh[lchildIdx], &hp->bh[parentIdx]);
-            } 
+        if (parentIdx >= hp->os_size || smallestIdx >= hp->os_size) {
+            printf("Invalid index! parentIdx=%d, smallestIdx=%d, os_size=%d\n",
+                parentIdx, smallestIdx, hp->os_size);
             return hp;
         }
 
-        // Need to check indexes again.
-        swap(&hp->bh[smallest_child], &hp->bh[parentIdx]);
-
-        parentIdx = smallest_child;
-        lchildIdx = (2*parentIdx + 1);
-        rchildIdx = (2*parentIdx + 2);
-
-        smallest_child = (hp->bh[lchildIdx]->f < hp->bh[rchildIdx]->f) ? lchildIdx : rchildIdx;
+        // Swap and continue bubbling down
+        swap(&hp->bh[parentIdx], &hp->bh[smallestIdx]);
+        parentIdx = smallestIdx;
     }
 
     return hp;

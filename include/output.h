@@ -24,7 +24,12 @@ struct Cell {
     int x, y;
     char ch;
 
-
+    struct Cell *prev;
+    
+    bool inOpenSet;
+    bool inClosedSet;
+    
+    int weight;
     int g;
     int md;
     int f; // f = g + manhattan distance (md)

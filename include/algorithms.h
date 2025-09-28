@@ -30,6 +30,6 @@ void astar();
 void initSearch();
 struct Cell* updateCellF(struct Cell *cell);
 Heap* makeClosed(Heap *hp, struct Cell* curr);
-bool isValidNeighbour(struct Cell *cell);
+bool isValidNeighbour(Heap *hp, struct Cell *cell);
 
 #endif
