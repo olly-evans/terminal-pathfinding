@@ -5,33 +5,36 @@
 #include "heap.h"
 
 /* PRIORITY QUEUE */
-Heap hp;
+Heap hp = { NULL, 0, NULL, 0 };
 
 struct Cell* heapExtract(Heap *hp) {
-    /* remove highest priority element from Priority queue. */
-    
     if (hp->os_size == 0) return NULL;
 
-    struct Cell **root = &hp->bh[0];
+    struct Cell *root = hp->bh[0];
 
-    // This non-bubble case is working.
     if (hp->os_size == 1) {
         hp->os_size--;
-        return *root;
+        return root;
     }
 
-    struct Cell **last = &hp->bh[hp->os_size - 1];
-    swap(root, last);
+    int lastIdx = hp->os_size - 1;
 
+    // Swap root with last
+    swap(&hp->bh[0], &hp->bh[lastIdx]);
+
+    // Remove last element (which is now at index 0 after swap)
     hp->os_size--;
 
-    // bubble down the new root.
     heapBubbleDown(hp, 0);
-}   
+
+    return root;
+}
 
 Heap* heapInsert(Heap *hp, struct Cell *cell) {
 
     /* Add element to the binary heap. */
+
+    cell->inOpenSet = true;
 
     int idx = hp->os_size; // hp.size incremented so saving this.
 
@@ -41,11 +44,12 @@ Heap* heapInsert(Heap *hp, struct Cell *cell) {
     // If one cell in queue we can just return no bubbling required.
     if (hp->os_size == 1) return hp;
 
-    heapBubbleUp(hp, idx);
-    return hp;
+    return heapBubbleUp(hp, idx);
 }
 
-void heapBubbleUp(Heap *hp, int childIdx) {
+Heap* heapBubbleUp(Heap *hp, int childIdx) {
+
+    if (childIdx == 0) return hp;
 
     int parentIdx = ((childIdx - 1) / 2);
 
@@ -55,6 +59,7 @@ void heapBubbleUp(Heap *hp, int childIdx) {
         childIdx = parentIdx;
         parentIdx = ((childIdx - 1) / 2);
     }
+    return hp;
 }
 
 Heap* heapBubbleDown(Heap *hp, int parentIdx) {
@@ -99,7 +104,6 @@ void swap(struct Cell **a, struct Cell **b) {
 }
 
 void initBinaryHeap() {
-	hp.bh = NULL;
     hp.os_size = 0;
     hp.cs_size = 0;
 }

@@ -48,10 +48,10 @@ void astar(Heap *hp) {
     // Add start to the openset.
     hp = heapInsert(hp, g->start_cell);
 
-
     while (hp->os_size > 0 && hp->bh != NULL) {
         // start cell not shown to be in closed set visually.
         struct Cell *current_cell = heapExtract(hp); // Don't need to f check, done in bubbledown.
+        if (current_cell == NULL) return;
 
         hp = makeClosed(hp, current_cell);
         if (current_cell == g->end_cell) {
@@ -71,7 +71,10 @@ void astar(Heap *hp) {
             struct Cell *neighbour = &g->cells[ny][nx];
             // G IS DIFFERENT FOR PATH, WHAT IS G UP TO THIS POINT? IN TOTAL?
 
-            if (!isValidNeighbour(hp, neighbour)) continue;
+            if (!isValidNeighbour(hp, neighbour)) {
+                hp = makeClosed(hp, neighbour);
+                continue;
+            }
 
             int tentative_g = current_cell->g + neighbour->weight;
             
@@ -89,8 +92,6 @@ void astar(Heap *hp) {
 
             }
         }
-
-        // break;// rm, tmp
     }   
 }
 
