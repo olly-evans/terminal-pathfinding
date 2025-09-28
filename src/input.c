@@ -63,6 +63,9 @@ void dashProcessKeypress() {
             write(STDOUT_FILENO, "\x1b[3J", 4); // Clear scrollback buffer.
             write(STDOUT_FILENO, "\x1b[0m", 4); // Reset terminal text-styles.
             write(STDOUT_FILENO, "\x1b[?25h", 6); // Give user their cursor back.
+            
+            disableRawMode(); // debugging.
+            printf("Open set size: %i\n", hp.os_size);
 
             exit(0);
             break;
@@ -83,13 +86,13 @@ void dashProcessKeypress() {
                 Con.state = STATE_VISUALIZATION;
                 Con.cy = 1;
                 Con.cx = 1;
-                break;
+                
             }
-        if (Con.state == STATE_VISUALIZATION && g->end_cell != NULL && g->start_cell != NULL) {
+            if (Con.state == STATE_VISUALIZATION && g->end_cell != NULL && g->start_cell != NULL) {
                 Con.state = STATE_RUN;
-                break;
+                
             }
-            
+            break;
 
         case (' '):
             // Place start, end and barrier cells one by one.

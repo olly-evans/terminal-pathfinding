@@ -1,4 +1,6 @@
 #include <unistd.h>
+#include <math.h>
+#include <stdlib.h>
 
 #include "output.h"
 #include "abuf.h"
@@ -10,12 +12,38 @@
 void search() {
     struct abuf s_ab = ABUF_INIT;
 
-    abAppend(&s_ab, "\x1b[?25l", 6);
+    abAppend(&s_ab, "\x1b[?25h", 6);
     initSearch(); // Needed here as we could still refresh or change E/S position.
+
+    astar(&hp);
+
+    //write(stdout, &s_ab, )
 }
 
-void astar() {
-    return;
+// will return heap probably.
+void astar(Heap *hp) {
+    // Add start to the openset.
+    heapInsert(hp, g->start_cell);
+
+
+    while (hp->os_size > 0) {
+        struct Cell *current_cell = heapExtract(hp);     // Don't need to f check, done in bubbledown.
+        if (current_cell == NULL) return; // tmp
+
+        // Add current to closed set.
+        hp = makeClosed(hp, current_cell);
+    }   
+    
+
+    // get neighbors
+    // make neighbours g distance to start.
+    // update f score.
+
+    // Closed set size of total cells.
+    struct Cell closed_set[Con.screenrows * Con.screencols];
+
+
+
 }
 
 void initSearch() {
@@ -32,7 +60,7 @@ void initSearch() {
             if (x == g->start_cell->x && y == g->start_cell->y) {
                 g->cells[y][x].g = 0;
             } else {
-                g->cells[y][x].g = 1;
+                g->cells[y][x].g = -1;
             }
             
 
@@ -40,4 +68,21 @@ void initSearch() {
             
         }
     }
+}
+
+Heap* makeClosed(Heap *hp, struct Cell* curr) {
+
+    /* Add a cell to the closed set. */
+
+    // Make memory for it.
+    hp->cs = realloc(hp->cs, (hp->cs_size + 1) * sizeof(*hp->cs )); // *hp->cs ??? 
+
+    // Add it.
+    hp->cs[hp->cs_size++] = curr;
+
+
+    // Make cell.ch something different.
+    curr->ch = 'C'; 
+
+    return hp;
 }

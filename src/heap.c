@@ -7,17 +7,23 @@
 /* PRIORITY QUEUE */
 Heap hp;
 
-void heapExtract(Heap *hp) {
+struct Cell* heapExtract(Heap *hp) {
     /* remove highest priority element from Priority queue. */
     
-    if (!hp->size) return;
+    if (hp->os_size == 0) return NULL;
 
     struct Cell **root = &hp->bh[0];
-    struct Cell **last = &hp->bh[hp->size - 1];
-    swap(root, last);
 
-    hp->size--;
+    // This non-bubble case is working.
+    if (hp->os_size == 1) {
+        hp->os_size--;
+        return *root;
+    }
+
+    struct Cell **last = &hp->bh[hp->os_size - 1];
+    swap(root, last);
     free(*root);
+    hp->os_size--;
 
     // bubble down the new root.
     heapBubbleDown(hp, 0);
@@ -27,13 +33,13 @@ void heapInsert(Heap *hp, struct Cell *cell) {
 
     /* Add element to the binary heap. */
 
-    int idx = hp->size; // hp.size incremented so saving this.
+    int idx = hp->os_size; // hp.size incremented so saving this.
 
-    hp->bh = realloc(hp->bh, (hp->size + 1) * sizeof(*hp->bh ));
-    hp->bh[hp->size++] = cell;
+    hp->bh = realloc(hp->bh, (hp->os_size + 1) * sizeof(*hp->bh ));
+    hp->bh[hp->os_size++] = cell;
 
     // If one cell in queue we can just return no bubbling required.
-    if (hp->size == 1) return;
+    if (hp->os_size == 1) return;
 
     heapBubbleUp(hp, idx);
 }
@@ -64,10 +70,10 @@ Heap* heapBubbleDown(Heap *hp, int parentIdx) {
     int rchild_f = hp->bh[rchildIdx]->f;
 
     // If no left child, then no bubble required.
-    if (lchildIdx > hp->size) return hp;
+    if (lchildIdx > hp->os_size) return hp;
 
     // We have a left child if we get here, do we have a right.
-    if (rchildIdx > hp->size) {
+    if (rchildIdx > hp->os_size) {
         if (lchild_f < parent_f) {
             swap(&hp->bh[lchild_f], &hp->bh[parentIdx]);
         }
@@ -75,12 +81,12 @@ Heap* heapBubbleDown(Heap *hp, int parentIdx) {
     }
 
     int smallest_child = (lchild_f < rchild_f) ? lchildIdx : rchildIdx;
-    while (smallest_child < hp->size && hp->bh[smallest_child]->f < hp->bh[parentIdx]->f) {
+    while (smallest_child < hp->os_size && hp->bh[smallest_child]->f < hp->bh[parentIdx]->f) {
 
         // Which childs do we have.
-        if (lchildIdx > hp->size) return hp;
+        if (lchildIdx > hp->os_size) return hp;
 
-        if (rchildIdx > hp->size) {
+        if (rchildIdx > hp->os_size) {
             if (hp->bh[lchildIdx]->f < hp->bh[parentIdx]->f) {
                 swap(&hp->bh[lchildIdx], &hp->bh[parentIdx]);
             } 
@@ -108,7 +114,8 @@ void swap(struct Cell **a, struct Cell **b) {
 
 void initBinaryHeap() {
 	hp.bh = NULL;
-    hp.size = 0;
+    hp.os_size = 0;
+    hp.cs_size = 0;
 }
 
 /* MIGHT NEED TO BE IN ANOTHER FILE. */

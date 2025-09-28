@@ -25,6 +25,8 @@ extern table algos;
 extern tablerow algoRows[];
 
 void search();
+void astar();
 void initSearch();
+Heap* makeClosed(Heap *hp, struct Cell* curr);
 
 #endif
