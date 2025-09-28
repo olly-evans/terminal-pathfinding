@@ -197,7 +197,8 @@ void drawGrid(struct abuf *ab) {
 
             // Current Cell
             struct Cell *c = &g->cells[y][x];
-
+            // if (Con.state == STATE_RUN) updateCellF(c); // im confused about this. ill be real might be wrong.
+            
             switch (c->type) {
                 case START:
                     abAppend(ab, "\x1b[32m", 5); // Green

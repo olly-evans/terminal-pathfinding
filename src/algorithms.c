@@ -32,21 +32,39 @@ void astar(Heap *hp) {
     // set start cell g to zero.
     // other cells g set in initGrid().
     // This is me thinking i dont need to loop through grid again in initSearch().
-    // g->start_cell->g = 0;
+    g->start_cell->g = 0;
+    g->start_cell->md = getManhattanDist(g->start_cell, g->end_cell);
+
+    // F = G + H
+    g->start_cell->f = g->start_cell->g + g->start_cell->md;
 
     // Add start to the openset.
-    heapInsert(hp, g->start_cell);
+    hp = heapInsert(hp, g->start_cell);
 
 
     while (hp->os_size > 0 && hp->bh != NULL) {
         // start cell not shown to be in closed set visually.
-        struct Cell *current_cell = heapExtract(hp);     // Don't need to f check, done in bubbledown.
-        if (current_cell == NULL) return; // tmp
+        struct Cell *current_cell = heapExtract(hp); // Don't need to f check, done in bubbledown.
+
+        if (current_cell == NULL) return; // we're finished here nothing to find.
 
         // Add current to closed set.
         hp = makeClosed(hp, current_cell);
 
         // get the neighbours and update their f.
+
+        // Cover eyes.
+        struct Cell *down = &g->cells[current_cell->y + 1][current_cell->x];
+        struct Cell *up = &g->cells[current_cell->y - 1][current_cell->x];
+        struct Cell *right = &g->cells[current_cell->y][current_cell->x + 1];
+        struct Cell *left = &g->cells[current_cell->y][current_cell->x - 1];
+
+        
+        if (isValidNeighbour(down)) hp = heapInsert(hp, down);
+        if (isValidNeighbour(up)) hp = heapInsert(hp, up);
+        if (isValidNeighbour(right)) hp = heapInsert(hp, right);
+        if (isValidNeighbour(left)) hp = heapInsert(hp, left);
+        break; // rm, tmp
     }   
     
 
@@ -97,6 +115,8 @@ Heap* makeClosed(Heap *hp, struct Cell* curr) {
     // Add it.
     hp->cs[hp->cs_size++] = curr;
 
+    curr->inClosedSet = true;
+
     // Make cell.ch something different.
     if (curr == g->start_cell) {
         return hp;
@@ -106,4 +126,8 @@ Heap* makeClosed(Heap *hp, struct Cell* curr) {
     curr->type = CLOSED;
 
     return hp;
+}
+
+bool isValidNeighbour(struct Cell *cell) {
+    return (cell->type != PERMANENT_BARRIER && cell->type != BARRIER && !cell->inClosedSet);
 }

@@ -29,7 +29,7 @@ struct Cell* heapExtract(Heap *hp) {
     heapBubbleDown(hp, 0);
 }   
 
-void heapInsert(Heap *hp, struct Cell *cell) {
+Heap* heapInsert(Heap *hp, struct Cell *cell) {
 
     /* Add element to the binary heap. */
 
@@ -39,9 +39,10 @@ void heapInsert(Heap *hp, struct Cell *cell) {
     hp->bh[hp->os_size++] = cell;
 
     // If one cell in queue we can just return no bubbling required.
-    if (hp->os_size == 1) return;
+    if (hp->os_size == 1) return hp;
 
     heapBubbleUp(hp, idx);
+    return hp;
 }
 
 void heapBubbleUp(Heap *hp, int childIdx) {

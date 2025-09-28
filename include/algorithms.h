@@ -28,6 +28,8 @@ extern tablerow algoRows[];
 void search();
 void astar();
 void initSearch();
+struct Cell* updateCellF(struct Cell *cell);
 Heap* makeClosed(Heap *hp, struct Cell* curr);
+bool isValidNeighbour(struct Cell *cell);
 
 #endif
