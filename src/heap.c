@@ -35,6 +35,8 @@ Heap* heapInsert(Heap *hp, struct Cell *cell) {
     /* Add element to the binary heap. */
 
     cell->inOpenSet = true;
+    cell->ch = 'O';
+    cell->type = OPEN;
 
     int idx = hp->os_size; // hp.size incremented so saving this.
 

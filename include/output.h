@@ -16,7 +16,8 @@ enum CellTypes {
     BARRIER,
     PERMANENT_BARRIER,
     EMPTY,
-    CLOSED
+    CLOSED,
+    OPEN
 };  
 
 struct Cell {
@@ -28,7 +29,8 @@ struct Cell {
     
     bool inOpenSet;
     bool inClosedSet;
-    
+
+
     int weight;
     int g;
     int md;

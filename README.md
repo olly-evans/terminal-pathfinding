@@ -10,7 +10,13 @@ that shit, and really think about the logic for vertical scrolling.
 
 # Binary Heap
 
-- need to go over the bubbleDown implementation, i think its okay but needs double checking when i'm less tired.
+- print OPEN SET.
+- why is closed only shown after button press.
+- isvalidneighbours fucking with display.
+- open cell->type maybe ditch.
+- why do i have to press enter or any key twice after runnning?
+- why is the end E being overwritten by C.
+- have a look at the whole char system i think its shite.
 
 # General
 - testing new branch.

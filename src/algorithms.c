@@ -54,12 +54,21 @@ void astar(Heap *hp) {
         if (current_cell == NULL) return;
 
         hp = makeClosed(hp, current_cell);
+
         if (current_cell == g->end_cell) {
             // highlight the cells in prev.
-            // backtrack();
-        } // we're finished here nothing to find.
+            // we're finished here nothing to find.
 
-        // get the neighbours and update their f.
+            struct Cell *prev = g->end_cell->prev;
+            while (prev != NULL) {
+                prev->ch = 'P';
+
+                prev = prev->prev;
+            }
+            break;
+        } 
+
+        // Get the neighbours and update their.
 
         for (int i = 0; i < 4; i++) {
             int nx = current_cell->x + DIRS[i][0];
@@ -95,35 +104,6 @@ void astar(Heap *hp) {
     }   
 }
 
-// void initSearch() {
-//     /* 
-//     Loop through all cells and give them manhattan dist to end cell.
-//     Compute their respective f values. f = g + mh. 
-//     */
-
-//     for (int y = 0; y < Con.screenrows; y++) {
-//         for (int x = 0; x < Con.screencols; x++) {
-
-//             g->cells[y][x].md = getManhattanDist(&g->cells[y][x], g->end_cell);
-            
-//             if (x == g->start_cell->x && y == g->start_cell->y) {
-//                 g->cells[y][x].g = 0;
-//             } else {
-//                 g->cells[y][x].g = -1;
-//             }
-//             g->cells[y][x].f = g->cells[y][x].g + g->cells[y][x].md;
-            
-//         }
-//     }
-// }
-
-struct Cell* updateCellF(struct Cell *cell) {
-    cell->g = getManhattanDist(cell, g->start_cell);
-    cell->md = getManhattanDist(cell, g->end_cell);
-
-    cell->f = cell->g + cell->md;
-    return cell;
-}
 
 Heap* makeClosed(Heap *hp, struct Cell* curr) {
 
@@ -146,7 +126,7 @@ Heap* makeClosed(Heap *hp, struct Cell* curr) {
 
 bool isValidNeighbour(Heap *hp, struct Cell *cell) {
 
-    if (cell->type == PERMANENT_BARRIER && cell->type == BARRIER) return false;
+    if (cell->type == PERMANENT_BARRIER || cell->type == BARRIER) return false;
     
     // maybe just change to bool.
     for (int y = 0; y < hp->cs_size; y++) {
