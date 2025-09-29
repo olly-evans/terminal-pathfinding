@@ -12,7 +12,7 @@ that shit, and really think about the logic for vertical scrolling.
 
 - print OPEN SET.
 - why is closed only shown after button press.
-- isvalidneighbours fucking with display.
+- isvalidneighbours fucking with display, barriers are being added to the closed set, when should just be ignored.
 - open cell->type maybe ditch.
 - why do i have to press enter or any key twice after runnning?
 - why is the end E being overwritten by C.

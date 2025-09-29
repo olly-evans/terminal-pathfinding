@@ -53,8 +53,6 @@ void astar(Heap *hp) {
         struct Cell *current_cell = heapExtract(hp); // Don't need to f check, done in bubbledown.
         if (current_cell == NULL) return;
 
-        hp = makeClosed(hp, current_cell);
-
         if (current_cell == g->end_cell) {
             // highlight the cells in prev.
             // we're finished here nothing to find.
@@ -66,9 +64,11 @@ void astar(Heap *hp) {
                 prev = prev->prev;
             }
             break;
-        } 
+        } else {
+            hp = makeClosed(hp, current_cell);
+        }
 
-        // Get the neighbours and update their.
+        // Get the neighbours and update scores.
 
         for (int i = 0; i < 4; i++) {
             int nx = current_cell->x + DIRS[i][0];
@@ -79,11 +79,8 @@ void astar(Heap *hp) {
             
             struct Cell *neighbour = &g->cells[ny][nx];
             // G IS DIFFERENT FOR PATH, WHAT IS G UP TO THIS POINT? IN TOTAL?
-
-            if (!isValidNeighbour(hp, neighbour)) {
-                hp = makeClosed(hp, neighbour);
-                continue;
-            }
+            
+            if (!isValidNeighbour(hp, neighbour)) continue;
 
             int tentative_g = current_cell->g + neighbour->weight;
             
@@ -98,7 +95,6 @@ void astar(Heap *hp) {
                     hp = heapInsert(hp, neighbour);
                     neighbour->inOpenSet = true;
                 }
-
             }
         }
     }   

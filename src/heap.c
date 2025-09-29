@@ -35,8 +35,8 @@ Heap* heapInsert(Heap *hp, struct Cell *cell) {
     /* Add element to the binary heap. */
 
     cell->inOpenSet = true;
-    cell->ch = 'O';
-    cell->type = OPEN;
+    cell->ch = 'O'; //
+    cell->type = OPEN; //
 
     int idx = hp->os_size; // hp.size incremented so saving this.
 
@@ -85,11 +85,8 @@ Heap* heapBubbleDown(Heap *hp, int parentIdx) {
         // If no swap needed, break
         if (smallestIdx == parentIdx) break;
 
-        if (parentIdx >= hp->os_size || smallestIdx >= hp->os_size) {
-            printf("Invalid index! parentIdx=%d, smallestIdx=%d, os_size=%d\n",
-                parentIdx, smallestIdx, hp->os_size);
-            return hp;
-        }
+        if (parentIdx >= hp->os_size || smallestIdx >= hp->os_size) return hp;
+        
 
         // Swap and continue bubbling down
         swap(&hp->bh[parentIdx], &hp->bh[smallestIdx]);
