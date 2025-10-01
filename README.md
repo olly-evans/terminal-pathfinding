@@ -8,7 +8,32 @@
 are all of its constituent functions, work on the algorithms and have fun before coming back to fix
 that shit, and really think about the logic for vertical scrolling.
 
+#### ACTUAL WAVES
+
+- drawgrid needs to run in an infinite loop.
+- astar() doesnt.
+- They need to be decoupled somehow.
+
+Track which cells were updated (e.g., visited, open, closed)
+
+Move the cursor to their terminal position
+
+Write just that one character
+
+
+
+
+
+
+
+
+
+
+
 # Binary Heap
+
+- OS_SIZE = SIZEOF(BH) / SIZEOF(BH[0])
+
 
 - print OPEN SET.
 - why is closed only shown after button press.

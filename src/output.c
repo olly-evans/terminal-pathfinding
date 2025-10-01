@@ -197,7 +197,6 @@ void drawGrid(struct abuf *ab) {
 
             // Current Cell
             struct Cell *c = &g->cells[y][x];
-            // if (Con.state == STATE_RUN) updateCellF(c); // im confused about this. ill be real might be wrong.
             
             switch (c->type) {
                 case START:
@@ -232,4 +231,14 @@ void drawGrid(struct abuf *ab) {
         }
         if (y < g->rows - 1) abAppend(ab, "\r\n", 2);
     }
+}
+
+void drawCell(struct abuf *ab, struct Cell *cell) {
+
+    // append cursor pos
+    char buf[32];
+    snprintf(buf, sizeof(buf), "\x1b[%d;%dH", cell->y + 1, cell->x + 1);
+    abAppend(ab, buf, strlen(buf)); 
+
+    abAppend(ab, &cell->ch, 1);
 }

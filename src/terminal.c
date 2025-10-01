@@ -31,6 +31,7 @@ void disableRawMode() {
 void enableRawMode() {
     if (tcgetattr(STDIN_FILENO, &Con.termiosOrig) == -1) die("enableRawMode() -> tcgetattr");
     atexit(disableRawMode);
+	
 
     struct termios termiosRaw = Con.termiosOrig;
     termiosRaw.c_iflag &= ~(BRKINT | ICRNL | INPCK | ISTRIP | IXON);

@@ -3,42 +3,42 @@
 
 #include "output.h"
 #include "heap.h"
+#include "algorithms.h"
 
 /* PRIORITY QUEUE */
-Heap hp = { NULL, 0, NULL, 0 };
+Heap hp;
 
-struct Cell* heapExtract(Heap *hp) {
+struct Cell *heapExtract(Heap *hp) {
     if (hp->os_size == 0) return NULL;
 
-    struct Cell *root = hp->bh[0];
+    struct Cell *extracted = hp->bh[0];  // the cell to pop
 
-    if (hp->os_size == 1) {
-        hp->os_size--;
-        return root;
-    }
-
+    // Swap root with last element
     int lastIdx = hp->os_size - 1;
-
-    // Swap root with last
     swap(&hp->bh[0], &hp->bh[lastIdx]);
-
-    // Remove last element (which is now at index 0 after swap)
     hp->os_size--;
 
+    // Bubble down the new root to maintain heap property
     heapBubbleDown(hp, 0);
+    
 
-    return root;
+    return extracted;
 }
 
 Heap* heapInsert(Heap *hp, struct Cell *cell) {
 
     /* Add element to the binary heap. */
 
-    cell->inOpenSet = true;
+    if (inOpenSet(hp, cell)) return hp; // this check can't be right.
+    
     cell->ch = 'O'; //
     cell->type = OPEN; //
 
-    int idx = hp->os_size; // hp.size incremented so saving this.
+    int last = hp->os_size; // hp.size incremented so saving this.
+
+    // if (hp->os_size == 0) {
+    //     hp->bh = malloc(sizeof(*hp->bh));
+    // }
 
     hp->bh = realloc(hp->bh, (hp->os_size + 1) * sizeof(*hp->bh ));
     hp->bh[hp->os_size++] = cell;
@@ -46,7 +46,7 @@ Heap* heapInsert(Heap *hp, struct Cell *cell) {
     // If one cell in queue we can just return no bubbling required.
     if (hp->os_size == 1) return hp;
 
-    return heapBubbleUp(hp, idx);
+    return heapBubbleUp(hp, last);
 }
 
 Heap* heapBubbleUp(Heap *hp, int childIdx) {
@@ -97,14 +97,18 @@ Heap* heapBubbleDown(Heap *hp, int parentIdx) {
 }
 
 void swap(struct Cell **a, struct Cell **b) {
+    // a = address pointer in list of pointers pointing to. 
     struct Cell *tmp = *a;
     *a = *b;
     *b = tmp;
 }
 
-void initBinaryHeap() {
+Heap initBinaryHeap(Heap hp) {
     hp.os_size = 0;
     hp.cs_size = 0;
+    hp.bh = NULL;
+    hp.cs = NULL;
+    return hp;
 }
 
 /* MIGHT NEED TO BE IN ANOTHER FILE. */

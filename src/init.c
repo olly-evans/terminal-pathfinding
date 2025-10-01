@@ -49,7 +49,7 @@ void init() {
 
 	getTableColWidths();
 
-	initBinaryHeap();
+	hp = initBinaryHeap(hp);
 
 }
 
@@ -77,6 +77,10 @@ struct Grid* initGrid(struct Grid *g, int rows, int cols) {
 			if (y == 0 || x == 0 || y == Con.screenrows - 1 || x == Con.screencols - 1) {
 				g->cells[y][x].type = PERMANENT_BARRIER;
 				g->cells[y][x].ch = '#';
+				g->cells[y][x].x = x;
+				g->cells[y][x].y = y;
+				g->cells[y][x].g = INT_MAX;
+				g->cells[y][x].weight = 1;
 			} else {
 				g->cells[y][x].type = EMPTY;
 				g->cells[y][x].x = x;
@@ -84,7 +88,6 @@ struct Grid* initGrid(struct Grid *g, int rows, int cols) {
 				g->cells[y][x].ch = ' ';
 				g->cells[y][x].g = INT_MAX;
 				g->cells[y][x].weight = 1;
-				g->cells[y][x].inOpenSet = false;
 			}
 		}
 	}

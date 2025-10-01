@@ -18,11 +18,14 @@ int main(void) {
         // Con.app_state changed upon enter keypress in STATE_WELCOME.
         if (Con.state == STATE_WELCOME) drawWelcomeScreen();
         if (Con.state == STATE_VISUALIZATION) drawPathfindingVisualizer();
-        if (Con.state == STATE_RUN) search();
-        
+        if (Con.state == STATE_RUN) {
+            search();
+            dashProcessKeypress();
+            break;
+        }
         dashProcessKeypress();
     }
-
+    
     freeGrid(g);
     return 0;
 }
