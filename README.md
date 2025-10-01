@@ -10,6 +10,10 @@ that shit, and really think about the logic for vertical scrolling.
 
 #### ACTUAL WAVES
 
+- use capacity instead of realloc everytime we heapInsert.
+- use bool instead of loops for open/closed set checks.
+
+
 - drawgrid needs to run in an infinite loop.
 - astar() doesnt.
 - They need to be decoupled somehow.

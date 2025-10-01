@@ -31,10 +31,12 @@ Heap* heapInsert(Heap *hp, struct Cell *cell) {
 
     if (inOpenSet(hp, cell)) return hp; // this check can't be right.
     
-    cell->ch = 'O'; //
+    if (!isStartCell(cell) && !isEndCell(cell)) {
+        cell->ch = 'O'; //
+    }
     cell->type = OPEN; //
 
-    int last = hp->os_size; // hp.size incremented so saving this.
+    // int new_last = hp->os_size; // Becomes last element
 
     // if (hp->os_size == 0) {
     //     hp->bh = malloc(sizeof(*hp->bh));
@@ -46,7 +48,7 @@ Heap* heapInsert(Heap *hp, struct Cell *cell) {
     // If one cell in queue we can just return no bubbling required.
     if (hp->os_size == 1) return hp;
 
-    return heapBubbleUp(hp, last);
+    return heapBubbleUp(hp, hp->os_size - 1);
 }
 
 Heap* heapBubbleUp(Heap *hp, int childIdx) {
