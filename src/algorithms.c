@@ -27,18 +27,111 @@ void search() {
     abAppend(&s_ab, "\x1b[2J", 4);
     abAppend(&s_ab, "\x1b[3J", 4);
 
-    astar(&hp, &s_ab);
-    // drawGrid(&s_ab);
-    
-    
+    astarGrid(&hp, &s_ab);
+    // astarCell(&hp, &s_ab);
 
+    
     write(STDOUT_FILENO, s_ab.b, s_ab.len);
     abFree(&s_ab);
 }
 
 // will return heap probably.
-void astar(Heap *hp, struct abuf *s_ab) {
+void astarGrid(Heap *hp, struct abuf *s_ab) {
 
+    
+    g->start_cell->g = 0;
+    g->start_cell->md = getManhattanDist(g->start_cell, g->end_cell);
+
+    // F = G + H
+    g->start_cell->f = g->start_cell->g + g->start_cell->md;
+    g->start_cell->prev = NULL;
+
+    // Add start to the openset.
+    hp = heapInsert(hp, g->start_cell); 
+
+    // os_size = 1
+
+
+    while (hp->os_size > 0 && hp->bh != NULL) {
+        // abAppend(s_ab, "\x1b[?25l", 6);
+        // abAppend(s_ab, "\x1b[H", 4);
+        // drawGrid(s_ab);
+
+        // perhaps we dont remove from here and extract all in one.
+        struct Cell *current = heapExtract(hp);
+        // os_size = 0
+
+        
+        // if end cell, long version.
+        if (current->x == g->end_cell->x && current->y == g->end_cell->y) {
+            
+            struct Cell *previous = g->end_cell->prev;
+            while (previous != NULL) {
+                previous->ch = 'P';
+                // drawCell(s_ab, previous);
+                drawGrid(s_ab); // debug cell by cell.
+
+
+                previous = previous->prev;
+            }
+            break;
+        }
+
+        // rem from openset here?
+            
+
+        hp = makeClosed(hp, current);
+        // drawCell(s_ab, current);
+        // OS: 0
+        // CS: 1
+
+        // as expected to up to here.
+
+        for (int i = 0; i < 4; i++) {
+            // { 0, -1 }, // Up
+            // { 0, 1 },  // Down
+            // { -1, 0 }, // Left
+            // { 1, 0 }   // Right
+            int nx = current->x + DIRS[i][0];
+            int ny = current->y + DIRS[i][1];
+            
+            // In grid.
+            if (nx < 0 || ny < 0 || nx >= g->cols || ny >= g->rows) continue;
+            
+            struct Cell *neighbour = &g->cells[ny][nx];
+
+            // check for barriers.
+
+            int tentative_g = current->g + neighbour->weight;
+
+            if (inClosedSet(hp, neighbour) && tentative_g > neighbour->g) continue;
+
+            // need to check for barriers.
+            if (!inOpenSet(hp, neighbour) || tentative_g < neighbour->g) {
+                neighbour->prev = current;
+                neighbour->g = tentative_g;
+                neighbour->f = neighbour->g + getManhattanDist(neighbour, g->end_cell);
+                
+
+                // this check isnt working.
+                if (!inOpenSet(hp, neighbour)) {
+                    hp = heapInsert(hp, neighbour); // okay so something up with this.
+                }
+            // drawCell(s_ab, neighbour);
+
+
+            }
+        drawGrid(s_ab); // debug cell by cell.
+
+        }
+        
+    }
+    // no solution
+}
+
+void astarCell(Heap *hp, struct abuf *s_ab) {
+
+    
     g->start_cell->g = 0;
     g->start_cell->md = getManhattanDist(g->start_cell, g->end_cell);
 
@@ -56,7 +149,7 @@ void astar(Heap *hp, struct abuf *s_ab) {
         abAppend(s_ab, "\x1b[?25l", 6);
         abAppend(s_ab, "\x1b[H", 4);
         drawGrid(s_ab);
-        
+
         // perhaps we dont remove from here and extract all in one.
         struct Cell *current = heapExtract(hp);
         // os_size = 0
@@ -69,6 +162,7 @@ void astar(Heap *hp, struct abuf *s_ab) {
             while (previous != NULL) {
                 previous->ch = 'P';
                 drawCell(s_ab, previous);
+
 
                 previous = previous->prev;
             }
@@ -119,8 +213,7 @@ void astar(Heap *hp, struct abuf *s_ab) {
 
 
             }
-        }
-        
+        } 
     }
     // no solution
 }

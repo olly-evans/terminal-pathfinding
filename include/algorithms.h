@@ -26,7 +26,11 @@ extern table algos;
 extern tablerow algoRows[];
 
 void search();
-void astar();
+
+void astarCell(Heap *hp, struct abuf *s_ab);
+void astarGrid(Heap *hp, struct abuf *s_ab);
+
+
 void initSearch();
 struct Cell* updateCellF(struct Cell *cell);
 Heap* makeClosed(Heap *hp, struct Cell* curr);
