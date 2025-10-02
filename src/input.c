@@ -72,10 +72,10 @@ void dashProcessKeypress() {
                 if (i == hp.os_size - 1) printf("\n");
             }
 
-            for (int i = 0; i < hp.cs_size; i++) {
-                printf("CS %d: (%d, %d)\n", i, hp.cs[i]->y, hp.cs[i]->x);
-                if (i == hp.cs_size - 1) printf("\n");
-            }
+            // for (int i = 0; i < hp.cs_size; i++) {
+            //     printf("CS %d: (%d, %d)\n", i, hp.cs[i]->y, hp.cs[i]->x);
+            //     if (i == hp.cs_size - 1) printf("\n");
+            // }
 
             printf("Start Cell (y,x): (%d, %d)\n", g->start_cell->y, g->start_cell->x);
             printf("End Cell (y,x): (%d, %d)\n", g->end_cell->y, g->end_cell->x);

@@ -40,4 +40,8 @@ bool inOpenSet(Heap *hp, struct Cell* curr);
 bool isStartCell(struct Cell *cell);
 bool isEndCell(struct Cell *cell);
 
+void printOpenSet(Heap* hp, struct abuf *openset_buf);
+int getOpenSetIdx(Heap *hp, struct Cell *cell);
+
+
 #endif

@@ -20,7 +20,6 @@ struct Cell *heapExtract(Heap *hp) {
 
     // Bubble down the new root to maintain heap property
     heapBubbleDown(hp, 0);
-    
 
     return extracted;
 }
@@ -38,9 +37,9 @@ Heap* heapInsert(Heap *hp, struct Cell *cell) {
 
     // int new_last = hp->os_size; // Becomes last element
 
-    // if (hp->os_size == 0) {
-    //     hp->bh = malloc(sizeof(*hp->bh));
-    // }
+    if (hp->os_size == 0) {
+        hp->bh = malloc(sizeof(*hp->bh));
+    }
 
     hp->bh = realloc(hp->bh, (hp->os_size + 1) * sizeof(*hp->bh ));
     hp->bh[hp->os_size++] = cell;
@@ -57,7 +56,7 @@ Heap* heapBubbleUp(Heap *hp, int childIdx) {
 
     int parentIdx = ((childIdx - 1) / 2);
 
-    while (childIdx > 0 && hp->bh[parentIdx]->f > hp->bh[childIdx]->f) {
+    while (childIdx > 0 && hp->bh[parentIdx]->f >= hp->bh[childIdx]->f) {
         swap(&hp->bh[parentIdx], &hp->bh[childIdx]);
 
         childIdx = parentIdx;
@@ -100,6 +99,7 @@ Heap* heapBubbleDown(Heap *hp, int parentIdx) {
 
 void swap(struct Cell **a, struct Cell **b) {
     // a = address pointer in list of pointers pointing to. 
+    if (!a || !b) return;
     struct Cell *tmp = *a;
     *a = *b;
     *b = tmp;

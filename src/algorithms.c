@@ -22,6 +22,8 @@ void search() {
 
     struct abuf s_ab = ABUF_INIT;
 
+    
+
     abAppend(&s_ab, "\x1b[?25l", 6);
     abAppend(&s_ab, "\x1b[H", 4);
     abAppend(&s_ab, "\x1b[2J", 4);
@@ -38,24 +40,24 @@ void search() {
 // will return heap probably.
 void astarGrid(Heap *hp, struct abuf *s_ab) {
 
+    struct abuf os_ab = ABUF_INIT;
     
     g->start_cell->g = 0;
     g->start_cell->md = getManhattanDist(g->start_cell, g->end_cell);
-
+    
     // F = G + H
     g->start_cell->f = g->start_cell->g + g->start_cell->md;
     g->start_cell->prev = NULL;
 
     // Add start to the openset.
-    hp = heapInsert(hp, g->start_cell); 
+    hp = heapInsert(hp, g->start_cell);
+    g->start_cell->inOpenSet = true; 
 
     while (hp->os_size > 0 && hp->bh != NULL) {
-
-        
-
         // perhaps we dont remove from here and extract all in one.
         struct Cell *current = heapExtract(hp);
         // os_size = 0
+        current->inOpenSet = false;
 
         
         // if end cell, long version.
@@ -76,16 +78,12 @@ void astarGrid(Heap *hp, struct abuf *s_ab) {
         }
 
         hp = makeClosed(hp, current);
+
+        current->inClosedSet = true;
         // OS: 0
         // CS: 1
 
-        // as expected to up to here.
-
         for (int i = 0; i < 4; i++) {
-            // { 0, -1 }, // Up
-            // { 0, 1 },  // Down
-            // { -1, 0 }, // Left
-            // { 1, 0 }   // Right
             int nx = current->x + DIRS[i][0];
             int ny = current->y + DIRS[i][1];
             
@@ -98,29 +96,33 @@ void astarGrid(Heap *hp, struct abuf *s_ab) {
 
             int tentative_g = current->g + neighbour->weight;
 
-            if (inClosedSet(hp, neighbour) && tentative_g > neighbour->g) continue;
-
-            // need to check for barriers.
-            if (!inOpenSet(hp, neighbour) || tentative_g < neighbour->g) {
-                neighbour->prev = current;
-
-                neighbour->g = tentative_g;
-                neighbour->f = neighbour->g + getManhattanDist(neighbour, g->end_cell);
-                
-                // this check isnt working.
-                if (!inOpenSet(hp, neighbour)) {
-                    hp = heapInsert(hp, neighbour); // okay so something up with this.
-                }
+            if (neighbour->inClosedSet && tentative_g > neighbour->g) {
+                continue;
             }
+
+            if (!neighbour->inOpenSet || tentative_g < neighbour->g) {
+                
+                neighbour->prev = current;
+                neighbour->g = tentative_g;
+                neighbour->md = getManhattanDist(neighbour, g->end_cell);
+                neighbour->f = neighbour->g + neighbour->md;
+                
+                // check if neighbour in there
+                if (!neighbour->inOpenSet) {
+                    hp = heapInsert(hp, neighbour); // duplicates but should be bubbled.
+                    neighbour->inOpenSet = true;
+                } else {
+                    int idx = getOpenSetIdx(hp, neighbour);
+                    hp->bh[idx]->f = neighbour->f;
+                    hp = heapBubbleUp(hp, idx);
+                }
+            } 
         drawGrid(s_ab);
         }
     }
-    // no solution
 }
 
 void astarCell(Heap *hp, struct abuf *s_ab) {
-
-    
     g->start_cell->g = 0;
     g->start_cell->md = getManhattanDist(g->start_cell, g->end_cell);
 
@@ -131,12 +133,10 @@ void astarCell(Heap *hp, struct abuf *s_ab) {
     // Add start to the openset.
     hp = heapInsert(hp, g->start_cell); 
 
-    // os_size = 1
-
 
     while (hp->os_size > 0 && hp->bh != NULL) {
         abAppend(s_ab, "\x1b[?25l", 6);
-        abAppend(s_ab, "\x1b[H", 4);
+        abAppend(s_ab, "\x1b[H", 4); // all above loop?
         drawGrid(s_ab);
 
         // perhaps we dont remove from here and extract all in one.
@@ -266,4 +266,23 @@ bool isStartCell(struct Cell *cell) {
 
 bool isEndCell(struct Cell *cell) {
     return (cell->x == g->end_cell->x && cell->y == g->end_cell->y);
+}
+
+void printOpenSet(Heap* hp, struct abuf *openset_buf) {
+    for (int i = 0; i < hp->os_size; i++) {
+
+        int size = snprintf(NULL, 0, "Cell%d: %d\n", i, hp->bh[i]->f);
+        char buf[size + 1];
+        snprintf(buf, sizeof(buf), "Cell%d: %d\n", i, hp->bh[i]->f);
+        abAppend(openset_buf, buf, sizeof(buf));
+        if (i == hp->os_size - 1) abAppend(openset_buf, "\n\n", 2);
+    }
+}
+
+int getOpenSetIdx(Heap *hp, struct Cell *cell) {
+    for (int i = 0; i < hp->os_size; i++) {
+        if (hp->bh[i]->x == cell->x && hp->bh[i]->y == cell->y) {
+            return i;
+        }
+    }
 }

@@ -74,6 +74,7 @@ struct Grid* initGrid(struct Grid *g, int rows, int cols) {
 		for (int x = 0; x < cols; x++) {
 
 			// Make terminal edges borders by default.
+			// not ideal is it.
 			if (y == 0 || x == 0 || y == Con.screenrows - 1 || x == Con.screencols - 1) {
 				g->cells[y][x].type = PERMANENT_BARRIER;
 				g->cells[y][x].ch = '#';
@@ -88,6 +89,8 @@ struct Grid* initGrid(struct Grid *g, int rows, int cols) {
 				g->cells[y][x].ch = ' ';
 				g->cells[y][x].g = INT_MAX;
 				g->cells[y][x].weight = 1;
+				g->cells[y][x].inOpenSet = false;
+				g->cells[y][x].inClosedSet = false;
 			}
 		}
 	}
