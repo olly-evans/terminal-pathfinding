@@ -29,8 +29,8 @@ void search() {
     abAppend(&s_ab, "\x1b[2J", 4);
     abAppend(&s_ab, "\x1b[3J", 4);
 
-    astarGrid(&hp, &s_ab);
-    // astarCell(&hp, &s_ab);
+    // astarGrid(&hp, &s_ab);
+    astarCell(&hp, &s_ab);
 
     
     write(STDOUT_FILENO, s_ab.b, s_ab.len);
@@ -60,7 +60,7 @@ void astarGrid(Heap *hp, struct abuf *s_ab) {
         current->inOpenSet = false;
 
         
-        // if end cell, long version.
+        // if end cell, long version. isEndCell(current)
         if (current->x == g->end_cell->x && current->y == g->end_cell->y) {
             
             struct Cell *previous = g->end_cell->prev;
@@ -96,27 +96,26 @@ void astarGrid(Heap *hp, struct abuf *s_ab) {
 
             int tentative_g = current->g + neighbour->weight;
 
+            // what if one of these is true?
             if (neighbour->inClosedSet && tentative_g > neighbour->g) {
                 continue;
             }
 
-            if (!neighbour->inOpenSet || tentative_g < neighbour->g) {
-                
+            // IT DOES WORK, THE ARRAY INDEXES ARE CHILDREN REMEMBER!!!!!
+            if (tentative_g < neighbour->g) {
                 neighbour->prev = current;
                 neighbour->g = tentative_g;
-                neighbour->md = getManhattanDist(neighbour, g->end_cell);
-                neighbour->f = neighbour->g + neighbour->md;
-                
-                // check if neighbour in there
+                neighbour->f = tentative_g + getManhattanDist(neighbour, g->end_cell);
+
                 if (!neighbour->inOpenSet) {
-                    hp = heapInsert(hp, neighbour); // duplicates but should be bubbled.
+                    hp = heapInsert(hp, neighbour);
                     neighbour->inOpenSet = true;
                 } else {
                     int idx = getOpenSetIdx(hp, neighbour);
                     hp->bh[idx]->f = neighbour->f;
                     hp = heapBubbleUp(hp, idx);
                 }
-            } 
+            }
         drawGrid(s_ab);
         }
     }
@@ -188,16 +187,18 @@ void astarCell(Heap *hp, struct abuf *s_ab) {
 
             if (inClosedSet(hp, neighbour) && tentative_g > neighbour->g) continue;
 
-            // need to check for barriers.
-            if (!inOpenSet(hp, neighbour) || tentative_g < neighbour->g) {
+            if (tentative_g < neighbour->g) {
                 neighbour->prev = current;
                 neighbour->g = tentative_g;
-                neighbour->f = neighbour->g + getManhattanDist(neighbour, g->end_cell);
-                
+                neighbour->f = tentative_g + getManhattanDist(neighbour, g->end_cell);
 
-                // this check isnt working.
-                if (!inOpenSet(hp, neighbour)) {
-                    hp = heapInsert(hp, neighbour); // okay so something up with this.
+                if (!neighbour->inOpenSet) {
+                    hp = heapInsert(hp, neighbour);
+                    neighbour->inOpenSet = true;
+                } else {
+                    int idx = getOpenSetIdx(hp, neighbour);
+                    hp->bh[idx]->f = neighbour->f;
+                    hp = heapBubbleUp(hp, idx);
                 }
             drawCell(s_ab, neighbour);
             }
