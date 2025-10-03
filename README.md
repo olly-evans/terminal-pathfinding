@@ -1,5 +1,18 @@
 ## IN-PROGRESS
 
+## Notes Having Implemented A*.
+
+- How to store/find selected algorithm in welcome menu.
+- Maze algorithms.
+- Random barriers.
+- Control bar for visualizer.
+
+astarCell()
+- For sure a better way to do this without drawGrid().
+- Also could the heap we used be defined locally here?
+
+
+
 # Notes 
 - vertical scrolling for welcome screen and edge stuff vertical then done w welcome screen i think.
 - make headerrow just below printed bits not rows/3 doesnt make sense.

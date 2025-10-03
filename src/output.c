@@ -213,17 +213,23 @@ void drawGrid(struct abuf *ab) {
                 case PERMANENT_BARRIER:
                     abAppend(ab, "\x1b[37m", 5); // White
                     abAppend(ab, &c->ch, 1);
-                    
                     break;
+
                 case CLOSED:
                     abAppend(ab, "\x1b[35m", 5);
                     abAppend(ab, &c->ch, 1);
-
                     break;
+
                 case OPEN:
                     abAppend(ab, "\x1b[36m", 5);
                     abAppend(ab, &c->ch, 1);
                     break;
+
+                case PATH:
+                    abAppend(ab, "\x1b[33m", 5);
+                    abAppend(ab, &c->ch, 1);
+                    break;
+
                 default:
                     abAppend(ab, &c->ch, 1);  // No color
                     break;
@@ -240,5 +246,16 @@ void drawCell(struct abuf *ab, struct Cell *cell) {
     snprintf(buf, sizeof(buf), "\x1b[%d;%dH", cell->y + 1, cell->x + 1);
     abAppend(ab, buf, strlen(buf)); 
 
+    // char *cell_col = getCellColor(cell);
+
+    // abAppend(ab, cell_col, sizeof(cell_col));
     abAppend(ab, &cell->ch, 1);
+}
+
+char* getCellColor(struct Cell *cell) {
+    
+    switch (cell->type) {
+        case PATH:
+            return "\x1b[33m"; // yellow
+    }
 }

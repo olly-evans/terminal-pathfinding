@@ -5,11 +5,14 @@
 
 #define CTRL_KEY(k) ((k) & 0x1f)
 
+// Move this.
 enum appState {
 	STATE_WELCOME,
 	STATE_VISUALIZATION,
     STATE_RUN
 };
+
+/* LINUX TERMINAL DEPENDANT */
 
 struct Config {
     int screenrows;

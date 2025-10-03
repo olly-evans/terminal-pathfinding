@@ -57,7 +57,6 @@ struct Grid* initGrid(struct Grid *g, int rows, int cols) {
 	g = malloc(sizeof(struct Grid));
 	if (!g) die("Couldn't allocate memory for grid of terminals size.");
 
-	// Allocate the rows and cols.
 	g->rows = rows;
 	g->cols = cols;
 
@@ -65,33 +64,26 @@ struct Grid* initGrid(struct Grid *g, int rows, int cols) {
 	g->cells = malloc(sizeof(struct Cell*) * rows);
 	if (!g->cells) die("g->cells not allocated.");
 
-	// Lord forgive me.
 	for (int y = 0; y < rows; y++) {
 		// Allocate memory for a row of cells, sized for cols
 		g->cells[y] = malloc(sizeof(struct Cell) * cols);
 		if (!g->cells[y]) die("g->cells[y] not allocated");
 
 		for (int x = 0; x < cols; x++) {
-
-			// Make terminal edges borders by default.
-			// not ideal is it.
 			if (y == 0 || x == 0 || y == Con.screenrows - 1 || x == Con.screencols - 1) {
 				g->cells[y][x].type = PERMANENT_BARRIER;
 				g->cells[y][x].ch = '#';
-				g->cells[y][x].x = x;
-				g->cells[y][x].y = y;
-				g->cells[y][x].g = INT_MAX;
-				g->cells[y][x].weight = 1;
 			} else {
 				g->cells[y][x].type = EMPTY;
-				g->cells[y][x].x = x;
-				g->cells[y][x].y = y;
 				g->cells[y][x].ch = ' ';
-				g->cells[y][x].g = INT_MAX;
-				g->cells[y][x].weight = 1;
-				g->cells[y][x].inOpenSet = false;
-				g->cells[y][x].inClosedSet = false;
 			}
+
+			g->cells[y][x].x = x;
+			g->cells[y][x].y = y;
+			g->cells[y][x].g = INT_MAX;
+			g->cells[y][x].weight = 1;
+			g->cells[y][x].inOpenSet = false;
+			g->cells[y][x].inClosedSet = false;
 		}
 	}
 	return g;

@@ -17,7 +17,8 @@ enum CellTypes {
     PERMANENT_BARRIER,
     EMPTY,
     CLOSED,
-    OPEN
+    OPEN,
+    PATH
 };  
 
 struct Cell {
@@ -64,5 +65,6 @@ int getfRowLen(int row);
 void formatRow(char * buf, size_t bufsize, int row);
 void appendVisibleRow(struct abuf *ab, char *buf);
 void drawCell(struct abuf *ab, struct Cell *cell);
+char* getCellColor(struct Cell *cell);
 
 #endif

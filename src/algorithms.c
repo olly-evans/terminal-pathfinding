@@ -122,60 +122,59 @@ void astarGrid(Heap *hp, struct abuf *s_ab) {
 }
 
 void astarCell(Heap *hp, struct abuf *s_ab) {
+    /* 
+
+    Find path to end cell using the A* algorithm 
+    Cell states updated on a per-change basis and written to buffer.
+    
+    For sure a better way to do this without drawGrid().
+    Also could the heap we used be defined locally here?
+    
+    */
+
     g->start_cell->g = 0;
     g->start_cell->md = getManhattanDist(g->start_cell, g->end_cell);
-
-    // F = G + H
     g->start_cell->f = g->start_cell->g + g->start_cell->md;
     g->start_cell->prev = NULL;
 
-    // Add start to the openset.
+    // Heap returned to maintain state.
     hp = heapInsert(hp, g->start_cell); 
 
 
     while (hp->os_size > 0 && hp->bh != NULL) {
-        abAppend(s_ab, "\x1b[?25l", 6);
-        abAppend(s_ab, "\x1b[H", 4); // all above loop?
+        abAppend(s_ab, "\x1b[?25l", 6); // Hide Cursor
+        abAppend(s_ab, "\x1b[H", 4); // Cursor to home (top left).
         drawGrid(s_ab);
 
-        // perhaps we dont remove from here and extract all in one.
         struct Cell *current = heapExtract(hp);
-        // os_size = 0
 
-        
-        // if end cell, long version.
-        if (current->x == g->end_cell->x && current->y == g->end_cell->y) {
+        if (isEndCell(current)) {
             
             struct Cell *previous = g->end_cell->prev;
             while (previous != NULL) {
                 previous->ch = 'P';
+                previous->type = PATH;
+                
+                // Just draws col path right now.
+                char *cell_col = getCellColor(previous);
+                abAppend(s_ab, cell_col, sizeof(cell_col));
                 drawCell(s_ab, previous);
-
 
                 previous = previous->prev;
             }
             break;
         }
 
-        // rem from openset here?
-            
-
         hp = makeClosed(hp, current);
         drawCell(s_ab, current);
-        // OS: 0
-        // CS: 1
 
-        // as expected to up to here.
-
+        // No diagonals, hence 4 neighbours. DIRS appendable to add diagonals.
         for (int i = 0; i < 4; i++) {
-            // { 0, -1 }, // Up
-            // { 0, 1 },  // Down
-            // { -1, 0 }, // Left
-            // { 1, 0 }   // Right
+            // See DIRS array.
             int nx = current->x + DIRS[i][0];
             int ny = current->y + DIRS[i][1];
             
-            // In grid.
+            // Are coords in the grid range.
             if (nx < 0 || ny < 0 || nx >= g->cols || ny >= g->rows) continue;
             
             struct Cell *neighbour = &g->cells[ny][nx];
@@ -196,15 +195,17 @@ void astarCell(Heap *hp, struct abuf *s_ab) {
                     hp = heapInsert(hp, neighbour);
                     neighbour->inOpenSet = true;
                 } else {
-                    int idx = getOpenSetIdx(hp, neighbour);
+                    // Indexing if in open set here is not optimal.
+                    // Can look at using a heap index if becomes problematic.
+                    int idx = getOpenSetIdx(hp, neighbour); 
                     hp->bh[idx]->f = neighbour->f;
                     hp = heapBubbleUp(hp, idx);
                 }
+            // Draw updated neighbour state.
             drawCell(s_ab, neighbour);
             }
         } 
     }
-    // no solution
 }
 
 Heap* makeClosed(Heap *hp, struct Cell* curr) {
@@ -227,20 +228,6 @@ Heap* makeClosed(Heap *hp, struct Cell* curr) {
     curr->type = CLOSED;
     // // Make cell.ch something different.
     return hp;
-}
-
-bool isValidNeighbour(Heap *hp, struct Cell *cell) {
-
-    if (cell->type == PERMANENT_BARRIER || cell->type == BARRIER) return false;
-    
-    // maybe just change to bool.
-    for (int y = 0; y < hp->cs_size; y++) {
-        if (hp->cs[y] == cell) {
-            return false;
-        }
-    }
-
-    return true;
 }
 
 bool inClosedSet(Heap *hp, struct Cell* curr) {
