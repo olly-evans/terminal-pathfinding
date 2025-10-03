@@ -22,29 +22,30 @@ enum CellTypes {
 };  
 
 struct Cell {
-    enum CellTypes type;
-    int x, y;
-    char ch;
+    enum CellTypes type; // What is the cells type, see enum.
+    int x, y; // Cell's y (row) and x (col) in g->cells.
+    char ch; // Cell's outward character.
 
-    struct Cell *prev;
+    struct Cell *prev; // Pointer to cell this cell came from to retrace best path.
     
     bool inOpenSet;
     bool inClosedSet;
 
-
-    int weight;
-    int g;
-    int md;
-    int f; // f = g + manhattan distance (md)
+    int weight; // Cell to cell weight/cost.
+    int g; // Cumulative weight from start cell to this cell.
+    int md; // Manhattan distance of cell to the end cell.
+    int f; // Global cost, f = g + h (md)
 };
 
 struct Grid {
-    int rows, cols;
-    struct Cell **cells;
+    int rows, cols; // The rows and columns in the grid.
 
-    struct Cell *start_cell;
-    struct Cell *end_cell;
+    struct Cell **cells; /* Pointer to array of cell pointers.
+                            Each cell pointer points to an array of cells for each row.
+                         */ 
 
+    struct Cell *start_cell; // Cell pointer to start cell in grid.
+    struct Cell *end_cell; // Cell pointer to end cell in grid.
 };
 
 extern struct Grid *g;

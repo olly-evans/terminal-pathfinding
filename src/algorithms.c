@@ -124,13 +124,18 @@ void astarGrid(Heap *hp, struct abuf *s_ab) {
 void astarCell(Heap *hp, struct abuf *s_ab) {
     /* 
 
-    Find path to end cell using the A* algorithm 
+    Find shortest path to end cell using the A* algorithm 
     Cell states updated on a per-change basis and written to buffer.
     
-    For sure a better way to do this without drawGrid().
     Also could the heap we used be defined locally here?
     
     */
+
+    abAppend(s_ab, "\x1b[?25l", 6); // Hide Cursor
+    abAppend(s_ab, "\x1b[H", 4); // Cursor to home (top left).
+
+    // Draw grid once. Only cells that are changed updated from here.
+    drawGrid(s_ab);
 
     g->start_cell->g = 0;
     g->start_cell->md = getManhattanDist(g->start_cell, g->end_cell);
@@ -140,13 +145,10 @@ void astarCell(Heap *hp, struct abuf *s_ab) {
     // Heap returned to maintain state.
     hp = heapInsert(hp, g->start_cell); 
 
-
     while (hp->os_size > 0 && hp->bh != NULL) {
-        abAppend(s_ab, "\x1b[?25l", 6); // Hide Cursor
-        abAppend(s_ab, "\x1b[H", 4); // Cursor to home (top left).
-        drawGrid(s_ab);
-
+        
         struct Cell *current = heapExtract(hp);
+        drawCell(s_ab, current);
 
         if (isEndCell(current)) {
             
@@ -156,8 +158,8 @@ void astarCell(Heap *hp, struct abuf *s_ab) {
                 previous->type = PATH;
                 
                 // Just draws col path right now.
-                char *cell_col = getCellColor(previous);
-                abAppend(s_ab, cell_col, sizeof(cell_col));
+                // char *cell_col = getCellColor(previous);
+                // abAppend(s_ab, cell_col, sizeof(cell_col));
                 drawCell(s_ab, previous);
 
                 previous = previous->prev;
@@ -169,7 +171,7 @@ void astarCell(Heap *hp, struct abuf *s_ab) {
         drawCell(s_ab, current);
 
         // No diagonals, hence 4 neighbours. DIRS appendable to add diagonals.
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < sizeof(DIRS); i++) {
             // See DIRS array.
             int nx = current->x + DIRS[i][0];
             int ny = current->y + DIRS[i][1];
@@ -254,17 +256,6 @@ bool isStartCell(struct Cell *cell) {
 
 bool isEndCell(struct Cell *cell) {
     return (cell->x == g->end_cell->x && cell->y == g->end_cell->y);
-}
-
-void printOpenSet(Heap* hp, struct abuf *openset_buf) {
-    for (int i = 0; i < hp->os_size; i++) {
-
-        int size = snprintf(NULL, 0, "Cell%d: %d\n", i, hp->bh[i]->f);
-        char buf[size + 1];
-        snprintf(buf, sizeof(buf), "Cell%d: %d\n", i, hp->bh[i]->f);
-        abAppend(openset_buf, buf, sizeof(buf));
-        if (i == hp->os_size - 1) abAppend(openset_buf, "\n\n", 2);
-    }
 }
 
 int getOpenSetIdx(Heap *hp, struct Cell *cell) {
