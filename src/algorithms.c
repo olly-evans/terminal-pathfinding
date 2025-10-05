@@ -52,8 +52,8 @@ void astarGrid(Heap *hp, struct abuf *s_ab) {
     // Add start to the openset.
     hp = heapInsert(hp, g->start_cell);
     g->start_cell->inOpenSet = true; 
-
     while (hp->os_size > 0 && hp->bh != NULL) {
+        sleep(100);
         // perhaps we dont remove from here and extract all in one.
         struct Cell *current = heapExtract(hp);
         // os_size = 0
@@ -116,7 +116,7 @@ void astarGrid(Heap *hp, struct abuf *s_ab) {
                     hp = heapBubbleUp(hp, idx);
                 }
             }
-        drawGrid(s_ab);
+            drawGrid(s_ab);
         }
     }
 }
@@ -153,7 +153,7 @@ void astarCell(Heap *hp, struct abuf *s_ab) {
         if (isEndCell(current)) {
             
             struct Cell *previous = g->end_cell->prev;
-            while (previous != NULL) {
+            while (previous != NULL && !isStartCell(previous)) {
                 previous->ch = 'P';
                 previous->type = PATH;
                 
@@ -186,7 +186,7 @@ void astarCell(Heap *hp, struct abuf *s_ab) {
 
             int tentative_g = current->g + neighbour->weight;
 
-            if (inClosedSet(hp, neighbour) && tentative_g > neighbour->g) continue;
+            if (neighbour->inClosedSet && tentative_g > neighbour->g) continue;
 
             if (tentative_g < neighbour->g) {
                 neighbour->prev = current;
@@ -195,17 +195,14 @@ void astarCell(Heap *hp, struct abuf *s_ab) {
 
                 if (!neighbour->inOpenSet) {
                     hp = heapInsert(hp, neighbour);
-                    neighbour->inOpenSet = true;
                 } else {
                     // Indexing if in open set here is not optimal.
-                    // Can look at using a heap index if becomes problematic.
                     int idx = getOpenSetIdx(hp, neighbour); 
                     hp->bh[idx]->f = neighbour->f;
                     hp = heapBubbleUp(hp, idx);
                 }
-            // Draw updated neighbour state.
-            drawCell(s_ab, neighbour);
             }
+            drawCell(s_ab, neighbour);
         } 
     }
 }
@@ -225,9 +222,11 @@ Heap* makeClosed(Heap *hp, struct Cell* curr) {
 
     if (!isStartCell(curr) && !isEndCell(curr)) {
         curr->ch = 'C'; 
+        curr->type = CLOSED;
         
     }
-    curr->type = CLOSED;
+    curr->inClosedSet = true;
+    
     // // Make cell.ch something different.
     return hp;
 }

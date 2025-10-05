@@ -264,7 +264,6 @@ char* getCellColor(struct Cell *cell) {
         case BARRIER:
             return "\x1b[37m"; // White
         
-        // i think closed cells
         case OPEN:
             return "\x1b[36m";
         case CLOSED:

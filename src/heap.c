@@ -13,6 +13,7 @@ struct Cell *heapExtract(Heap *hp) {
 
     struct Cell *extracted = hp->bh[0];  // the cell to pop
 
+    
     // Swap root with last element
     int lastIdx = hp->os_size - 1;
     swap(&hp->bh[0], &hp->bh[lastIdx]);
@@ -21,6 +22,7 @@ struct Cell *heapExtract(Heap *hp) {
     // Bubble down the new root to maintain heap property
     heapBubbleDown(hp, 0);
 
+    extracted->inOpenSet = false;
     return extracted;
 }
 
@@ -34,7 +36,7 @@ Heap* heapInsert(Heap *hp, struct Cell *cell) {
         cell->ch = 'O'; //
     }
     cell->type = OPEN; //
-
+    cell->inOpenSet = true;
     // int new_last = hp->os_size; // Becomes last element
 
     if (hp->os_size == 0) {
@@ -52,6 +54,7 @@ Heap* heapInsert(Heap *hp, struct Cell *cell) {
 
 Heap* heapBubbleUp(Heap *hp, int childIdx) {
 
+    /* Try and make this account for g score too */
     if (childIdx == 0) return hp;
 
     int parentIdx = ((childIdx - 1) / 2);
@@ -114,10 +117,7 @@ Heap initBinaryHeap(Heap hp) {
 }
 
 /* MIGHT NEED TO BE IN ANOTHER FILE. */
+
 int getManhattanDist(struct Cell *c1, struct Cell *end) {
-    return abs(end->x - c1->x) + abs(end->y - c1->y);
+    return 2*(abs(end->x - c1->x) + abs(end->y - c1->y));
 }
-
-// get neighbours
-
-// we calculate function value for cell. we add it to min prio queue where lowest value chosen next.

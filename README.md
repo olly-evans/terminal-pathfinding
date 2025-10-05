@@ -2,6 +2,10 @@
 
 ## Notes Having Implemented A*.
 
+- broken again but minimal.
+
+PRIO 1 --- BUBBLEUP take into account g when f score is equal.
+
 - How to store/find selected algorithm in welcome menu.
 - Maze algorithms.
 - Random barriers.
@@ -10,6 +14,8 @@
 astarCell()
 - For sure a better way to do this without drawGrid().
 - Also could the heap we used be defined locally here?
+
+- saving a maze to a file and loading from a file.
 
 
 
