@@ -185,4 +185,3 @@ void handleRPress(struct Cell *curr_cell) {
         return;
     }
 }
-

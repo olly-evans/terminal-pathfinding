@@ -127,9 +127,10 @@ void astarGrid(Heap *hp, struct abuf *s_ab) {
 void astarCell(struct abuf *s_ab) {
     /* 
 
-    Find shortest path to end cell using the A* algorithm 
-    Cell states updated on a per-change basis and written
-    to appendable buffer.
+    Find shortest path to end cell using the A* algorithm.
+
+    Cell states updated and written to appendable buffer
+    upon change.
         
     */
 
@@ -231,8 +232,6 @@ Heap* makeClosed(Heap *hp, struct Cell* curr) {
     // // Make cell.ch something different.
     return hp;
 }
-
-
 
 int getOpenSetIdx(Heap *hp, struct Cell *cell) {
     for (int i = 0; i < hp->os_size; i++) {
