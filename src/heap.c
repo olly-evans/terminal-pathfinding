@@ -6,8 +6,7 @@
 #include "algorithms.h"
 #include "cell.h"
 
-/* HEAP STORES OPEN AND CLOSED SET */
-// Heap hp;
+/* Functions that provide functionality for a priority queue using a binary min-heap */
 
 struct Cell *heapExtract(Heap *hp) {
     if (hp->os_size == 0) return NULL;
@@ -97,7 +96,6 @@ Heap* heapBubbleDown(Heap *hp, int parentIdx) {
         swap(&hp->bh[parentIdx], &hp->bh[smallestIdx]);
         parentIdx = smallestIdx;
     }
-
     return hp;
 }
 

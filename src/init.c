@@ -50,9 +50,6 @@ void init() {
     g->end_cell = NULL;
 
 	getTableColWidths();
-
-	// hp = initBinaryHeap(hp);
-
 }
 
 struct Grid* initGrid(struct Grid *g, int rows, int cols) {

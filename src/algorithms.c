@@ -173,7 +173,7 @@ void astarCell(struct abuf *s_ab) {
         drawCell(s_ab, current);
 
         // No diagonals, hence 4 neighbours. DIRS appendable to add diagonals.
-        for (int i = 0; i < sizeof(DIRS); i++) {
+        for (int i = 0; i < sizeof(DIRS)/sizeof(DIRS[0]); i++) {
             // See DIRS array.
             int nx = current->x + DIRS[i][0];
             int ny = current->y + DIRS[i][1];
