@@ -4,7 +4,7 @@
 
 #include "terminal.h"
 #include "init.h"
-#include "output.h"
+#include "welcome.h"
 #include "algorithms.h"
 #include "heap.h"
 #include "cell.h"

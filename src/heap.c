@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#include "output.h"
+#include "welcome.h"
 #include "heap.h"
 #include "algorithms.h"
 #include "cell.h"

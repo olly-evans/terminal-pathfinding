@@ -4,7 +4,6 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-#include "output.h"
 #include "terminal.h"
 #include "abuf.h"
 #include "input.h"
@@ -159,29 +158,4 @@ void appendVisibleRow(struct abuf *ab, char *buf) {
 
     
     abAppend(ab, &buf[Con.coloff], len); 
-}
-
-/* VISUALIZER */
-
-void drawPathfindingVisualizer() {
-
-    struct abuf vis_ab = ABUF_INIT;
-
-    abAppend(&vis_ab, "\x1b[?25l", 6);
-    abAppend(&vis_ab, "\x1b[H", 4);
-    abAppend(&vis_ab, "\x1b[2J", 4);
-    abAppend(&vis_ab, "\x1b[3J", 4);
-
-    drawGrid(&vis_ab);
-
-    char buf[32];
-    snprintf(buf, sizeof(buf), "\x1b[%d;%dH", Con.cy + 1, Con.cx + 1);
-    abAppend(&vis_ab, buf, strlen(buf)); 
-
-
-    abAppend(&vis_ab, "\x1b[?25h", 6);
-    
-    write(STDOUT_FILENO, vis_ab.b, vis_ab.len);
-
-    abFree(&vis_ab);
 }

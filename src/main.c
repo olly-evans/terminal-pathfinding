@@ -5,7 +5,7 @@
 
 #include "terminal.h"
 #include "input.h"
-#include "output.h"
+#include "welcome.h"
 #include "init.h"
 #include "algorithms.h"
 #include "grid.h"

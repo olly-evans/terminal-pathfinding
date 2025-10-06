@@ -1,7 +1,7 @@
 #ifndef ALGORITHMS_H
 #define ALGORITHMS_H
 
-#include "output.h"
+#include "welcome.h"
 #include "heap.h"
 
 /* Welcome Info */

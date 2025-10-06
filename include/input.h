@@ -2,7 +2,7 @@
 #define INPUT_H
 
 #include "cell.h"
-#include "output.h"
+#include "welcome.h"
 
 enum editorKey {
   ARROW_LEFT = 1000,
