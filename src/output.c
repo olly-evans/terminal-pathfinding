@@ -162,7 +162,6 @@ void appendVisibleRow(struct abuf *ab, char *buf) {
 /* VISUALIZER */
 
 void drawPathfindingVisualizer() {
-    // Con.state = STATE_VISUALIZATION;
 
     struct abuf vis_ab = ABUF_INIT;
 
@@ -246,7 +245,7 @@ void drawCell(struct abuf *ab, struct Cell *cell) {
     abAppend(ab, buf, strlen(buf)); 
 
     char *cell_col = getCellColor(cell);
-
+    // usleep(10000); // wont work :(
     abAppend(ab, cell_col, strlen(cell_col));
     abAppend(ab, &cell->ch, 1);
 }

@@ -53,7 +53,6 @@ void astarGrid(Heap *hp, struct abuf *s_ab) {
     hp = heapInsert(hp, g->start_cell);
     g->start_cell->inOpenSet = true; 
     while (hp->os_size > 0 && hp->bh != NULL) {
-        sleep(100);
         // perhaps we dont remove from here and extract all in one.
         struct Cell *current = heapExtract(hp);
         // os_size = 0

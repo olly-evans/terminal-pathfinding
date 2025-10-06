@@ -31,10 +31,10 @@ struct Cell {
     bool inOpenSet;
     bool inClosedSet;
 
-    int weight; // Cell to cell weight/cost.
+    int weight; // Cell to cell weight.
     int g; // Cumulative weight from start cell to this cell.
     int md; // Manhattan distance of cell to the end cell.
-    int f; // Global cost, f = g + h (md)
+    int f; // Global cost, f = g + h 
 };
 
 struct Grid {
