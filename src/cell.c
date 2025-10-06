@@ -25,9 +25,10 @@ void drawCell(struct abuf *ab, struct Cell *cell) {
 
     char *cell_col = getCellColor(cell);
     usleep(10000); 
+
+    abAppend(&cell_buf, "\x1b[?25l", 6);
     abAppend(&cell_buf, cell_col, strlen(cell_col));
     abAppend(&cell_buf, &cell->ch, 1);
-    abAppend(&cell_buf, "\x1b[H", 3);
     write(STDOUT_FILENO, cell_buf.b, cell_buf.len); 
     
     // this write also isnt correct, testing it.
