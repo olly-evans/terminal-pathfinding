@@ -118,3 +118,34 @@ Heap* initHeap() {
     hp->cs_size = 0;
     return hp;
 }
+
+Heap* makeClosed(Heap *hp, struct Cell* curr) {
+
+    /* Add a cell to the closed set. */
+
+    if (curr->inClosedSet) return hp;
+
+    // Make memory for it.
+    hp->cs = realloc(hp->cs, (hp->cs_size + 1) * sizeof(*hp->cs )); 
+
+    // Add it.
+    hp->cs[hp->cs_size] = curr;
+    hp->cs_size++;
+
+    if (!isStartCell(curr) && !isEndCell(curr)) {
+        curr->ch = 'C'; 
+        curr->type = CLOSED;
+    }
+    curr->inClosedSet = true;
+    
+    // // Make cell.ch something different.
+    return hp;
+}
+
+int getOpenSetIdx(Heap *hp, struct Cell *cell) {
+    for (int i = 0; i < hp->os_size; i++) {
+        if (hp->bh[i]->x == cell->x && hp->bh[i]->y == cell->y) {
+            return i;
+        }
+    }
+}

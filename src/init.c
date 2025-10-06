@@ -1,6 +1,5 @@
 #include <stdlib.h>
 #include <string.h>
-#include <limits.h>
 
 #include "terminal.h"
 #include "init.h"
@@ -36,7 +35,7 @@ void init() {
 	// Allocate rows and cols of terminal, initialise grid with these values.
 	if (getWindowSize(&Con.screenrows, &Con.screencols) == -1) die("getWindowSize");
 	
-	Con.headerrow = 2; // Always the 3rd row.
+	Con.headerrow = 2; // Will be refactored. TMP
 
 	if (Con.screenrows < Con.headerrow + algos.algoCount + 1) die("Larger terminal height required.");
 

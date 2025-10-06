@@ -24,17 +24,14 @@ void search() {
 
     struct abuf s_ab = ABUF_INIT;
 
-    
-
     abAppend(&s_ab, "\x1b[?25l", 6);
     abAppend(&s_ab, "\x1b[H", 4);
     abAppend(&s_ab, "\x1b[2J", 4);
     abAppend(&s_ab, "\x1b[3J", 4);
 
-    // astarGrid(&hp, &s_ab);
+    // astarGrid(&hp, &s_ab);h fo
     astarCell(&s_ab);
 
-    
     write(STDOUT_FILENO, s_ab.b, s_ab.len);
     abFree(&s_ab);
 }
@@ -42,7 +39,7 @@ void search() {
 // will return heap probably.
 void astarGrid(Heap *hp, struct abuf *s_ab) {
 
-    /* Very very very outdated. Only kept for testing. */
+    /* Very very very outdated compared to astarCell. Only here for testing for now. */
 
     struct abuf os_ab = ABUF_INIT;
     
@@ -56,6 +53,7 @@ void astarGrid(Heap *hp, struct abuf *s_ab) {
     // Add start to the openset.
     hp = heapInsert(hp, g->start_cell);
     g->start_cell->inOpenSet = true; 
+
     while (hp->os_size > 0 && hp->bh != NULL) {
         // perhaps we dont remove from here and extract all in one.
         struct Cell *current = heapExtract(hp);
@@ -128,6 +126,7 @@ void astarCell(struct abuf *s_ab) {
     /* 
 
     Find shortest path to end cell using the A* algorithm.
+    Draw the shortest path using cell pointers.
 
     Cell states updated and written to appendable buffer
     upon change.
@@ -206,37 +205,5 @@ void astarCell(struct abuf *s_ab) {
             }
             drawCell(s_ab, neighbour);
         } 
-    }
-}
-
-Heap* makeClosed(Heap *hp, struct Cell* curr) {
-
-    /* Add a cell to the closed set. */
-
-    if (curr->inClosedSet) return hp;
-
-    // Make memory for it.
-    hp->cs = realloc(hp->cs, (hp->cs_size + 1) * sizeof(*hp->cs )); 
-
-    // Add it.
-    hp->cs[hp->cs_size] = curr;
-    hp->cs_size++;
-
-    if (!isStartCell(curr) && !isEndCell(curr)) {
-        curr->ch = 'C'; 
-        curr->type = CLOSED;
-        
-    }
-    curr->inClosedSet = true;
-    
-    // // Make cell.ch something different.
-    return hp;
-}
-
-int getOpenSetIdx(Heap *hp, struct Cell *cell) {
-    for (int i = 0; i < hp->os_size; i++) {
-        if (hp->bh[i]->x == cell->x && hp->bh[i]->y == cell->y) {
-            return i;
-        }
     }
 }

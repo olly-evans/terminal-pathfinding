@@ -30,15 +30,4 @@ void search();
 void astarCell(struct abuf *s_ab);
 void astarGrid(Heap *hp, struct abuf *s_ab);
 
-
-void initSearch();
-struct Cell* updateCellF(struct Cell *cell);
-Heap* makeClosed(Heap *hp, struct Cell* curr);
-bool isValidNeighbour(Heap *hp, struct Cell *cell);
-bool inClosedSet(Heap *hp, struct Cell *curr);
-bool inOpenSet(Heap *hp, struct Cell* curr);
-
-int getOpenSetIdx(Heap *hp, struct Cell *cell);
-
-
 #endif

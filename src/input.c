@@ -64,7 +64,7 @@ void dashProcessKeypress() {
             write(STDOUT_FILENO, "\x1b[0m", 4); // Reset terminal text-styles.
             write(STDOUT_FILENO, "\x1b[?25h", 6); // Give user their cursor back.
 
-            /* OPEN SET DEBUGGING */
+            ///////////* OPEN SET DEBUGGING *///////////
 
             // disableRawMode(); 
             
@@ -83,7 +83,8 @@ void dashProcessKeypress() {
             // printf("Open set size: %i\n", hp.os_size);
             // printf("Closed set size: %i\n", hp.cs_size);
 
-
+            ///////////* OPEN SET DEBUGGING *///////////
+            
             exit(0);
             break;
 
