@@ -1,6 +1,7 @@
 #include <stdio.h>  
 #include <string.h>
 #include <stdlib.h>
+#include <unistd.h>
 
 #include "abuf.h"
 #include "cell.h"
@@ -8,15 +9,22 @@
 
 void drawCell(struct abuf *ab, struct Cell *cell) {
 
-    // append cursor pos
+    /* 
+    
+    buffer is problematic here. a lot of writes needed with each cell. 
+    perhaps just make a new buffer in here? might be wishful thinking.
+
+    */
     char buf[32];
     snprintf(buf, sizeof(buf), "\x1b[%d;%dH", cell->y + 1, cell->x + 1);
     abAppend(ab, buf, strlen(buf)); 
 
     char *cell_col = getCellColor(cell);
-    // usleep(10000); // wont work :(
+    usleep(10000); 
     abAppend(ab, cell_col, strlen(cell_col));
     abAppend(ab, &cell->ch, 1);
+    abAppend(ab, "\x1b[H", 3);
+    write(STDOUT_FILENO, ab->b, ab->len);
 }
 
 char* getCellColor(struct Cell *cell) {

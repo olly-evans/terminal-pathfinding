@@ -1,6 +1,7 @@
 {
     "files.associations": {
         "stdio.h": "c",
-        "output.h": "c"
+        "output.h": "c",
+        "grid.h": "c"
     }
 }

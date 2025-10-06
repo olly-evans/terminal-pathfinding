@@ -25,7 +25,7 @@ void search() {
     struct abuf s_ab = ABUF_INIT;
 
     abAppend(&s_ab, "\x1b[?25l", 6);
-    abAppend(&s_ab, "\x1b[H", 4);
+    abAppend(&s_ab, "\x1b[H", 3);
     abAppend(&s_ab, "\x1b[2J", 4);
     abAppend(&s_ab, "\x1b[3J", 4);
 
