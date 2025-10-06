@@ -10,6 +10,7 @@
 #include "algorithms.h"
 #include "heap.h"
 #include "cell.h"
+#include "grid.h"
 
 void dashMoveCursor(int key) {
     switch (key) {

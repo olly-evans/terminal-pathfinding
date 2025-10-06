@@ -3,6 +3,8 @@
 
 #include <stdbool.h>
 
+#include "abuf.h"
+
 enum CellTypes {
     START,
     END,

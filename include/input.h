@@ -1,6 +1,7 @@
 #ifndef INPUT_H
 #define INPUT_H
 
+#include "cell.h"
 #include "output.h"
 
 enum editorKey {

@@ -8,13 +8,13 @@
 #include "output.h"
 #include "init.h"
 #include "algorithms.h"
+#include "grid.h"
 
 int main(void) {
     enableRawMode();
     init();
 
     while (1) {
-        // Con global instance of config struct.
         // Con.app_state changed upon enter keypress in STATE_WELCOME.
         if (Con.state == STATE_WELCOME) drawWelcomeScreen();
         if (Con.state == STATE_VISUALIZATION) drawPathfindingVisualizer();

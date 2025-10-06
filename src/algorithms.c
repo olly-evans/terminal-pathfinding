@@ -9,6 +9,7 @@
 #include "algorithms.h"
 #include "heap.h"
 #include "cell.h"
+#include "grid.h"
 
 const int DIRS[4][2] = {
     { 0, -1 }, // Up
