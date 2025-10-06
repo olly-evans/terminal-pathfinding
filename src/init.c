@@ -51,7 +51,7 @@ void init() {
 
 	getTableColWidths();
 
-	hp = initBinaryHeap(hp);
+	// hp = initBinaryHeap(hp);
 
 }
 

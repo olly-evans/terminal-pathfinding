@@ -32,7 +32,7 @@ void search() {
     abAppend(&s_ab, "\x1b[3J", 4);
 
     // astarGrid(&hp, &s_ab);
-    astarCell(&hp, &s_ab);
+    astarCell(&s_ab);
 
     
     write(STDOUT_FILENO, s_ab.b, s_ab.len);
@@ -122,7 +122,7 @@ void astarGrid(Heap *hp, struct abuf *s_ab) {
     }
 }
 
-void astarCell(Heap *hp, struct abuf *s_ab) {
+void astarCell(struct abuf *s_ab) {
     /* 
 
     Find shortest path to end cell using the A* algorithm 
@@ -131,6 +131,16 @@ void astarCell(Heap *hp, struct abuf *s_ab) {
     Also could the heap we used be defined locally here?
     
     */
+
+    Heap *hp = malloc(sizeof(Heap));
+    if (!hp) die("Couldn't allocate memory for Open and Closed set.");
+
+    hp->cs = NULL;
+    hp->cs_size = 0;
+    hp->os_size = 0;
+    hp->bh = NULL;
+
+    ///////////////////
 
     abAppend(s_ab, "\x1b[?25l", 6); // Hide Cursor
     abAppend(s_ab, "\x1b[H", 4); // Cursor to home (top left).

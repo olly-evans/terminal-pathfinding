@@ -6,8 +6,8 @@
 #include "algorithms.h"
 #include "cell.h"
 
-/* PRIORITY QUEUE */
-Heap hp;
+/* HEAP STORES OPEN AND CLOSED SET */
+// Heap hp;
 
 struct Cell *heapExtract(Heap *hp) {
     if (hp->os_size == 0) return NULL;
@@ -115,10 +115,4 @@ Heap initBinaryHeap(Heap hp) {
     hp.bh = NULL;
     hp.cs = NULL;
     return hp;
-}
-
-/* MIGHT NEED TO BE IN ANOTHER FILE. */
-
-int getManhattanDist(struct Cell *c1, struct Cell *end) {
-    return 2*(abs(end->x - c1->x) + abs(end->y - c1->y));
 }

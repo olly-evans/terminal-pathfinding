@@ -2,6 +2,8 @@
 #ifndef HEAP_H
 #define HEAP_H
 
+#define HEAP_INIT (Heap){.bh = NULL, .os_size = 0, .cs = NULL, .cs_size = 0};
+
 typedef struct {
     struct Cell **bh; // Binary minimum heap, zero-indexed so left child at 2i + 1, right at 2i + 2.
     int os_size;

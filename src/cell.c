@@ -1,5 +1,6 @@
 #include <stdio.h>  
 #include <string.h>
+#include <stdlib.h>
 
 #include "abuf.h"
 #include "cell.h"
@@ -35,4 +36,8 @@ char* getCellColor(struct Cell *cell) {
         case CLOSED:
             return "\x1b[35m";
     }   
+}
+
+int getManhattanDist(struct Cell *c1, struct Cell *end) {
+    return 2*(abs(end->x - c1->x) + abs(end->y - c1->y));
 }

@@ -27,7 +27,7 @@ extern tablerow algoRows[];
 
 void search();
 
-void astarCell(Heap *hp, struct abuf *s_ab);
+void astarCell(struct abuf *s_ab);
 void astarGrid(Heap *hp, struct abuf *s_ab);
 
 
