@@ -18,25 +18,6 @@ const int DIRS[4][2] = {
     { 1, 0 }   // Right
 };
 
-// perhaps just search.c with algos elsewhere.
-
-void search() {
-
-    struct abuf s_ab = ABUF_INIT;
-
-    abAppend(&s_ab, "\x1b[?25l", 6);
-    abAppend(&s_ab, "\x1b[H", 3);
-    abAppend(&s_ab, "\x1b[2J", 4);
-    abAppend(&s_ab, "\x1b[3J", 4);
-
-    // astarGrid(&hp, &s_ab);h fo
-    astarCell(&s_ab);
-
-    write(STDOUT_FILENO, s_ab.b, s_ab.len);
-    abFree(&s_ab);
-}
-
-// will return heap probably.
 void astarGrid(Heap *hp, struct abuf *s_ab) {
 
     /* Very very very outdated compared to astarCell. Only here for testing for now. */
@@ -79,10 +60,7 @@ void astarGrid(Heap *hp, struct abuf *s_ab) {
         }
 
         hp = makeClosed(hp, current);
-
         current->inClosedSet = true;
-        // OS: 0
-        // CS: 1
 
         for (int i = 0; i < 4; i++) {
             int nx = current->x + DIRS[i][0];
@@ -122,22 +100,19 @@ void astarGrid(Heap *hp, struct abuf *s_ab) {
     }
 }
 
-void astarCell(struct abuf *s_ab) {
+void astar() {
     /* 
 
     Find shortest path to end cell using the A* algorithm.
-    Draw the shortest path using cell pointers.
+    Shortest path drawn using cell pointers.
 
-    Cell states updated and written to appendable buffer
-    upon change.
+    Cell states updated and appended to buffer before being
+    written to the terminal.
         
     */
 
     // Init heap struct containing open and closed set, (bh and cs).
     Heap *hp = initHeap();
-
-    // Draw grid once. Only cells that are changed updated from here.
-    drawGrid(s_ab);
 
     g->start_cell->g = 0;
     g->start_cell->md = getManhattanDist(g->start_cell, g->end_cell);
@@ -203,4 +178,6 @@ void astarCell(struct abuf *s_ab) {
             drawCell(neighbour);
         } 
     }
+    // No solution.
+    // Want the grid to stay in place and a refresh option.
 }

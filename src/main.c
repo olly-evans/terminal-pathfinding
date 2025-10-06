@@ -21,7 +21,7 @@ int main(void) {
         dashProcessKeypress();
 
         if (Con.state == STATE_RUN) {
-            search(); // How is a chosen algo identified.. panel has a pointer to it perhaps.
+            astar(); // How is a chosen algo identified.. panel has a pointer to it perhaps.
             dashProcessKeypress();
             break;
         }

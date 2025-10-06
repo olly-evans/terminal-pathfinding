@@ -31,6 +31,7 @@ void drawCell(struct Cell *cell) {
     abAppend(&cell_buf, cell_color, strlen(cell_color));
     abAppend(&cell_buf, &cell->ch, 1);
     write(STDOUT_FILENO, cell_buf.b, cell_buf.len); 
+    abFree(&cell_buf);
 }
 
 char* getCellColor(struct Cell *cell) {

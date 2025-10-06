@@ -4,7 +4,10 @@
 
 - broken again but minimal.
 
-PRIO 1 --- BUBBLEUP take into account g when f score is equal.
+- WHY ARE SOME CLOSED SET CELLS BEING REPLACED WITH O'S?
+
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
 
 - How to store/find selected algorithm in welcome menu.
 - Maze algorithms.
@@ -15,8 +18,8 @@ astarCell()
 - For sure a better way to do this without drawGrid().
 
 - saving a maze to a file and loading from a file.
-- Find better way to render cell by cell. Requires a lot of writes.
-
+- I think we're analysing cells multiple times, but i can't prove it :>/
+- Something is drawing the grid in astarCell without drawGrid() and i dont know what...????
 
 # Notes 
 - vertical scrolling for welcome screen and edge stuff vertical then done w welcome screen i think.
@@ -26,35 +29,9 @@ astarCell()
 are all of its constituent functions, work on the algorithms and have fun before coming back to fix
 that shit, and really think about the logic for vertical scrolling.
 
-#### ACTUAL WAVES
-
-- use capacity instead of realloc everytime we heapInsert.
-- use bool instead of loops for open/closed set checks.
-
-
-- drawgrid needs to run in an infinite loop.
-- astar() doesnt.
-- They need to be decoupled somehow.
-
-Track which cells were updated (e.g., visited, open, closed)
-
-Move the cursor to their terminal position
-
-Write just that one character
-
-
-
-
-
-
-
-
-
-
-
 # Binary Heap
 
-- OS_SIZE = SIZEOF(BH) / SIZEOF(BH[0])
+- OS_SIZE = SIZEOF(BH) / SIZEOF(BH[0]) ////////
 
 
 - print OPEN SET.

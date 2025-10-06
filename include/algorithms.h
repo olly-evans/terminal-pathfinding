@@ -25,9 +25,7 @@ typedef struct {
 extern table algos;
 extern tablerow algoRows[];
 
-void search();
-
-void astarCell(struct abuf *s_ab);
+void astar();
 void astarGrid(Heap *hp, struct abuf *s_ab);
 
 #endif

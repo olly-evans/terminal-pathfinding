@@ -88,25 +88,27 @@ void dashProcessKeypress() {
             exit(0);
             break;
 
-        if (Con.state == STATE_RUN) return;
 
-        case 'a':
+        if (Con.state == STATE_RUN) return; // Lower so below c eventaully, want screen clear post-run.
+
+        case 'c':
             freeGrid(g);
             g = initGrid(g, Con.screenrows, Con.screencols);
             g->end_cell = NULL;
             g->start_cell = NULL;
 
             break;
-
+        
         // Enter is a carriage return in raw mode.
         case ('\r'):
             if (Con.state == STATE_WELCOME) {
                 Con.state = STATE_VISUALIZATION;
+
+                // Bit dodge, can't be in the infinite loop.
                 Con.cy = 5; // why is this here?
                 Con.cx = 37;
                 break;
-
-                
+ 
             }
             if (Con.state == STATE_VISUALIZATION && g->end_cell != NULL && g->start_cell != NULL) {
                 Con.state = STATE_RUN;
