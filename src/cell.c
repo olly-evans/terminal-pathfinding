@@ -7,33 +7,30 @@
 #include "cell.h"
 #include "grid.h"
 
-void drawCell(struct abuf *ab, struct Cell *cell) {
+void drawCell(struct Cell *cell) {
 
     /* 
 
-    buffer is problematic here. a lot of writes needed with each cell. 
-    perhaps just make a new buffer in here? Is basically the same thing.
-    Perhaps dont update after individual cells but as neighbours or something.
+    Move the cursor to the arg cell's y,x and append its new character.
+
+    Write this small buffer to terminal to draw it.
+    
     */
 
-    // okay this isnt as flickery because we're writing less. as opposed to appending whole of ab.
-    // need to investigate what that is again. but is exiting weirdly once its found path.
+    // Much better, no flickering i can see but exiting weirdly. Problem for later/tomorrow.
     struct abuf cell_buf = ABUF_INIT;
     char buf[32];
     snprintf(buf, sizeof(buf), "\x1b[%d;%dH", cell->y + 1, cell->x + 1);
     abAppend(&cell_buf, buf, strlen(buf)); 
 
-    char *cell_col = getCellColor(cell);
+    char *cell_color = getCellColor(cell);
+
     usleep(10000); 
 
-    abAppend(&cell_buf, "\x1b[?25l", 6);
-    abAppend(&cell_buf, cell_col, strlen(cell_col));
+    abAppend(&cell_buf, "\x1b[?25l", 6); // Hide cursor.
+    abAppend(&cell_buf, cell_color, strlen(cell_color));
     abAppend(&cell_buf, &cell->ch, 1);
     write(STDOUT_FILENO, cell_buf.b, cell_buf.len); 
-    
-    // this write also isnt correct, testing it.
-    // its writing the whole buffer up to this point or something its not great.
-    // lots of flicker.
 }
 
 char* getCellColor(struct Cell *cell) {

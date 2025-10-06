@@ -32,7 +32,7 @@ struct Cell {
     int f; // Global cost, f = g + h 
 };
 
-void drawCell(struct abuf *ab, struct Cell *cell);
+void drawCell(struct Cell *cell);
 char* getCellColor(struct Cell *cell);
 bool isStartCell(struct Cell *cell);
 bool isEndCell(struct Cell *cell);

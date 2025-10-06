@@ -135,9 +135,6 @@ void astarCell(struct abuf *s_ab) {
 
     // Init heap struct containing open and closed set, (bh and cs).
     Heap *hp = initHeap();
-    
-    abAppend(s_ab, "\x1b[?25l", 6); // Hide Cursor
-    abAppend(s_ab, "\x1b[H", 4); // Cursor to home (top left).
 
     // Draw grid once. Only cells that are changed updated from here.
     drawGrid(s_ab);
@@ -152,7 +149,7 @@ void astarCell(struct abuf *s_ab) {
     while (hp->os_size > 0 && hp->bh != NULL) {
         
         struct Cell *current = heapExtract(hp);
-        drawCell(s_ab, current);
+        drawCell(current);
 
         if (isEndCell(current)) {
             
@@ -160,7 +157,7 @@ void astarCell(struct abuf *s_ab) {
             while (previous != NULL && !isStartCell(previous)) {
                 previous->ch = 'P';
                 previous->type = PATH;
-                drawCell(s_ab, previous);
+                drawCell(previous);
 
                 previous = previous->prev;
             }
@@ -168,7 +165,7 @@ void astarCell(struct abuf *s_ab) {
         }
 
         hp = makeClosed(hp, current);
-        drawCell(s_ab, current);
+        drawCell(current);
 
         // No diagonals, hence 4 neighbours. DIRS appendable to add diagonals.
         for (int i = 0; i < sizeof(DIRS)/sizeof(DIRS[0]); i++) {
@@ -203,7 +200,7 @@ void astarCell(struct abuf *s_ab) {
                     hp = heapBubbleUp(hp, idx);
                 }
             }
-            drawCell(s_ab, neighbour);
+            drawCell(neighbour);
         } 
     }
 }
