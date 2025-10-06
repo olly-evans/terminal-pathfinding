@@ -9,6 +9,7 @@
 #include "output.h"
 #include "algorithms.h"
 #include "heap.h"
+#include "cell.h"
 
 void dashMoveCursor(int key) {
     switch (key) {

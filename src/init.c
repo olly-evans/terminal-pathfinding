@@ -7,6 +7,7 @@
 #include "output.h"
 #include "algorithms.h"
 #include "heap.h"
+#include "cell.h"
 
 struct Grid *g = NULL;
 

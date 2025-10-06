@@ -4,6 +4,7 @@
 #include "output.h"
 #include "heap.h"
 #include "algorithms.h"
+#include "cell.h"
 
 /* PRIORITY QUEUE */
 Heap hp;
