@@ -109,10 +109,14 @@ void swap(struct Cell **a, struct Cell **b) {
     *b = tmp;
 }
 
-Heap initBinaryHeap(Heap hp) {
-    hp.os_size = 0;
-    hp.cs_size = 0;
-    hp.bh = NULL;
-    hp.cs = NULL;
+Heap* initHeap() {
+    Heap *hp = malloc(sizeof(Heap)); // could be dodgy, realloc used in heapinsert too with no check.
+    if (!hp) die("Couldn't allocate memory for Open and Closed set.");
+
+    hp->bh = NULL;
+    hp->cs = NULL;
+
+    hp->os_size = 0;
+    hp->cs_size = 0;
     return hp;
 }

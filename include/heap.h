@@ -4,6 +4,7 @@
 
 #define HEAP_INIT (Heap){.bh = NULL, .os_size = 0, .cs = NULL, .cs_size = 0};
 
+// Argument to be had over these being seperate, or renamed.
 typedef struct {
     struct Cell **bh; // Binary minimum heap, zero-indexed so left child at 2i + 1, right at 2i + 2.
     int os_size;
@@ -19,7 +20,6 @@ Heap* heapInsert(Heap *hp, struct Cell *cell);
 Heap* heapBubbleUp(Heap *hp, int childIdx);
 void swap(struct Cell **a, struct Cell **b);
 Heap* heapBubbleDown(Heap *hp, int parentIdx);
-Heap initBinaryHeap(Heap hp);
-int getManhattanDist(struct Cell *c1, struct Cell *end);
+Heap* initHeap();
 
 #endif

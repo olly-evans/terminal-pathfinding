@@ -127,21 +127,12 @@ void astarCell(struct abuf *s_ab) {
 
     Find shortest path to end cell using the A* algorithm 
     Cell states updated on a per-change basis and written to buffer.
-    
-    Also could the heap we used be defined locally here?
-    
+        
     */
 
-    Heap *hp = malloc(sizeof(Heap));
-    if (!hp) die("Couldn't allocate memory for Open and Closed set.");
-
-    hp->cs = NULL;
-    hp->cs_size = 0;
-    hp->os_size = 0;
-    hp->bh = NULL;
-
-    ///////////////////
-
+    // Init heap struct containing open and closed set.
+    Heap *hp = initHeap();
+    
     abAppend(s_ab, "\x1b[?25l", 6); // Hide Cursor
     abAppend(s_ab, "\x1b[H", 4); // Cursor to home (top left).
 

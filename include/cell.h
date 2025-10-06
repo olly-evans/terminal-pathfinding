@@ -34,5 +34,6 @@ struct Cell {
 
 void drawCell(struct abuf *ab, struct Cell *cell);
 char* getCellColor(struct Cell *cell);
+int getManhattanDist(struct Cell *c1, struct Cell *end);
 
 #endif
