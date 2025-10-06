@@ -30,7 +30,7 @@ Heap* heapInsert(Heap *hp, struct Cell *cell) {
 
     /* Add element to the binary heap. */
 
-    if (inOpenSet(hp, cell)) return hp; // this check can't be right.
+    if (cell->inOpenSet) return hp; // this check can't be right.
     
     if (!isStartCell(cell) && !isEndCell(cell)) {
         cell->ch = 'O'; //

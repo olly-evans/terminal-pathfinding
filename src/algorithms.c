@@ -42,6 +42,8 @@ void search() {
 // will return heap probably.
 void astarGrid(Heap *hp, struct abuf *s_ab) {
 
+    /* Very very very outdated. Only kept for testing. */
+
     struct abuf os_ab = ABUF_INIT;
     
     g->start_cell->g = 0;
@@ -126,11 +128,12 @@ void astarCell(struct abuf *s_ab) {
     /* 
 
     Find shortest path to end cell using the A* algorithm 
-    Cell states updated on a per-change basis and written to buffer.
+    Cell states updated on a per-change basis and written
+    to appendable buffer.
         
     */
 
-    // Init heap struct containing open and closed set.
+    // Init heap struct containing open and closed set, (bh and cs).
     Heap *hp = initHeap();
     
     abAppend(s_ab, "\x1b[?25l", 6); // Hide Cursor
@@ -144,7 +147,6 @@ void astarCell(struct abuf *s_ab) {
     g->start_cell->f = g->start_cell->g + g->start_cell->md;
     g->start_cell->prev = NULL;
 
-    // Heap returned to maintain state.
     hp = heapInsert(hp, g->start_cell); 
 
     while (hp->os_size > 0 && hp->bh != NULL) {
@@ -158,10 +160,6 @@ void astarCell(struct abuf *s_ab) {
             while (previous != NULL && !isStartCell(previous)) {
                 previous->ch = 'P';
                 previous->type = PATH;
-                
-                // Just draws col path right now.
-                // char *cell_col = getCellColor(previous);
-                // abAppend(s_ab, cell_col, sizeof(cell_col));
                 drawCell(s_ab, previous);
 
                 previous = previous->prev;
@@ -178,9 +176,10 @@ void astarCell(struct abuf *s_ab) {
             int nx = current->x + DIRS[i][0];
             int ny = current->y + DIRS[i][1];
             
-            // Are coords in the grid range.
+            // Is this neighbour in the grid range.
             if (nx < 0 || ny < 0 || nx >= g->cols || ny >= g->rows) continue;
             
+            // Point to neighbour of current.
             struct Cell *neighbour = &g->cells[ny][nx];
 
             if (neighbour->type == PERMANENT_BARRIER || neighbour->type == BARRIER) continue;
@@ -213,7 +212,7 @@ Heap* makeClosed(Heap *hp, struct Cell* curr) {
 
     /* Add a cell to the closed set. */
 
-    if (inClosedSet(hp, curr)) return hp;
+    if (curr->inClosedSet) return hp;
 
     // Make memory for it.
     hp->cs = realloc(hp->cs, (hp->cs_size + 1) * sizeof(*hp->cs )); 
@@ -233,31 +232,7 @@ Heap* makeClosed(Heap *hp, struct Cell* curr) {
     return hp;
 }
 
-bool inClosedSet(Heap *hp, struct Cell* curr) {
-    for (int i = 0; i < hp->cs_size; i++) {
-        if (curr == hp->cs[i]) {
-            return true;
-        }
-    }
-    return false;
-}
 
-bool inOpenSet(Heap *hp, struct Cell* curr) {
-    for (int i = 0; i < hp->os_size; i++) {
-        if (curr == hp->bh[i]) {
-            return true;
-        }
-    }
-    return false;
-}
-
-bool isStartCell(struct Cell *cell) {
-    return (cell->x == g->start_cell->x && cell->y == g->start_cell->y);
-}
-
-bool isEndCell(struct Cell *cell) {
-    return (cell->x == g->end_cell->x && cell->y == g->end_cell->y);
-}
 
 int getOpenSetIdx(Heap *hp, struct Cell *cell) {
     for (int i = 0; i < hp->os_size; i++) {

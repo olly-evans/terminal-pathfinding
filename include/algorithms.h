@@ -37,8 +37,6 @@ Heap* makeClosed(Heap *hp, struct Cell* curr);
 bool isValidNeighbour(Heap *hp, struct Cell *cell);
 bool inClosedSet(Heap *hp, struct Cell *curr);
 bool inOpenSet(Heap *hp, struct Cell* curr);
-bool isStartCell(struct Cell *cell);
-bool isEndCell(struct Cell *cell);
 
 int getOpenSetIdx(Heap *hp, struct Cell *cell);
 

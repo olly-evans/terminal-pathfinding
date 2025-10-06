@@ -4,6 +4,7 @@
 
 #include "abuf.h"
 #include "cell.h"
+#include "grid.h"
 
 void drawCell(struct abuf *ab, struct Cell *cell) {
 
@@ -36,6 +37,14 @@ char* getCellColor(struct Cell *cell) {
         case CLOSED:
             return "\x1b[35m";
     }   
+}
+
+bool isStartCell(struct Cell *cell) {
+    return (cell->x == g->start_cell->x && cell->y == g->start_cell->y);
+}
+
+bool isEndCell(struct Cell *cell) {
+    return (cell->x == g->end_cell->x && cell->y == g->end_cell->y);
 }
 
 int getManhattanDist(struct Cell *c1, struct Cell *end) {
