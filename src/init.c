@@ -33,7 +33,7 @@ void init() {
 	Con.coloff = 0;
 
 	// Allocate rows and cols of terminal, initialise grid with these values.
-	if (getWindowSize(&Con.screenrows, &Con.screencols) == -1) die("getWindowSize");
+	if (getWindowSize(&Con.screenrows, &Con.screencols) == -1) die("init() -> getWindowSize");
 	
 	Con.headerrow = 2; // Will be refactored. TMP
 
@@ -42,7 +42,7 @@ void init() {
 	Con.cy = Con.headerrow + 1; // Assign after wel_offset assigned.
 
 	g = initGrid(g, Con.screenrows, Con.screencols);
-	if (!g) die("Couldn't initialise the grid.");
+	if (!g) die("init() -> initGrid");
 
 	// Pointers to start/end cell.
 	g->start_cell = NULL;

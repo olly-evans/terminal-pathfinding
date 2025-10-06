@@ -109,7 +109,7 @@ void swap(struct Cell **a, struct Cell **b) {
 
 Heap* initHeap() {
     Heap *hp = malloc(sizeof(Heap)); // could be dodgy, realloc used in heapinsert too with no check.
-    if (!hp) die("Couldn't allocate memory for Open and Closed set.");
+    if (!hp) die("initHeap() -> malloc");
 
     hp->bh = NULL;
     hp->cs = NULL;

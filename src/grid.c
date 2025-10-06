@@ -61,19 +61,19 @@ void drawGrid(struct abuf *ab) {
 
 struct Grid* initGrid(struct Grid *g, int rows, int cols) {
 	g = malloc(sizeof(struct Grid));
-	if (!g) die("Couldn't allocate memory for grid of terminals size.");
+	if (!g) die("initGrid() -> malloc");
 
 	g->rows = rows;
 	g->cols = cols;
 
 	// Allocate memory for an array of row pointers, sized for rows
 	g->cells = malloc(sizeof(struct Cell*) * rows);
-	if (!g->cells) die("g->cells not allocated.");
+	if (!g->cells) die("initGrid() -> malloc");
 
 	for (int y = 0; y < rows; y++) {
 		// Allocate memory for a row of cells, sized for cols
 		g->cells[y] = malloc(sizeof(struct Cell) * cols);
-		if (!g->cells[y]) die("g->cells[y] not allocated");
+		if (!g->cells[y]) die("initGrid() -> malloc");
 
 		for (int x = 0; x < cols; x++) {
 			if (y == 0 || x == 0 || y == Con.screenrows - 1 || x == Con.screencols - 1) {
