@@ -17,7 +17,6 @@ void drawCell(struct Cell *cell) {
     
     */
 
-    // Much better, no flickering i can see but exiting weirdly. Problem for later/tomorrow.
     struct abuf cell_buf = ABUF_INIT;
     char buf[32];
     snprintf(buf, sizeof(buf), "\x1b[%d;%dH", cell->y + 1, cell->x + 1);
@@ -30,6 +29,7 @@ void drawCell(struct Cell *cell) {
     abAppend(&cell_buf, "\x1b[?25l", 6); // Hide cursor.
     abAppend(&cell_buf, cell_color, strlen(cell_color));
     abAppend(&cell_buf, &cell->ch, 1);
+
     write(STDOUT_FILENO, cell_buf.b, cell_buf.len); 
     abFree(&cell_buf);
 }
@@ -54,14 +54,17 @@ char* getCellColor(struct Cell *cell) {
     }   
 }
 
-bool isStartCell(struct Cell *cell) {
-    return (cell->x == g->start_cell->x && cell->y == g->start_cell->y);
+bool isStartCell(struct Cell *c) {
+    return (c->x == g->start_cell->x && c->y == g->start_cell->y);
 }
 
-bool isEndCell(struct Cell *cell) {
-    return (cell->x == g->end_cell->x && cell->y == g->end_cell->y);
+bool isEndCell(struct Cell *c) {
+    return (c->x == g->end_cell->x && c->y == g->end_cell->y);
 }
 
+bool isWalkableCell(struct Cell *c) {
+    return ((c->type == PERMANENT_BARRIER || c->type == BARRIER));
+}
 int getManhattanDist(struct Cell *c1, struct Cell *end) {
     return 2*(abs(end->x - c1->x) + abs(end->y - c1->y));
 }
