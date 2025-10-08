@@ -23,7 +23,7 @@ const char *wel_controls_text =
 void drawWelcomeScreen() {
 
     Con.state = STATE_WELCOME;
-    checkScroll();
+    // checkScroll();
 
     // Define abuf for this welcome menu.
     struct abuf wel_ab = ABUF_INIT;
@@ -33,7 +33,7 @@ void drawWelcomeScreen() {
     abAppend(&wel_ab, "\x1b[3J", 4);
     abAppend(&wel_ab, "\x1b[H", 3);
 
-    drawWelcomeRows(&wel_ab);
+    // drawWelcomeRows(&wel_ab);
 
     char mcursor[32];
     snprintf(mcursor, sizeof(mcursor), "\x1b[%d;%dH", Con.cy + 1, (Con.cx - Con.coloff)+ 1); // adding offset could be close
@@ -46,6 +46,35 @@ void drawWelcomeScreen() {
     abFree(&wel_ab);
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
 void drawWelcomeRows(struct abuf *ab) {
 
     abAppend(ab, "\x1b[?7l", 5); // Disable terminal auto-wrap.
@@ -159,3 +188,4 @@ void appendVisibleRow(struct abuf *ab, char *buf) {
     
     abAppend(ab, &buf[Con.coloff], len); 
 }
+*/

@@ -30,14 +30,14 @@ Heap* heapInsert(Heap *hp, struct Cell *cell) {
 
     /* Add element to the binary heap. */
 
-    if (cell->inOpenSet) return hp; // this check can't be right.
+    if (cell->inOpenSet) return hp;
     
     if (!isStartCell(cell) && !isEndCell(cell)) {
-        cell->ch = 'O'; //
+        cell->ch = 'O'; 
+
     }
-    cell->type = OPEN; //
+    cell->type = OPEN;
     cell->inOpenSet = true;
-    // int new_last = hp->os_size; // Becomes last element
 
     if (hp->os_size == 0) {
         hp->bh = malloc(sizeof(*hp->bh));
@@ -91,7 +91,6 @@ Heap* heapBubbleDown(Heap *hp, int parentIdx) {
 
         if (parentIdx >= hp->os_size || smallestIdx >= hp->os_size) return hp;
         
-
         // Swap and continue bubbling down
         swap(&hp->bh[parentIdx], &hp->bh[smallestIdx]);
         parentIdx = smallestIdx;
@@ -100,7 +99,6 @@ Heap* heapBubbleDown(Heap *hp, int parentIdx) {
 }
 
 void swap(struct Cell **a, struct Cell **b) {
-    // a = address pointer in list of pointers pointing to. 
     if (!a || !b) return;
     struct Cell *tmp = *a;
     *a = *b;
@@ -108,7 +106,10 @@ void swap(struct Cell **a, struct Cell **b) {
 }
 
 Heap* initHeap() {
-    Heap *hp = malloc(sizeof(Heap)); // could be dodgy, realloc used in heapinsert too with no check.
+
+    /* Initialise heap struct for algorithm. */
+
+    Heap *hp = malloc(sizeof(Heap));
     if (!hp) die("initHeap() -> malloc");
 
     hp->bh = NULL;
@@ -121,24 +122,28 @@ Heap* initHeap() {
 
 Heap* makeClosed(Heap *hp, struct Cell* curr) {
 
-    /* Add a cell to the closed set. */
+    /* 
+    Add a cell to the closed set. 
+    Can just flag with a boolean actually but this way we know how many we have.
+    
+    */
 
     if (curr->inClosedSet) return hp;
 
-    // Make memory for it.
-    hp->cs = realloc(hp->cs, (hp->cs_size + 1) * sizeof(*hp->cs )); 
+    if (hp->cs_size == 0) {
+        hp->cs = malloc(sizeof(*hp->cs));
+    }
 
-    // Add it.
+    hp->cs = realloc(hp->cs, (hp->cs_size + 1) * sizeof(*hp->cs )); 
     hp->cs[hp->cs_size] = curr;
     hp->cs_size++;
 
     if (!isStartCell(curr) && !isEndCell(curr)) {
         curr->ch = 'C'; 
-        curr->type = CLOSED;
     }
+    curr->type = CLOSED;
     curr->inClosedSet = true;
     
-    // // Make cell.ch something different.
     return hp;
 }
 

@@ -8,7 +8,16 @@
 
 #define PATH_VERSION "0.0.1"
 
-/* Grid */
+typedef struct Panel {
+    int x, y, w, h;
+
+    int scrollV;
+    int scrollH;
+    
+    bool needsRedraw;
+    bool cursorOn;
+
+} Panel;
 
 
 void drawPathfindingVisualizer();

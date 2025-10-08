@@ -64,30 +64,10 @@ void dashProcessKeypress() {
             write(STDOUT_FILENO, "\x1b[0m", 4); // Reset terminal text-styles.
             write(STDOUT_FILENO, "\x1b[?25h", 6); // Give user their cursor back.
 
-            ///////////* OPEN SET DEBUGGING *///////////
-
-            // disableRawMode(); 
             
-            // for (int i = 0; i < hp.os_size; i ++) {
-            //     printf("OS %d: (%d, %d), f: %d\n", i, hp.bh[i]->y, hp.bh[i]->x, hp.bh[i]->f);
-            //     if (i == hp.os_size - 1) printf("\n");
-            // }
-
-            // // for (int i = 0; i < hp.cs_size; i++) {
-            // //     printf("CS %d: (%d, %d)\n", i, hp.cs[i]->y, hp.cs[i]->x);
-            // //     if (i == hp.cs_size - 1) printf("\n");
-            // // }
-
-            // printf("Start Cell (y,x): (%d, %d)\n", g->start_cell->y, g->start_cell->x);
-            // printf("End Cell (y,x): (%d, %d)\n", g->end_cell->y, g->end_cell->x);
-            // printf("Open set size: %i\n", hp.os_size);
-            // printf("Closed set size: %i\n", hp.cs_size);
-
-            ///////////* OPEN SET DEBUGGING *///////////
             
             exit(0);
             break;
-
 
         if (Con.state == STATE_RUN) return; // Lower so below c eventaully, want screen clear post-run.
 
