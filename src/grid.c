@@ -35,7 +35,11 @@ void drawGrid(struct abuf *ab) {
                     abAppend(ab, &c->ch, 1);
                     abAppend(ab, "\x1b[0m", 4);
                     break;
-
+                case EMPTY:
+                    abAppend(ab, "\x1b[40m", 5); 
+                    abAppend(ab, &c->ch, 1);
+                    abAppend(ab, "\x1b[0m", 4);
+                    break;
                 default:
                     abAppend(ab, &c->ch, 1);  // No color
                     break;

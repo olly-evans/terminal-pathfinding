@@ -63,13 +63,10 @@ void dashProcessKeypress() {
             write(STDOUT_FILENO, "\x1b[3J", 4); // Clear scrollback buffer.
             write(STDOUT_FILENO, "\x1b[0m", 4); // Reset terminal text-styles.
             write(STDOUT_FILENO, "\x1b[?25h", 6); // Give user their cursor back.
-
-            
-            
             exit(0);
             break;
 
-        if (Con.state == STATE_RUN) return; // Lower so below c eventaully, want screen clear post-run.
+        if (Con.state == STATE_RUN) return; // below c eventaully, want screen clear post-run.
 
         case 'c':
             freeGrid(g);
@@ -148,18 +145,18 @@ void handleSpacePress(struct Cell *curr_cell) {
 }
 
 void handleRPress(struct Cell *curr_cell) {
-    /* Handles an r press, by updating start and end cells and then barrier cells in that order. */
+    /* Handles an r press, by updating start and end cells, and then barrier cells in that order. */
 
     if (curr_cell->type == START) {
         curr_cell->type = EMPTY;
         curr_cell->ch = ' ';
-        g->start_cell = NULL; // Remove start ptr.
+        g->start_cell = NULL;
         return;
 
     } else if (curr_cell->type == END) {
         curr_cell->type = EMPTY;
         curr_cell->ch = ' ';
-        g->end_cell = NULL; // Remove end ptr.
+        g->end_cell = NULL; 
         return;
 
     } else if (curr_cell->type == BARRIER) {
