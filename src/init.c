@@ -11,7 +11,7 @@
 
 struct Grid *g = NULL;
 
-tablerow rows[] = {
+Panel rows[] = {
     { "Algorithm Name", "Description", "Speed" },
 
     { "A*", "Weighted and direction-based algorithm. A* is guaranteed to find the shortest path.", "Fast" },
@@ -20,7 +20,7 @@ tablerow rows[] = {
 	{"DFS", "Depth-first search.", "Slow"}
 };
 
-table algos = {
+Panels algos = {
     .algoCount = sizeof(rows) / sizeof(rows[0]),
     .rows = rows
 };

@@ -1,5 +1,5 @@
-#ifndef OUTPUT_H
-#define OUTPUT_H
+#ifndef WELCOME_H
+#define WELCOME_H
 
 #include <stdbool.h>
 
@@ -8,17 +8,38 @@
 
 #define PATH_VERSION "0.0.1"
 
-typedef struct Panel {
-    int x, y, w, h;
+// typedef struct Panel {
+//     int x, y, w, h;
 
-    int scrollV;
-    int scrollH;
+//     int scrollV;
+//     int scrollH;
     
-    bool needsRedraw;
-    bool cursorOn;
+//     bool needsRedraw;
+//     bool cursorOn;
 
+// } Panel;
+
+typedef struct {
+    char *name;
+    char *description;
+    char *speed;
+
+    bool needsRedraw;
+    bool isVisible;
 } Panel;
 
+typedef struct {
+    int lName;
+    int lDesc;
+    int lSpeed;
+
+    int tablewidth;
+    int algoCount;
+    Panel *rows;
+} Panels;
+
+extern Panels algos;
+extern Panel algoRows[];
 
 void drawPathfindingVisualizer();
 void drawWelcomeScreen();
