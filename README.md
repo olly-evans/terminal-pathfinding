@@ -2,6 +2,10 @@
 
 ## AGENDA
 
+- WHY WOULDNT YOU USE THE DRAWCELL IN THE VISUALIZER SECTION?????
+- WILL HOPEFULLY STOP FLICKER IN THE LINUX TERMINAL
+
+
 - How to store/find selected algorithm in welcome menu.
 - Maze algorithms.
 - Random barriers.
