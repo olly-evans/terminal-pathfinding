@@ -41,7 +41,7 @@ char* getCellColor(struct Cell *cell) {
     // Perhaps some buffer action required.
     switch (cell->type) {
         case PATH:
-            return "\x1b[43m"; // Yellow
+            return "\x1b[48;5;62m"; // Yellow
 
         // chance none below are printed. borders. could be from drawGrid
         case PERMANENT_BARRIER:

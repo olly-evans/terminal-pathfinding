@@ -2,13 +2,6 @@
 
 ## Notes Having Implemented A*.
 
-- broken again but minimal.
-
-- WHY ARE SOME CLOSED SET CELLS BEING REPLACED WITH O'S?
-
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-
 - How to store/find selected algorithm in welcome menu.
 - Maze algorithms.
 - Random barriers.
@@ -32,15 +25,6 @@ that shit, and really think about the logic for vertical scrolling.
 # Binary Heap
 
 - OS_SIZE = SIZEOF(BH) / SIZEOF(BH[0]) ////////
-
-
-- print OPEN SET.
-- why is closed only shown after button press.
-- isvalidneighbours fucking with display, barriers are being added to the closed set, when should just be ignored.
-- open cell->type maybe ditch.
-- why do i have to press enter or any key twice after runnning?
-- why is the end E being overwritten by C.
-- have a look at the whole char system i think its shite.
 
 # General
 - testing new branch.
