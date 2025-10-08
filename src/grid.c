@@ -31,23 +31,9 @@ void drawGrid(struct abuf *ab) {
 
                 case BARRIER:
                 case PERMANENT_BARRIER:
-                    abAppend(ab, "\x1b[37m", 5); // White
+                    abAppend(ab, "\x1b[47m", 5); // White
                     abAppend(ab, &c->ch, 1);
-                    break;
-
-                case CLOSED:
-                    abAppend(ab, "\x1b[35m", 5);
-                    abAppend(ab, &c->ch, 1);
-                    break;
-
-                case OPEN:
-                    abAppend(ab, "\x1b[36m", 5);
-                    abAppend(ab, &c->ch, 1);
-                    break;
-
-                case PATH:
-                    abAppend(ab, "\x1b[33m", 5);
-                    abAppend(ab, &c->ch, 1);
+                    abAppend(ab, "\x1b[0m", 4);
                     break;
 
                 default:
@@ -78,12 +64,12 @@ struct Grid* initGrid(struct Grid *g, int rows, int cols) {
 		for (int x = 0; x < cols; x++) {
 			if (y == 0 || x == 0 || y == Con.screenrows - 1 || x == Con.screencols - 1) {
 				g->cells[y][x].type = PERMANENT_BARRIER;
-				g->cells[y][x].ch = '#';
 			} else {
 				g->cells[y][x].type = EMPTY;
-				g->cells[y][x].ch = ' ';
+				
 			}
 
+            g->cells[y][x].ch = ' ';
 			g->cells[y][x].x = x;
 			g->cells[y][x].y = y;
 			g->cells[y][x].g = INT_MAX;

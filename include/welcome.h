@@ -8,17 +8,6 @@
 
 #define PATH_VERSION "0.0.1"
 
-// typedef struct Panel {
-//     int x, y, w, h;
-
-//     int scrollV;
-//     int scrollH;
-    
-//     bool needsRedraw;
-//     bool cursorOn;
-
-// } Panel;
-
 typedef struct {
     char *name;
     char *description;

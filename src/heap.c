@@ -32,10 +32,11 @@ Heap* heapInsert(Heap *hp, struct Cell *cell) {
 
     if (cell->inOpenSet) return hp;
     
-    if (!isStartCell(cell) && !isEndCell(cell)) {
-        cell->ch = 'O'; 
+    // if (!isStartCell(cell) && !isEndCell(cell)) {
+    //     cell->ch = 'O'; 
 
-    }
+    // }
+    
     cell->type = OPEN;
     cell->inOpenSet = true;
 
@@ -138,9 +139,9 @@ Heap* makeClosed(Heap *hp, struct Cell* curr) {
     hp->cs[hp->cs_size] = curr;
     hp->cs_size++;
 
-    if (!isStartCell(curr) && !isEndCell(curr)) {
-        curr->ch = 'C'; 
-    }
+    // if (!isStartCell(curr) && !isEndCell(curr)) {
+    //     curr->ch = 'C'; 
+    // }
     curr->type = CLOSED;
     curr->inClosedSet = true;
     

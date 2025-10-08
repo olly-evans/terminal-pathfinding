@@ -142,7 +142,7 @@ void handleSpacePress(struct Cell *curr_cell) {
     // Make anything that isn't start/end cell a border thereafter.
     if (curr_cell->type != START && curr_cell->type != END && (!isPermBarrier)) {
         curr_cell->type = BARRIER;
-        curr_cell->ch = '#';
+        curr_cell->ch = ' ';
         return;
     }
 }

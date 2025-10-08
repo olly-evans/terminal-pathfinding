@@ -55,7 +55,10 @@ void drawWelcomeRows(struct abuf *ab) {
 
 
     for (int y = 0; y < Con.screenrows; y++) {
-                
+
+        int row = y + Con.rowoff;
+        
+
         if (y == 0) {
             // always at the top, stops scrolling.
             char welcome[80];
@@ -63,7 +66,6 @@ void drawWelcomeRows(struct abuf *ab) {
             if (welcomelen > Con.screencols) welcomelen = Con.screencols;
             abAppend(ab, welcome, welcomelen);
         }
-
         if (isHeaderRow(y)) {
             abAppend(ab, "\x1b[46m", 5);
 
@@ -75,16 +77,16 @@ void drawWelcomeRows(struct abuf *ab) {
 
             abAppend(ab, "\x1b[0m", 4);
         }
-        
+    
         if (isCursorRow(y)) {
-            abAppend(ab, "\x1b[7m\x1b[K", 7); // not extending to end of row.
+                abAppend(ab, "\x1b[7m\x1b[K", 7); // not extending to end of row.
 
-            int sz = getfRowLen(y - Con.headerrow) + 1;
-            char buf[sz];
+                int sz = getfRowLen(y - Con.headerrow) + 1;
+                char buf[sz];
 
-            formatRow(buf, sz, y - Con.headerrow);
-            appendVisibleRow(ab, buf);
-            abAppend(ab, "\x1b[0m", 4); // Reset background.
+                formatRow(buf, sz, y - Con.headerrow);
+                appendVisibleRow(ab, buf);
+                abAppend(ab, "\x1b[0m", 4); // Reset background.
 
         } else if (isDataRow(y)) {
             int sz = getfRowLen(y - Con.headerrow) + 1;
@@ -103,6 +105,23 @@ void drawWelcomeRows(struct abuf *ab) {
     if (controlslen > Con.screencols) controlslen = Con.screencols;
 
     abAppend(ab, controls, controlslen);
+}
+
+void checkScroll() {
+    if (Con.cx < Con.coloff) {
+        Con.coloff = Con.cx;
+    }
+    if (Con.cx >= Con.coloff + Con.screencols) {
+        Con.coloff = Con.cx - Con.screencols + 1;
+    }
+
+    if (Con.cy < Con.rowoff) {
+        Con.rowoff = Con.cy;
+    }
+
+    if (Con.cy >= Con.rowoff + Con.screenrows) {
+        Con.rowoff = Con.cy - Con.screenrows + 1;
+    }
 }
 
 bool isHeaderRow(int row) {
@@ -128,15 +147,6 @@ bool isCursorRow(int row) {
     return false;
 }
 
-
-void checkScroll() {
-    if (Con.cx < Con.coloff) {
-        Con.coloff = Con.cx;
-    }
-    if (Con.cx >= Con.coloff + Con.screencols) {
-        Con.coloff = Con.cx - Con.screencols + 1;
-    }
-}
 
 int getfRowLen(int row) {
     return snprintf(NULL, 0, " %-*s %-*s %-*s", 

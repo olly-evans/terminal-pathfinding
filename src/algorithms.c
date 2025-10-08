@@ -127,10 +127,12 @@ void astar() {
         struct Cell *current = heapExtract(hp);
 
         if (isEndCell(current)) {
+            current->type = PATH;
+            drawCell(current);
             
             struct Cell *previous = g->end_cell->prev;
-            while (previous != NULL && !isStartCell(previous)) {
-                previous->ch = 'P';
+            while (previous != NULL) {
+                // previous->ch = 'P';
                 previous->type = PATH;
                 drawCell(previous);
 
@@ -177,4 +179,5 @@ void astar() {
         } 
     }
     // No solution.
+    free(hp);
 }

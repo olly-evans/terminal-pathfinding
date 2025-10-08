@@ -29,6 +29,7 @@ void drawCell(struct Cell *cell) {
     abAppend(&cell_buf, "\x1b[?25l", 6); // Hide cursor.
     abAppend(&cell_buf, cell_color, strlen(cell_color));
     abAppend(&cell_buf, &cell->ch, 1);
+    abAppend(&cell_buf, "\x1b[0m", 4);
 
     write(STDOUT_FILENO, cell_buf.b, cell_buf.len); 
     abFree(&cell_buf);
@@ -40,17 +41,17 @@ char* getCellColor(struct Cell *cell) {
     // Perhaps some buffer action required.
     switch (cell->type) {
         case PATH:
-            return "\x1b[33m"; // Yellow
+            return "\x1b[43m"; // Yellow
 
         // chance none below are printed. borders. could be from drawGrid
         case PERMANENT_BARRIER:
         case BARRIER:
-            return "\x1b[37m"; // White
+            return "\x1b[47m"; // White
         
         case OPEN:
-            return "\x1b[36m";
+            return "\x1b[46m";
         case CLOSED:
-            return "\x1b[35m";
+            return "\x1b[45m";
     }   
 }
 

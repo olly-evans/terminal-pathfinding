@@ -8,6 +8,7 @@
 #include "heap.h"
 #include "cell.h"
 #include "grid.h"
+#include "welcome.h"
 
 struct Grid *g = NULL;
 
@@ -17,6 +18,12 @@ Panel rows[] = {
     { "A*", "Weighted and direction-based algorithm. A* is guaranteed to find the shortest path.", "Fast" },
     { "Dijkstra", "Unweighted, but guarantees the shortest path.", "Medium" },
     { "BFS", "Breadth-first search. Explores equally in all directions.", "Slow" },
+	{"DFS", "Depth-first search.", "Slow"},
+	{"DFS", "Depth-first search.", "Slow"},
+	{"DFS", "Depth-first search.", "Slow"},
+	{"DFS", "Depth-first search.", "Slow"},
+	{"DFS", "Depth-first search.", "Slow"},
+	{"DFS", "Depth-first search.", "Slow"},
 	{"DFS", "Depth-first search.", "Slow"}
 };
 
@@ -31,15 +38,19 @@ void init() {
 	Con.cx = 0;
 	Con.cy = 0;
 	Con.coloff = 0;
+	Con.rowoff = 0;
 
 	// Allocate rows and cols of terminal, initialise grid with these values.
 	if (getWindowSize(&Con.screenrows, &Con.screencols) == -1) die("init() -> getWindowSize");
 	
+
+	///////////////// !!!!!!!!!!!!!!! ////////////////////
+	// the worst things ive ever seen.
 	Con.headerrow = 2; // Will be refactored. TMP
 
-	if (Con.screenrows < Con.headerrow + algos.algoCount + 1) die("Larger terminal height required.");
-
 	Con.cy = Con.headerrow + 1; // Assign after wel_offset assigned.
+
+	///////////////// !!!!!!!!!!!!!!! ////////////////////
 
 	g = initGrid(g, Con.screenrows, Con.screencols);
 	if (!g) die("init() -> initGrid");
