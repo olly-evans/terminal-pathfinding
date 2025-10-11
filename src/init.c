@@ -48,7 +48,7 @@ void init() {
 	// the worst things ive ever seen.
 	Con.headerrow = 2; // Will be refactored. TMP
 
-	Con.cy = Con.headerrow + 1; // Assign after wel_offset assigned.
+	// Con.cy = Con.headerrow + 1; // Assign after wel_offset assigned.
 
 	///////////////// !!!!!!!!!!!!!!! ////////////////////
 

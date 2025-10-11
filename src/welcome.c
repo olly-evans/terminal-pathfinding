@@ -51,14 +51,14 @@ void drawWelcomeScreen() {
 
 void drawWelcomeRows(struct abuf *ab) {
     abAppend(ab, "\x1b[?7l", 5);
-    
+
     char welcome[80];
-    int welcomelen = snprintf(welcome, sizeof(welcome), "Welcome to PATH -- Version %s\n", PATH_VERSION);
+    int welcomelen = snprintf(welcome, sizeof(welcome), "Welcome to PATH -- Version %s\r\n", PATH_VERSION);
     if (welcomelen > Con.screencols) welcomelen = Con.screencols;
     abAppend(ab, welcome, welcomelen);
 
     // calculate the rows i need to print
-    for (int y = 0; y < Con.screenrows; y++) {
+    for (int y = 0; y < Con.screenrows - 1; y++) {
 
         // only print row y if in this range.
 
@@ -66,7 +66,14 @@ void drawWelcomeRows(struct abuf *ab) {
         if (y != Con.screenrows - 1) abAppend(ab, "\r\n", 2);
 
     }
+    char controls[80];
+    int controlslen = snprintf(controls, sizeof(controls), "%s", wel_controls_text);
+
+    if (controlslen > Con.screencols) controlslen = Con.screencols;
+
+    abAppend(ab, controls, controlslen);
 }
+
 // void drawWelcomeRows(struct abuf *ab) {
 
 //     abAppend(ab, "\x1b[?7l", 5); // Disable terminal auto-wrap.
