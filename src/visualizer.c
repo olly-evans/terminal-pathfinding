@@ -14,7 +14,7 @@ void drawPathfindingVisualizer() {
 
     abAppend(&vis_ab, "\x1b[?25l", 6);
     abAppend(&vis_ab, "\x1b[H", 4);
-    abAppend(&vis_ab, "\x1b[2J", 4);
+    abAppend(&vis_ab, "\x1b[K", 3);
     abAppend(&vis_ab, "\x1b[3J", 4);
 
     drawGrid(&vis_ab);

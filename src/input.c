@@ -16,7 +16,7 @@ void dashMoveCursor(int key) {
     switch (key) {
         case ARROW_UP:
             // If on top datarow don't go above it.
-            if (Con.state == STATE_WELCOME && Con.cy > Con.headerrow + 1) Con.cy--;
+            if (Con.state == STATE_WELCOME && Con.cy != 0) Con.cy--;
 
             if (Con.state == STATE_VISUALIZATION && Con.cy != 0) {
                 Con.cy--;
@@ -24,7 +24,7 @@ void dashMoveCursor(int key) {
             break;
         case ARROW_DOWN:
             // If on bottom datarow don't go below that.
-            if (Con.state == STATE_WELCOME && Con.cy < Con.headerrow + algos.algoCount - 1) Con.cy++;
+            if (Con.state == STATE_WELCOME && Con.cy < Con.headerrow + algos.rowCount - 1) Con.cy++;
 
             if (Con.state == STATE_VISUALIZATION && Con.cy != Con.screenrows - 1) { 
                 Con.cy++;

@@ -28,7 +28,7 @@ Panel rows[] = {
 };
 
 Panels algos = {
-    .algoCount = sizeof(rows) / sizeof(rows[0]),
+    .rowCount = sizeof(rows) / sizeof(rows[0]),
     .rows = rows
 };
 
@@ -69,7 +69,7 @@ void getTableColWidths() {
 	char *lDescStr = "";
 	char *lSpeedStr = "";
 
-	for (int y = 0; y < algos.algoCount; y++) {
+	for (int y = 0; y < algos.rowCount; y++) {
 
 		if (strlen(lNameStr) < strlen(algos.rows[y].name)) {
 			lNameStr = algos.rows[y].name;

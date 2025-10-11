@@ -23,12 +23,11 @@ typedef struct {
     int lSpeed;
 
     int tablewidth;
-    int algoCount;
+    int rowCount;
     Panel *rows;
 } Panels;
 
 extern Panels algos;
-extern Panel algoRows[];
 
 void drawPathfindingVisualizer();
 void drawWelcomeScreen();
@@ -37,7 +36,7 @@ bool isHeaderRow(int row);
 bool isDataRow(int row); 
 bool isCursorRow(int row);
 void checkScroll();
-
+void formatCols(struct abuf *ab, int row);
 
 void formatAppendRows(struct abuf *ab, int row);
 

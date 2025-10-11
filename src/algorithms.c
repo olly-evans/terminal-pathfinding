@@ -153,7 +153,7 @@ void astar() {
             // Is this neighbour in the grid range.
             if (nx < 0 || ny < 0 || nx >= g->cols || ny >= g->rows) continue;
             
-            // Point to neighbour of current.
+            // Point to chosen neighbour of current.
             struct Cell *neighbour = &g->cells[ny][nx];
 
             if (neighbour->inClosedSet) continue;
