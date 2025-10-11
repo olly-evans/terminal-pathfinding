@@ -49,23 +49,92 @@ void drawWelcomeScreen() {
 }
 
 
+// void drawWelcomeRows(struct abuf *ab) {
+//     abAppend(ab, "\x1b[?7l", 5);
+
+//     // char welcome[80];
+//     // int welcomelen = snprintf(welcome, sizeof(welcome), "Welcome to PATH -- Version %s", PATH_VERSION);
+//     // if (welcomelen > Con.screencols) welcomelen = Con.screencols;
+//     // abAppend(ab, welcome, welcomelen);
+    
+//     // calculate the rows i need to print
+//     // subtract - 1 to add the controls.
+//     for (int y = 0; y < Con.screenrows; y++) {
+
+//         // only print row y if in this range.
+
+//         // y is the index into the algorithm table right now.
+        
+        
+//         if (algos.rows[y].isHeader == true) abAppend(ab, "\x1b[46m", 5);
+//         formatCols(ab, y);
+//         abAppend(ab, "\x1b[0m", 4); // << put in this function. im slopped out rn.
+//         if (algos.rows[y].isHeader == true) abAppend(ab, "\x1b[0m", 5);
+
+//         if (y != Con.screenrows - 1) abAppend(ab, "\r\n", 2);
+
+//     }
+//     // char controls[80];
+//     // int controlslen = snprintf(controls, sizeof(controls), "%s", wel_controls_text);
+
+//     // if (controlslen > Con.screencols) controlslen = Con.screencols;
+
+//     // abAppend(ab, controls, controlslen);
+// }
+
 void drawWelcomeRows(struct abuf *ab) {
-    abAppend(ab, "\x1b[?7l", 5);
 
-    char welcome[80];
-    int welcomelen = snprintf(welcome, sizeof(welcome), "Welcome to PATH -- Version %s\r\n", PATH_VERSION);
-    if (welcomelen > Con.screencols) welcomelen = Con.screencols;
-    abAppend(ab, welcome, welcomelen);
+    abAppend(ab, "\x1b[?7l", 5); // Disable terminal auto-wrap.
 
-    // calculate the rows i need to print
-    for (int y = 0; y < Con.screenrows - 1; y++) {
 
-        // only print row y if in this range.
+    for (int y = 0; y < Con.screenrows; y++) {
 
-        formatCols(ab, y);
+        int tableIdx = y - Con.headerrow;
+        int row = y + Con.rowoff;
+        
+        if (y == 0) {
+            // always at the top, stops scrolling.
+            char welcome[80];
+            int welcomelen = snprintf(welcome, sizeof(welcome), "Welcome to PATH -- Version %s", PATH_VERSION);
+            if (welcomelen > Con.screencols) welcomelen = Con.screencols;
+            abAppend(ab, welcome, welcomelen);
+        }
+        if (isHeaderRow(y)) {
+            abAppend(ab, "\x1b[46m", 5);
+
+            int sz = getfRowLen((y - Con.headerrow) + Con.rowoff) + 1;
+            char buf[sz];
+
+            formatRow(buf, sz, (y - Con.headerrow) + Con.rowoff);
+            appendVisibleRow(ab, buf);
+
+            abAppend(ab, "\x1b[0m", 4);
+        }
+    
+        if (isCursorRow(y)) {
+            abAppend(ab, "\x1b[7m\x1b[K", 7); // not extending to end of row.
+
+            int sz = getfRowLen((y - Con.headerrow) + Con.rowoff) + 1;
+            char buf[sz];
+
+            formatRow(buf, sz, (y - Con.headerrow) + Con.rowoff);
+            appendVisibleRow(ab, buf);
+            abAppend(ab, "\x1b[0m", 4); // Reset background.
+
+        } else if (isDataRow(y)) {
+            int sz = getfRowLen((y - Con.headerrow) + Con.rowoff) + 1;
+            char buf[sz];
+
+            formatRow(buf, sz, (y - Con.headerrow) + Con.rowoff);
+            appendVisibleRow(ab, buf);
+        }
+    
         if (y != Con.screenrows - 1) abAppend(ab, "\r\n", 2);
 
+
+        // if (Con.state == STATE_VISUALIZATION) Con.tableIdx = tableIdx;
     }
+
     char controls[80];
     int controlslen = snprintf(controls, sizeof(controls), "%s", wel_controls_text);
 
@@ -73,67 +142,6 @@ void drawWelcomeRows(struct abuf *ab) {
 
     abAppend(ab, controls, controlslen);
 }
-
-// void drawWelcomeRows(struct abuf *ab) {
-
-//     abAppend(ab, "\x1b[?7l", 5); // Disable terminal auto-wrap.
-
-
-//     for (int y = 0; y < Con.screenrows; y++) {
-
-//         int tableIdx = y - Con.headerrow;
-//         int row = y + Con.rowoff;
-        
-//         if (y == 0) {
-//             // always at the top, stops scrolling.
-//             char welcome[80];
-//             int welcomelen = snprintf(welcome, sizeof(welcome), "Welcome to PATH -- Version %s", PATH_VERSION);
-//             if (welcomelen > Con.screencols) welcomelen = Con.screencols;
-//             abAppend(ab, welcome, welcomelen);
-//         }
-//         if (isHeaderRow(y)) {
-//             abAppend(ab, "\x1b[46m", 5);
-
-//             int sz = getfRowLen((y - Con.headerrow) + Con.rowoff) + 1;
-//             char buf[sz];
-
-//             formatRow(buf, sz, (y - Con.headerrow) + Con.rowoff);
-//             appendVisibleRow(ab, buf);
-
-//             abAppend(ab, "\x1b[0m", 4);
-//         }
-    
-//         if (isCursorRow(y)) {
-//             abAppend(ab, "\x1b[7m\x1b[K", 7); // not extending to end of row.
-
-//             int sz = getfRowLen((y - Con.headerrow) + Con.rowoff) + 1;
-//             char buf[sz];
-
-//             formatRow(buf, sz, (y - Con.headerrow) + Con.rowoff);
-//             appendVisibleRow(ab, buf);
-//             abAppend(ab, "\x1b[0m", 4); // Reset background.
-
-//         } else if (isDataRow(y)) {
-//             int sz = getfRowLen((y - Con.headerrow) + Con.rowoff) + 1;
-//             char buf[sz];
-
-//             formatRow(buf, sz, (y - Con.headerrow) + Con.rowoff);
-//             appendVisibleRow(ab, buf);
-//         }
-    
-//         if (y != Con.screenrows - 1) abAppend(ab, "\r\n", 2);
-
-
-//         // if (Con.state == STATE_VISUALIZATION) Con.tableIdx = tableIdx;
-//     }
-
-    // char controls[80];
-    // int controlslen = snprintf(controls, sizeof(controls), "%s", wel_controls_text);
-
-    // if (controlslen > Con.screencols) controlslen = Con.screencols;
-
-    // abAppend(ab, controls, controlslen);
-// }
 
 void checkScroll() {
     if (Con.cx < Con.coloff) {

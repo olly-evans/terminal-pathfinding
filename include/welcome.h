@@ -13,9 +13,11 @@ typedef struct {
     char *description;
     char *speed;
 
+    bool isHeader;
     bool needsRedraw;
     bool isVisible;
-} Panel;
+    
+} trow;
 
 typedef struct {
     int lName;
@@ -24,10 +26,10 @@ typedef struct {
 
     int tablewidth;
     int rowCount;
-    Panel *rows;
-} Panels;
+    trow *rows;
+} table;
 
-extern Panels algos;
+extern table algos;
 
 void drawPathfindingVisualizer();
 void drawWelcomeScreen();
