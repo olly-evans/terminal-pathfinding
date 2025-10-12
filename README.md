@@ -1,6 +1,7 @@
 ## IN-PROGRESS
 
 ## AGENDA
+- Cursor shows when pressing arrow at the arrows in menu.
 - Write a test to check abAppend bytes input.
 - Vertical padding for menu. Abort if screenrows less than appropriate no.
 - by printing more lines i can go past the terminal rows, user can scroll with the mouse/bar.

@@ -16,7 +16,7 @@
 MenuControl controls[] = {
     {"Scroll", "Arrows"},
     {"Select", "Enter"},
-    {"Quit", "Q"}
+    {"Quit", "Q"},
 };
 
 void drawMenu() {
@@ -28,6 +28,7 @@ void drawMenu() {
     abAppend(&wel_ab, "\x1b[3J", 4);
     abAppend(&wel_ab, "\x1b[H", 3);
 
+
     drawMenuItems(&wel_ab);
 
     write(STDOUT_FILENO, wel_ab.b, wel_ab.len);
@@ -37,6 +38,9 @@ void drawMenu() {
 void drawMenuItems(struct abuf *ab) {
     
     /* Welcome message */
+    
+    abAppend(ab, "\x1b[?7l", 5); // Disable terminal auto-wrap.
+
     char welcome[80];
     int welcomelen = snprintf(welcome, sizeof(welcome), "Welcome to PATH -- Version %s", PATH_VERSION);
     abAppend(ab, "\x1b[1m\x1b[45m", 9);
@@ -77,7 +81,6 @@ void drawMenuItems(struct abuf *ab) {
     for (int y = 0; y < num_controls; y++) {
 
         abAppend(ab, controls[y].key, strlen(controls[y].key));
-
         abAppend(ab, "\x1b[45m\x1b[1m", 9);
         abAppend(ab, controls[y].action, strlen(controls[y].action));
         abAppend(ab, "\x1b[0m", 4);
