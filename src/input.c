@@ -65,7 +65,7 @@ void dashProcessKeypress() {
     struct Cell *curr_cell = &g->cells[Con.cy][Con.cx];
     
     switch (c) {
-        case (CTRL_KEY('q')):
+        case ('q'):
             write(STDOUT_FILENO, "\x1b[2J", 4); // Clear screen.
             write(STDOUT_FILENO, "\x1b[H", 3); // Cursor home.
             write(STDOUT_FILENO, "\x1b[3J", 4); // Clear scrollback buffer.

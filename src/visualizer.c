@@ -6,6 +6,13 @@
 #include "terminal.h"
 #include "grid.h"
 
+
+const char *vis_controls_text =
+    "Arrows"      "\x1b[46mMove/Scroll\x1b[0m"
+    "Space"          "\x1b[46mSelect Algorithm\x1b[0m"
+    " CTRL-Q"         "\x1b[46mQuit\x1b[0m";
+
+
 /* VISUALIZER */
 
 void drawPathfindingVisualizer() {

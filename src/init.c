@@ -56,7 +56,6 @@ void init() {
 
 	// Allocate rows and cols of terminal, initialise grid with these values.
 	if (getWindowSize(&Con.screenrows, &Con.screencols) == -1) die("init() -> getWindowSize");
-	
 
 	///////////////// !!!!!!!!!!!!!!! ////////////////////
 	// the worst things ive ever seen.
