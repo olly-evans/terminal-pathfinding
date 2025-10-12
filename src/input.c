@@ -11,6 +11,7 @@
 #include "heap.h"
 #include "cell.h"
 #include "grid.h"
+#include "menu.h"
 
 void dashMoveCursor(int key) {
     switch (key) {
@@ -31,7 +32,7 @@ void dashMoveCursor(int key) {
             break;
         case ARROW_RIGHT:
 
-            if (Con.state == STATE_WELCOME) Con.algoIdx++, Con.algoIdx = Con.algoIdx % ;
+            if (Con.state == STATE_WELCOME) M.algoIdx = (M.algoIdx + 1) % M.algoCount;
 
 
 
@@ -44,7 +45,9 @@ void dashMoveCursor(int key) {
             }
             break;
         case ARROW_LEFT:
-            if (Con.state == STATE_WELCOME) Con.algoIdx--;
+            if (Con.state == STATE_WELCOME) M.algoIdx = (M.algoIdx - 1 + M.algoCount) % M.algoCount;
+
+
             if (Con.state == STATE_WELCOME && Con.cx != 0) {
                 Con.cx--;
             }

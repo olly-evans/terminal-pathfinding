@@ -44,20 +44,29 @@ void drawMenu() {
 void drawMenuItems(struct abuf *ab) {
     
     char welcome[80];
-    int welcomelen = snprintf(welcome, sizeof(welcome), "Welcome to PATH -- Version %s\r\n", PATH_VERSION);
+    abAppend(ab, "\x1b[1m", 4);
+    int welcomelen = snprintf(welcome, sizeof(welcome), "Welcome to PATH -- Version %s", PATH_VERSION);
     abAppendCentered(ab, welcome);
+    abAppend(ab, "\x1b[0m", 4);
+    abAppend(ab, "\r\n\r\n", 4);
 
     abAppendCentered(ab, "An in-terminal pathfinding algorithm visualizer!");
     abAppend(ab, "\r\n\r\n", 4);
-    
-    int padding = Con.screencols - (int)strlen(algorithms[0]) / 2;
-    
+        
     
     // global variable here that keeps algorithmsIdx.
-    abAppendCentered(ab, algorithms[Con.algoIdx]);
+    int padding = (Con.screencols - strlen(M.algorithms[M.algoIdx])) / 2;
+    while(padding--) abAppend(ab, " ", 1);
+
+    abAppend(ab, "<", 1);
+    
+    abAppend(ab, "\x1b[33m", 5);
+    abAppend(ab, M.algorithms[M.algoIdx], strlen(M.algorithms[M.algoIdx]));
+    abAppend(ab, "\x1b[0m", 4);
+    abAppend(ab, ">", 1);
     
 
     abAppend(ab, "\r\n\r\n", 4);
     
-    abAppendCentered(ab, "[ Use the arrow-keys and Enter to select an algorithm! ]");
+    abAppendCentered(ab, "[ Use the arrow-keys and Enter to select an algorithm ]");
 }

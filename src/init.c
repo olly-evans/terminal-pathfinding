@@ -9,36 +9,42 @@
 #include "cell.h"
 #include "grid.h"
 #include "welcome.h"
+#include "menu.h"
 
 struct Grid *g = NULL;
 
-// trow rows[] = {
-//     { "Algorithm Name", "Description", "Speed", true},
+trow rows[] = {
+    { "Algorithm Name", "Description", "Speed", true},
 
-//     { "A*", "Weighted and direction-based algorithm. A* is guaranteed to find the shortest path.", "Fast"},
-//     { "Dijkstra", "Unweighted, but guarantees the shortest path.", "Medium" },
-//     { "BFS", "Breadth-first search. Explores equally in all directions.", "Slow" },
-// 	{"DFS", "Depth-first search.", "Slow"},
-// 	{"DFS", "Depth-first search.", "Slow"},
-// 	{"DFS", "Depth-first search.", "Slow"},
-// 	{"DFS", "Depth-first search.", "Slow"},
-// 	{"DFS", "Depth-first search.", "Slow"},
-// 	{"DFS", "Depth-first search.", "Slow"},
-// 	{"DFS", "Depth-first search.", "Slow"}
-// };
-
-// table algos = {
-//     .rowCount = sizeof(rows) / sizeof(rows[0]),
-//     .rows = rows
-// };
-
-char *algorithms[] = {
-    "<A*>",
-    "<Dijkstra>",
-    "<Depth-First Search>",
-    "<Breadth-First Search>"
+    { "A*", "Weighted and direction-based algorithm. A* is guaranteed to find the shortest path.", "Fast"},
+    { "Dijkstra", "Unweighted, but guarantees the shortest path.", "Medium" },
+    { "BFS", "Breadth-first search. Explores equally in all directions.", "Slow" },
+	{"DFS", "Depth-first search.", "Slow"},
+	{"DFS", "Depth-first search.", "Slow"},
+	{"DFS", "Depth-first search.", "Slow"},
+	{"DFS", "Depth-first search.", "Slow"},
+	{"DFS", "Depth-first search.", "Slow"},
+	{"DFS", "Depth-first search.", "Slow"},
+	{"DFS", "Depth-first search.", "Slow"}
 };
 
+table algos = {
+    .rowCount = sizeof(rows) / sizeof(rows[0]),
+    .rows = rows
+};
+
+char *algorithms[] = {
+    "A*",
+    "Dijkstra",
+    "Depth-First Search",
+    "Breadth-First Search"
+};
+
+struct Menu M = {
+	.algoCount = sizeof(algorithms) / sizeof(algorithms[0]),
+	.algoIdx = 0,
+	.algorithms = algorithms
+};
 
 void init() {
 	
@@ -47,7 +53,6 @@ void init() {
 	Con.cy = 0;
 	Con.coloff = 0;
 	Con.rowoff = 0;
-	Con.algoIdx = 0;
 
 	// Allocate rows and cols of terminal, initialise grid with these values.
 	if (getWindowSize(&Con.screenrows, &Con.screencols) == -1) die("init() -> getWindowSize");
