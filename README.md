@@ -2,9 +2,14 @@
 
 ## AGENDA
 
-- WHY WOULDNT YOU USE THE DRAWCELL IN THE VISUALIZER SECTION?????
-- WILL HOPEFULLY STOP FLICKER IN THE LINUX TERMINAL
+- by printing more lines i can go past the terminal rows, user can scroll with the mouse/bar.
 
+NEW MENU IDEA:
+
+- selection for algorithm with numbers.
+- taken to info page read in from text file.
+- then you can press enter to go to visualization.
+- or go back to the main menu.
 
 - How to store/find selected algorithm in welcome menu.
 - Maze algorithms.

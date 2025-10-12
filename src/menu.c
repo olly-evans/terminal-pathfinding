@@ -14,10 +14,11 @@
 
 /* WELCOME SCREEN */
 
+
+
 void drawMenu() {
 
     Con.state = STATE_WELCOME;
-    // checkScroll();
 
     // Define abuf for this welcome menu.
     struct abuf wel_ab = ABUF_INIT;
@@ -42,7 +43,21 @@ void drawMenu() {
 
 void drawMenuItems(struct abuf *ab) {
     
-    for (int y = 0; y < Con.screenrows; y++) {
-        return;
-    }
+    char welcome[80];
+    int welcomelen = snprintf(welcome, sizeof(welcome), "Welcome to PATH -- Version %s\r\n", PATH_VERSION);
+    abAppendCentered(ab, welcome);
+
+    abAppendCentered(ab, "An in-terminal pathfinding algorithm visualizer!");
+    abAppend(ab, "\r\n\r\n", 4);
+    
+    int padding = Con.screencols - (int)strlen(algorithms[0]) / 2;
+    
+    
+    // global variable here that keeps algorithmsIdx.
+    abAppendCentered(ab, algorithms[Con.algoIdx]);
+    
+
+    abAppend(ab, "\r\n\r\n", 4);
+    
+    abAppendCentered(ab, "[ Use the arrow-keys and Enter to select an algorithm! ]");
 }

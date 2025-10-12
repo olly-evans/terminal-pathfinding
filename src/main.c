@@ -17,7 +17,7 @@ int main(void) {
 
     // New; works but still wanna try no drawGrid().
     while (Con.state != STATE_RUN) {
-        if (Con.state == STATE_WELCOME) drawWelcomeScreen();
+        if (Con.state == STATE_WELCOME) drawMenu();
         if (Con.state == STATE_VISUALIZATION) drawPathfindingVisualizer();
         dashProcessKeypress();  
     }

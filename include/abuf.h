@@ -10,5 +10,6 @@ struct abuf {
 
 void abAppend(struct abuf *ab, char *s, int len);
 void abFree(struct abuf *ab);
+void abAppendCentered(struct abuf *ab, char *s);
 
 #endif

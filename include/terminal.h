@@ -23,11 +23,15 @@ struct Config {
     int coloff;
     int rowoff;
 
+    char *algorithms;
+    int algoIdx;
+
     enum appState state;
     struct termios termiosOrig;
 };
 
 extern struct Config Con;
+
 
 void die(char *s);
 void disableRawMode();
