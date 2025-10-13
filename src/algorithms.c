@@ -9,6 +9,7 @@
 #include "heap.h"
 #include "cell.h"
 #include "grid.h"
+#include "stack.h"
 
 const int DIRS[4][2] = {
     { 0, -1 }, // Up
@@ -39,7 +40,7 @@ void astar() {
     hp = heapInsert(hp, g->start_cell); 
     drawCell(g->start_cell);
 
-    while (hp->os_size > 0 && hp->bh != NULL) {
+    while (hp->os_size > 0 && hp->os != NULL) {
         
         struct Cell *current = heapExtract(hp);
 
@@ -49,7 +50,6 @@ void astar() {
             
             struct Cell *previous = g->end_cell->prev;
             while (previous != NULL) {
-                // previous->ch = 'P';
                 previous->type = PATH;
                 drawCell(previous);
 
@@ -88,7 +88,7 @@ void astar() {
                 } else {
                     // Indexing if in open set here is not optimal, heap_index cell member better.
                     int idx = getOpenSetIdx(hp, neighbour); 
-                    hp->bh[idx]->f = neighbour->f;
+                    hp->os[idx]->f = neighbour->f;
                     hp = heapBubbleUp(hp, idx);
                 }
             }
@@ -97,4 +97,33 @@ void astar() {
     }
     // No solution.
     free(hp);
+}
+
+void DFS() {
+    Stack *S = stackInit();
+
+    S = stackPush(S, g->start_cell);
+
+    while (S->st_size != 0 && S->st != NULL) {
+        struct Cell *current = stackPop(S);
+
+        if (!current->discovered) {
+            current->discovered = true;
+
+            for (int i = 0; i < sizeof(DIRS)/sizeof(DIRS[0]); i++) {
+                int nx = current->x + DIRS[i][0];
+                int ny = current->y + DIRS[i][1];
+                
+                // Is this neighbour in the grid range.
+                if (nx < 0 || ny < 0 || nx >= g->cols || ny >= g->rows) continue;
+                
+                // Point to chosen neighbour of current.
+                struct Cell *neighbour = &g->cells[ny][nx];
+                
+                if (isWalkableCell(neighbour)) continue;
+
+                S = stackPush(S, neighbour);
+            }
+        }
+    }
 }

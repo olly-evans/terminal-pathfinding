@@ -26,6 +26,8 @@ struct Cell {
     bool inOpenSet;
     bool inClosedSet;
 
+    bool discovered;
+
     int weight; // Cell to cell weight.
     int g; // Cumulative weight from start cell to this cell.
     int md; // Manhattan distance of cell to the end cell.

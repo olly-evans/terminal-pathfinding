@@ -4,5 +4,6 @@
 #include "heap.h"
 
 void astar();
+void DFS();
 
 #endif

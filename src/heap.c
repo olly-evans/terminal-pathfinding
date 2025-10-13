@@ -11,12 +11,12 @@
 struct Cell *heapExtract(Heap *hp) {
     if (hp->os_size == 0) return NULL;
 
-    struct Cell *extracted = hp->bh[0];  // the cell to pop
+    struct Cell *extracted = hp->os[0];  // the cell to pop
 
     
     // Swap root with last element
     int lastIdx = hp->os_size - 1;
-    swap(&hp->bh[0], &hp->bh[lastIdx]);
+    swap(&hp->os[0], &hp->os[lastIdx]);
     hp->os_size--;
 
     // Bubble down the new root to maintain heap property
@@ -28,24 +28,17 @@ struct Cell *heapExtract(Heap *hp) {
 
 Heap* heapInsert(Heap *hp, struct Cell *cell) {
 
-    /* Add element to the binary heap. */
+    /* Add cell to the binary min-heap. */
 
     if (cell->inOpenSet) return hp;
-    
-    // if (!isStartCell(cell) && !isEndCell(cell)) {
-    //     cell->ch = 'O'; 
-
-    // }
     
     cell->type = OPEN;
     cell->inOpenSet = true;
 
-    if (hp->os_size == 0) {
-        hp->bh = malloc(sizeof(*hp->bh));
-    }
+    if (hp->os_size == 0) hp->os = malloc(sizeof(*hp->os));
 
-    hp->bh = realloc(hp->bh, (hp->os_size + 1) * sizeof(*hp->bh ));
-    hp->bh[hp->os_size++] = cell;
+    hp->os = realloc(hp->os, (hp->os_size + 1) * sizeof(*hp->os ));
+    hp->os[hp->os_size++] = cell;
 
     // If one cell in queue we can just return no bubbling required.
     if (hp->os_size == 1) return hp;
@@ -60,8 +53,8 @@ Heap* heapBubbleUp(Heap *hp, int childIdx) {
 
     int parentIdx = ((childIdx - 1) / 2);
 
-    while (childIdx > 0 && hp->bh[parentIdx]->f >= hp->bh[childIdx]->f) {
-        swap(&hp->bh[parentIdx], &hp->bh[childIdx]);
+    while (childIdx > 0 && hp->os[parentIdx]->f >= hp->os[childIdx]->f) {
+        swap(&hp->os[parentIdx], &hp->os[childIdx]);
 
         childIdx = parentIdx;
         parentIdx = ((childIdx - 1) / 2);
@@ -78,22 +71,20 @@ Heap* heapBubbleDown(Heap *hp, int parentIdx) {
         int smallestIdx = parentIdx;
 
         // Check if left child exists and has lower f
-        if (lchildIdx < os_size && hp->bh[lchildIdx]->f < hp->bh[smallestIdx]->f) {
+        if (lchildIdx < os_size && hp->os[lchildIdx]->f < hp->os[smallestIdx]->f) {
             smallestIdx = lchildIdx;
         }
 
         // Check if right child exists and has lower f
-        if (rchildIdx < os_size && hp->bh[rchildIdx]->f < hp->bh[smallestIdx]->f) {
+        if (rchildIdx < os_size && hp->os[rchildIdx]->f < hp->os[smallestIdx]->f) {
             smallestIdx = rchildIdx;
         }
 
-        // If no swap needed, break
         if (smallestIdx == parentIdx) break;
 
         if (parentIdx >= hp->os_size || smallestIdx >= hp->os_size) return hp;
         
-        // Swap and continue bubbling down
-        swap(&hp->bh[parentIdx], &hp->bh[smallestIdx]);
+        swap(&hp->os[parentIdx], &hp->os[smallestIdx]);
         parentIdx = smallestIdx;
     }
     return hp;
@@ -113,7 +104,7 @@ Heap* initHeap() {
     Heap *hp = malloc(sizeof(Heap));
     if (!hp) die("initHeap() -> malloc");
 
-    hp->bh = NULL;
+    hp->os = NULL;
     hp->cs = NULL;
 
     hp->os_size = 0;
@@ -125,8 +116,8 @@ Heap* makeClosed(Heap *hp, struct Cell* curr) {
 
     /* 
     Add a cell to the closed set. 
-    Can just flag with a boolean actually but this way we know how many we have.
-    
+
+    Can just flag with a bool actually but this way we know how many we have.
     */
 
     if (curr->inClosedSet) return hp;
@@ -139,9 +130,6 @@ Heap* makeClosed(Heap *hp, struct Cell* curr) {
     hp->cs[hp->cs_size] = curr;
     hp->cs_size++;
 
-    // if (!isStartCell(curr) && !isEndCell(curr)) {
-    //     curr->ch = 'C'; 
-    // }
     curr->type = CLOSED;
     curr->inClosedSet = true;
     
@@ -150,8 +138,12 @@ Heap* makeClosed(Heap *hp, struct Cell* curr) {
 
 int getOpenSetIdx(Heap *hp, struct Cell *cell) {
     for (int i = 0; i < hp->os_size; i++) {
-        if (hp->bh[i]->x == cell->x && hp->bh[i]->y == cell->y) {
+        if (hp->os[i]->x == cell->x && hp->os[i]->y == cell->y) {
             return i;
         }
     }
+}
+
+void heapFree(Heap *hp) {
+    return;
 }

@@ -74,7 +74,6 @@ void dashProcessKeypress() {
             if (Con.state == WELCOME) {
                 Con.state = VISUALIZATION;
 
-                // Bit dodge, can't be in the infinite loop.
                 Con.cy = 5; // why is this here?
                 Con.cx = 37;
                 break;
