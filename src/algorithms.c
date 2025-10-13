@@ -103,9 +103,11 @@ void DFS() {
     Stack *S = stackInit();
 
     S = stackPush(S, g->start_cell);
+    drawCell(g->start_cell);
 
     while (S->st_size != 0 && S->st != NULL) {
         struct Cell *current = stackPop(S);
+        drawCell(current);
 
         if (!current->discovered) {
             current->discovered = true;
@@ -123,6 +125,7 @@ void DFS() {
                 if (isWalkableCell(neighbour)) continue;
 
                 S = stackPush(S, neighbour);
+                drawCell(neighbour);
             }
         }
     }
