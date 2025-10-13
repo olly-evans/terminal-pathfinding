@@ -4,7 +4,6 @@
 #include <string.h>
 #include <stdio.h>
 
-#include "welcome.h"
 #include "abuf.h"
 #include "algorithms.h"
 #include "heap.h"

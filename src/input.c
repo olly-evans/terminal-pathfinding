@@ -6,7 +6,6 @@
 #include "terminal.h"
 #include "input.h"
 #include "init.h"
-#include "welcome.h"
 #include "algorithms.h"
 #include "heap.h"
 #include "cell.h"
@@ -16,43 +15,29 @@
 void dashMoveCursor(int key) {
     switch (key) {
         case ARROW_UP:
-            // If on top datarow don't go above it.
-            if (Con.state == STATE_WELCOME && Con.cy != Con.headerrow + 1) Con.cy--;
 
-            if (Con.state == STATE_VISUALIZATION && Con.cy != 0) {
+            if (Con.state == VISUALIZATION && Con.cy != 0) {
                 Con.cy--;
             }
             break;
         case ARROW_DOWN:
-            if (Con.state == STATE_WELCOME && Con.cy != Con.headerrow + algos.rowCount - 1) Con.cy++;
 
-            if (Con.state == STATE_VISUALIZATION && Con.cy != Con.screenrows - 1) { 
+            if (Con.state == VISUALIZATION && Con.cy != Con.screenrows - 1) { 
                 Con.cy++;
             }
             break;
         case ARROW_RIGHT:
 
-            if (Con.state == STATE_WELCOME) M.algoIdx = (M.algoIdx + 1) % M.algoCount;
+            if (Con.state == WELCOME) M.algoIdx = (M.algoIdx + 1) % M.algoCount;
 
-
-
-            if (Con.state == STATE_WELCOME && Con.cx != algos.tablewidth) {
-                Con.cx++;
-            }
-
-            if (Con.state == STATE_VISUALIZATION && Con.cx != Con.screencols - 1) {
+            if (Con.state == VISUALIZATION && Con.cx != Con.screencols - 1) {
                 Con.cx++;
             }
             break;
         case ARROW_LEFT:
-            if (Con.state == STATE_WELCOME) M.algoIdx = (M.algoIdx - 1 + M.algoCount) % M.algoCount;
+            if (Con.state == WELCOME) M.algoIdx = (M.algoIdx - 1 + M.algoCount) % M.algoCount;
 
-
-            if (Con.state == STATE_WELCOME && Con.cx != 0) {
-                Con.cx--;
-            }
-
-            if (Con.state == STATE_VISUALIZATION && Con.cx != 0) {
+            if (Con.state == VISUALIZATION && Con.cx != 0) {
                 Con.cx--;
             }
             break;
@@ -74,7 +59,7 @@ void dashProcessKeypress() {
             exit(0);
             break;
 
-        if (Con.state == STATE_RUN) return; // below c eventaully, want screen clear post-run.
+        if (Con.state == RUN) return; // below c eventaully, want screen clear post-run.
 
         case 'c':
             freeGrid(g);
@@ -86,8 +71,8 @@ void dashProcessKeypress() {
         
         // Enter is a carriage return in raw mode.
         case ('\r'):
-            if (Con.state == STATE_WELCOME) {
-                Con.state = STATE_VISUALIZATION;
+            if (Con.state == WELCOME) {
+                Con.state = VISUALIZATION;
 
                 // Bit dodge, can't be in the infinite loop.
                 Con.cy = 5; // why is this here?
@@ -95,8 +80,8 @@ void dashProcessKeypress() {
                 break;
  
             }
-            if (Con.state == STATE_VISUALIZATION && g->end_cell != NULL && g->start_cell != NULL) {
-                Con.state = STATE_RUN;
+            if (Con.state == VISUALIZATION && g->end_cell != NULL && g->start_cell != NULL) {
+                Con.state = RUN;
                 break;
 
             }
@@ -104,12 +89,12 @@ void dashProcessKeypress() {
 
         case (' '):
             // Place start, end and barrier cells one by one.
-            if (Con.state == STATE_VISUALIZATION) handleSpacePress(curr_cell);
+            if (Con.state == VISUALIZATION) handleSpacePress(curr_cell);
             break;
 
         case 'r':
             // r press removes starts/ends or non-permanent barriers at cursor location.
-            if (Con.state == STATE_VISUALIZATION) handleRPress(curr_cell);
+            if (Con.state == VISUALIZATION) handleRPress(curr_cell);
             break;
 
         case ARROW_UP:

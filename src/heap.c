@@ -1,10 +1,10 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#include "welcome.h"
 #include "heap.h"
 #include "algorithms.h"
 #include "cell.h"
+#include "terminal.h"
 
 /* Functions that provide functionality for a priority queue using a binary min-heap */
 
