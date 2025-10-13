@@ -60,14 +60,6 @@ void init() {
 	// Allocate rows and cols of terminal, initialise grid with these values.
 	if (getWindowSize(&Con.screenrows, &Con.screencols) == -1) die("init() -> getWindowSize");
 	if (Con.screenrows < MIN_ROWS || Con.screencols < MIN_COLS) die("Terminal window too small!");
-	
-	///////////////// !!!!!!!!!!!!!!! ////////////////////
-	// the worst things ive ever seen.
-	Con.headerrow = 2; // Will be refactored. TMP
-
-	Con.cy = Con.headerrow + 1; // Assign after wel_offset assigned.
-	
-	///////////////// !!!!!!!!!!!!!!! ////////////////////
 
 	g = initGrid(g, Con.screenrows, Con.screencols);
 	if (!g) die("init() -> initGrid");

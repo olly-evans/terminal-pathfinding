@@ -20,7 +20,7 @@ MenuControl controls[] = {
 };
 
 void drawMenu() {
-    Con.state = STATE_WELCOME;
+    Con.state = WELCOME;
     struct abuf wel_ab = ABUF_INIT;
 
     abAppend(&wel_ab, "\x1b[?25l", 6);

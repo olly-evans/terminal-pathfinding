@@ -7,9 +7,9 @@
 
 // Move this.
 enum appState {
-	STATE_WELCOME,
-	STATE_VISUALIZATION,
-    STATE_RUN
+	WELCOME,
+	VISUALIZATION,
+    RUN
 };
 
 /* LINUX TERMINAL DEPENDANT */

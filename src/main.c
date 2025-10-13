@@ -16,13 +16,17 @@ int main(void) {
     init();
 
     // New; works but still wanna try no drawGrid().
-    while (Con.state != STATE_RUN) {
-        if (Con.state == STATE_WELCOME) drawMenu();
-        if (Con.state == STATE_VISUALIZATION) drawPathfindingVisualizer();
+    while (Con.state != RUN) {
+        if (Con.state == WELCOME) drawMenu();
+        if (Con.state == VISUALIZATION) drawPathfindingVisualizer();
         dashProcessKeypress();  
     }
     
-    astar(); // How is a chosen algo identified.. panel has a pointer to it perhaps.
+    switch (M.algoIdx) {
+        case 0:
+            astar();
+            break;
+    }
     dashProcessKeypress();
 
     freeGrid(g);
