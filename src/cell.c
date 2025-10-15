@@ -30,6 +30,7 @@ void drawCell(struct Cell *cell) {
     abAppend(&cell_buf, cell_color, strlen(cell_color));
     abAppend(&cell_buf, &cell->ch, 1);
     abAppend(&cell_buf, "\x1b[0m", 4);
+    abAppend(&cell_buf, "\r\n", 2);
 
     write(STDOUT_FILENO, cell_buf.b, cell_buf.len); 
     abFree(&cell_buf);
@@ -64,8 +65,9 @@ bool isEndCell(struct Cell *c) {
 }
 
 bool isWalkableCell(struct Cell *c) {
-    return ((c->type == PERMANENT_BARRIER || c->type == BARRIER));
+    return !((c->type == PERMANENT_BARRIER || c->type == BARRIER));
 }
+
 int getManhattanDist(struct Cell *c1, struct Cell *end) {
     return 2*(abs(end->x - c1->x) + abs(end->y - c1->y));
 }

@@ -1,5 +1,13 @@
 ## IN-PROGRESS
 
+### BLOG
+
+I incremented the pointer to my dynamically allocated array (Q->qu++), which made it no longer point to the start of the memory block returned by malloc() or realloc().
+
+Then I passed that shifted pointer to realloc(), which is undefined behavior, because realloc() must only be called on the original pointer returned by malloc() or realloc().
+
+This corrupted my memory layout and caused a segmentation fault when the program tried to access or resize the modified pointer.
+
 ## AGENDA
 - Cursor shows when pressing arrow at the arrows in menu.
 - Write a test to check abAppend bytes input.

@@ -29,6 +29,9 @@ int main(void) {
         case 2:
             // DFS();
             break;
+        case 3:
+            BFS();
+            break;
     }
     dashProcessKeypress();
 

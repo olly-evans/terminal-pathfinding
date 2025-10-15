@@ -5,5 +5,6 @@
 
 void astar();
 void DFS();
+void BFS();
 
 #endif

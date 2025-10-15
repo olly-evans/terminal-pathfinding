@@ -105,10 +105,12 @@ void BFS() {
     g->start_cell->explored = true;
 
     Q = enqueue(Q, g->start_cell);
+    drawCell(g->start_cell);
 
-    while (Q->qu_size != 0 && Q->qu != NULL) {
+    while (Q->rear != 0 && Q->qu != NULL) {
 
         struct Cell *current = dequeue(Q);
+        drawCell(current);
 
         if (isEndCell(current)) return;
 
@@ -123,13 +125,16 @@ void BFS() {
             // Point to chosen neighbour of current.
             struct Cell *neighbour = &g->cells[ny][nx];
 
+            if (!isWalkableCell(neighbour) || neighbour->explored) continue;
+
             if (!neighbour->explored) {
                 neighbour->explored = true;
                 neighbour->prev = current;
                 Q = enqueue(Q, neighbour);
             }
-        }
+            drawCell(neighbour);
 
+        }
     }
 }
 // void DFS() {

@@ -8,7 +8,10 @@
 
 typedef struct {
     struct Cell **qu; // Stack, pointer to an array of cell pointers.
-    int qu_size; // Number of cell pointers in st.
+    int front;
+    int rear;
+    int capacity;
+
 } Queue;
 
 Queue* queueInit();
