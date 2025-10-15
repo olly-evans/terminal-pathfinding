@@ -45,16 +45,7 @@ void astar() {
         struct Cell *current = heapExtract(hp);
 
         if (isEndCell(current)) {
-            current->type = PATH;
-            drawCell(current);
-            
-            struct Cell *previous = g->end_cell->prev;
-            while (previous != NULL) {
-                previous->type = PATH;
-                drawCell(previous);
-
-                previous = previous->prev;
-            }
+            reconstructPath(current);
             break;
         }
 
@@ -74,7 +65,7 @@ void astar() {
             struct Cell *neighbour = &g->cells[ny][nx];
 
             if (neighbour->inClosedSet) continue;
-            if (isWalkableCell(neighbour)) continue; // ????
+            if (!isWalkableCell(neighbour)) continue; // ????
 
             int tentative_g = current->g + neighbour->weight;
 
@@ -112,7 +103,10 @@ void BFS() {
         struct Cell *current = dequeue(Q);
         drawCell(current);
 
-        if (isEndCell(current)) return;
+        if (isEndCell(current)) {
+            reconstructPath(current);
+            break;
+        }
 
         for (int i = 0; i < sizeof(DIRS)/sizeof(DIRS[0]); i++) {
             // See DIRS array.
@@ -170,3 +164,16 @@ void BFS() {
 //         }
 //     }
 // }
+
+void reconstructPath(struct Cell *end) {
+    end->type = PATH;
+    drawCell(end);
+    
+    struct Cell *previous = g->end_cell->prev;
+    while (previous != NULL) {
+        previous->type = PATH;
+        drawCell(previous);
+
+        previous = previous->prev;
+    }
+}
