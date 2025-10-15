@@ -26,7 +26,7 @@ struct Cell {
     bool inOpenSet;
     bool inClosedSet;
 
-    bool discovered;
+    bool explored;
 
     int weight; // Cell to cell weight.
     int g; // Cumulative weight from start cell to this cell.

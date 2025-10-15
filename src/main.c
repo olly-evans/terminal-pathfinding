@@ -27,7 +27,7 @@ int main(void) {
             astar();
             break;
         case 2:
-            DFS();
+            // DFS();
             break;
     }
     dashProcessKeypress();

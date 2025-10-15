@@ -9,7 +9,7 @@
 #include "heap.h"
 #include "cell.h"
 #include "grid.h"
-#include "stack.h"
+#include "queue.h"
 
 const int DIRS[4][2] = {
     { 0, -1 }, // Up
@@ -74,7 +74,7 @@ void astar() {
             struct Cell *neighbour = &g->cells[ny][nx];
 
             if (neighbour->inClosedSet) continue;
-            if (isWalkableCell(neighbour)) continue;
+            if (isWalkableCell(neighbour)) continue; // ????
 
             int tentative_g = current->g + neighbour->weight;
 
@@ -99,34 +99,69 @@ void astar() {
     free(hp);
 }
 
-void DFS() {
-    Stack *S = stackInit();
+void BFS() {
+    Queue *Q = queueInit();
 
-    S = stackPush(S, g->start_cell);
-    drawCell(g->start_cell);
+    g->start_cell->explored = true;
 
-    while (S->st_size != 0 && S->st != NULL) {
-        struct Cell *current = stackPop(S);
-        drawCell(current);
+    Q = enqueue(Q, g->start_cell);
 
-        if (!current->discovered) {
-            current->discovered = true;
+    while (Q->qu_size != 0 && Q->qu != NULL) {
 
-            for (int i = 0; i < sizeof(DIRS)/sizeof(DIRS[0]); i++) {
-                int nx = current->x + DIRS[i][0];
-                int ny = current->y + DIRS[i][1];
-                
-                // Is this neighbour in the grid range.
-                if (nx < 0 || ny < 0 || nx >= g->cols || ny >= g->rows) continue;
-                
-                // Point to chosen neighbour of current.
-                struct Cell *neighbour = &g->cells[ny][nx];
-                
-                if (isWalkableCell(neighbour)) continue;
+        struct Cell *current = dequeue(Q);
 
-                S = stackPush(S, neighbour);
-                drawCell(neighbour);
+        if (isEndCell(current)) return;
+
+        for (int i = 0; i < sizeof(DIRS)/sizeof(DIRS[0]); i++) {
+            // See DIRS array.
+            int nx = current->x + DIRS[i][0];
+            int ny = current->y + DIRS[i][1];
+            
+            // Is this neighbour in the grid range.
+            if (nx < 0 || ny < 0 || nx >= g->cols || ny >= g->rows) continue;
+            
+            // Point to chosen neighbour of current.
+            struct Cell *neighbour = &g->cells[ny][nx];
+
+            if (!neighbour->explored) {
+                neighbour->explored = true;
+                neighbour->prev = current;
+                Q = enqueue(Q, neighbour);
             }
         }
+
     }
 }
+// void DFS() {
+//     Stack *S = stackInit();
+
+//     S = stackPush(S, g->start_cell);
+//     drawCell(g->start_cell);
+
+//     while (S->st_size != 0 && S->st != NULL) {
+//         struct Cell *current = stackPop(S);
+//         drawCell(current);
+
+//         if (isEndCell(current)) return;
+
+//         if (!current->discovered) {
+//             current->discovered = true;
+
+//             for (int i = 0; i < sizeof(DIRS)/sizeof(DIRS[0]); i++) {
+//                 int nx = current->x + DIRS[i][0];
+//                 int ny = current->y + DIRS[i][1];
+                
+//                 // Is this neighbour in the grid range.
+//                 if (nx < 0 || ny < 0 || nx >= g->cols || ny >= g->rows) continue;
+                
+//                 // Point to chosen neighbour of current.
+//                 struct Cell *neighbour = &g->cells[ny][nx];
+                
+//                 if (isWalkableCell(neighbour)) continue;
+
+//                 S = (S, neighbour);
+//                 drawCell(neighbour);
+//             }
+//         }
+//     }
+// }
