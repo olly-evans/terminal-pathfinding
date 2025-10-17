@@ -29,7 +29,7 @@ void astar() {
         
     */
 
-    // Init heap struct containing open and closed set, (bh and cs).
+    // Init heap struct containing open and closed set, (os and cs).
     Heap *hp = initHeap();
 
     g->start_cell->g = 0;
@@ -101,13 +101,14 @@ void BFS() {
     while (Q->rear != 0 && Q->qu != NULL) {
 
         struct Cell *current = dequeue(Q);
-        drawCell(current);
 
+        if (!current) break;
         if (isEndCell(current)) {
             reconstructPath(current);
             break;
         }
-
+        drawCell(current);
+        
         for (int i = 0; i < sizeof(DIRS)/sizeof(DIRS[0]); i++) {
             // See DIRS array.
             int nx = current->x + DIRS[i][0];
@@ -127,10 +128,11 @@ void BFS() {
                 Q = enqueue(Q, neighbour);
             }
             drawCell(neighbour);
-
         }
     }
+    free(Q);
 }
+
 // void DFS() {
 //     Stack *S = stackInit();
 

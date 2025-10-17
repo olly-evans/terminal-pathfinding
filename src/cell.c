@@ -24,7 +24,7 @@ void drawCell(struct Cell *cell) {
 
     char *cell_color = getCellColor(cell);
 
-    usleep(10000); 
+    usleep(1000); 
 
     abAppend(&cell_buf, "\x1b[?25l", 6); // Hide cursor.
     abAppend(&cell_buf, cell_color, strlen(cell_color));
@@ -65,7 +65,7 @@ bool isEndCell(struct Cell *c) {
 }
 
 bool isWalkableCell(struct Cell *c) {
-    return !((c->type == PERMANENT_BARRIER || c->type == BARRIER));
+    return !(c->type == PERMANENT_BARRIER || c->type == BARRIER);
 }
 
 int getManhattanDist(struct Cell *c1, struct Cell *end) {
