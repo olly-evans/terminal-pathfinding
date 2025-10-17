@@ -129,8 +129,7 @@ void BFS() {
             drawCell(neighbour);
         }
     }
-    free(Q->qu);
-    free(Q);
+    freeQueue(Q);
 }
 
 // void DFS() {

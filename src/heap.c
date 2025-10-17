@@ -37,7 +37,7 @@ Heap* heapInsert(Heap *hp, struct Cell *cell) {
 
     if (hp->os_size == 0) hp->os = malloc(sizeof(*hp->os));
 
-    hp->os = realloc(hp->os, (hp->os_size + 1) * sizeof(*hp->os ));
+    hp->os = realloc(hp->os, (hp->os_size + 1) * sizeof(*hp->os));
     hp->os[hp->os_size++] = cell;
 
     // If one cell in queue we can just return no bubbling required.
@@ -145,7 +145,7 @@ int getOpenSetIdx(Heap *hp, struct Cell *cell) {
 }
 
 void freeHeap(Heap *hp) {
-	free(hp->os);
+    free(hp->os);
     free(hp->cs);
     free(hp);
 }

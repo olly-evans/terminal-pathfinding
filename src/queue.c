@@ -40,12 +40,12 @@ struct Cell* dequeue(Queue *Q) {
 
     if (!cell) die("dequeue() -> cell is NULL.");
 
-
     cell->type = CLOSED;
     cell->inOpenSet = false;
     return cell;
 }
 
-void stackFree(Queue *S) {
-    return;
+void freeQueue(Queue *Q) {
+    free(Q->qu);
+    free(Q);
 }

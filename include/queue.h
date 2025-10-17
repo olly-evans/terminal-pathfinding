@@ -1,9 +1,9 @@
-#ifndef STACK_H
-#define STACK_H
+#ifndef QUEUE_H
+#define QUEUE_H
 
 #include "cell.h"
 
-#define STACK_INIT (Queue){.st = NULL, .st_size = 0};
+#define STACK_INIT (Queue){.qu = NULL, .qu = 0};
 
 
 typedef struct {
@@ -17,6 +17,6 @@ typedef struct {
 Queue* queueInit();
 Queue* enqueue(Queue *S, struct Cell *cell);
 struct Cell* dequeue(Queue *S);
-void stackFree(Queue *S);
+void freeQueue(Queue *Q);
 
 #endif
