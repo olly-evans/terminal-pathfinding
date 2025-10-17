@@ -26,30 +26,36 @@ struct Cell *heapExtract(Heap *hp) {
     return extracted;
 }
 
-Heap* heapInsert(Heap *hp, struct Cell *cell) {
+void heapInsert(Heap *hp, struct Cell *cell) {
 
     /* Add cell to the binary min-heap. */
 
-    if (cell->inOpenSet) return hp;
+    if (cell->inOpenSet) return;
     
     cell->type = OPEN;
     cell->inOpenSet = true;
 
-    if (hp->os_size == 0) hp->os = malloc(sizeof(*hp->os));
+    if (hp->os_size == 0) {
+        hp->os = malloc(sizeof(*hp->os));
+    } else {
+        struct Cell **tmp = realloc(hp->os, (hp->os_size + 1) * sizeof(*hp->os));
+        if (!tmp) return;
+        
+        hp->os = tmp;
+    }
 
-    hp->os = realloc(hp->os, (hp->os_size + 1) * sizeof(*hp->os));
     hp->os[hp->os_size++] = cell;
 
-    // If one cell in queue we can just return no bubbling required.
-    if (hp->os_size == 1) return hp;
+    // If one cell in queue we can just return, no bubbling required.
+    if (hp->os_size == 1) return;
 
-    return heapBubbleUp(hp, hp->os_size - 1);
+    heapBubbleUp(hp, hp->os_size - 1);
 }
 
-Heap* heapBubbleUp(Heap *hp, int childIdx) {
+void heapBubbleUp(Heap *hp, int childIdx) {
 
     /* Try and make this account for g score too */
-    if (childIdx == 0) return hp;
+    if (childIdx == 0) return;
 
     int parentIdx = ((childIdx - 1) / 2);
 
@@ -59,7 +65,7 @@ Heap* heapBubbleUp(Heap *hp, int childIdx) {
         childIdx = parentIdx;
         parentIdx = ((childIdx - 1) / 2);
     }
-    return hp;
+    return;
 }
 
 Heap* heapBubbleDown(Heap *hp, int parentIdx) {
@@ -146,6 +152,10 @@ int getOpenSetIdx(Heap *hp, struct Cell *cell) {
 
 void freeHeap(Heap *hp) {
     free(hp->os);
+    hp->os = NULL;
+
     free(hp->cs);
+    hp->cs = NULL;
+
     free(hp);
 }

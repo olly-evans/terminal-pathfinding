@@ -13,8 +13,8 @@ typedef struct {
 } Heap;
 
 struct Cell* heapExtract(Heap *hp);
-Heap* heapInsert(Heap *hp, struct Cell *cell);
-Heap* heapBubbleUp(Heap *hp, int childIdx);
+void heapInsert(Heap *hp, struct Cell *cell);
+void heapBubbleUp(Heap *hp, int childIdx);
 void swap(struct Cell **a, struct Cell **b);
 Heap* heapBubbleDown(Heap *hp, int parentIdx);
 Heap* initHeap();

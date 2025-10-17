@@ -37,7 +37,7 @@ void astar() {
     g->start_cell->f = g->start_cell->g + g->start_cell->md;
     g->start_cell->prev = NULL;
 
-    hp = heapInsert(hp, g->start_cell); 
+    heapInsert(hp, g->start_cell); 
     drawCell(g->start_cell);
 
     while (hp->os_size > 0 && hp->os != NULL) {
@@ -75,12 +75,12 @@ void astar() {
                 neighbour->f = tentative_g + getManhattanDist(neighbour, g->end_cell);
 
                 if (!neighbour->inOpenSet) {
-                    hp = heapInsert(hp, neighbour);
+                    heapInsert(hp, neighbour);
                 } else {
                     // Indexing if in open set here is not optimal, heap_index cell member better.
                     int idx = getOpenSetIdx(hp, neighbour); 
                     hp->os[idx]->f = neighbour->f;
-                    hp = heapBubbleUp(hp, idx);
+                    heapBubbleUp(hp, idx);
                 }
             }
             drawCell(neighbour);
