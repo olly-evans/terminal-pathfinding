@@ -80,6 +80,8 @@ struct Grid* initGrid(struct Grid *g, int rows, int cols) {
 			g->cells[y][x].weight = 1;
 			g->cells[y][x].inOpenSet = false;
 			g->cells[y][x].inClosedSet = false;
+            g->cells[y][x].explored = false;
+            g->cells[y][x].prev = NULL;
 		}
 	}
 	return g;
