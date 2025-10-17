@@ -33,7 +33,7 @@ Queue* enqueue(Queue *Q, struct Cell  *cell) {
 }
 
 struct Cell* dequeue(Queue *Q) {
-
+    
     if (Q->rear == Q->front) return NULL;
 
     struct Cell *cell = Q->qu[Q->front++];

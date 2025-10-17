@@ -65,7 +65,7 @@ void astar() {
             struct Cell *neighbour = &g->cells[ny][nx];
 
             if (neighbour->inClosedSet) continue;
-            if (!isWalkableCell(neighbour)) continue; // ????
+            if (!isWalkableCell(neighbour)) continue;
 
             int tentative_g = current->g + neighbour->weight;
 
@@ -86,8 +86,7 @@ void astar() {
             drawCell(neighbour);
         } 
     }
-    // No solution.
-    free(hp);
+    freeHeap(hp);
 }
 
 void BFS() {
@@ -102,7 +101,7 @@ void BFS() {
 
         struct Cell *current = dequeue(Q);
 
-        if (!current) break;
+        if (!current) break; // No solution.
         if (isEndCell(current)) {
             reconstructPath(current);
             break;
@@ -117,7 +116,7 @@ void BFS() {
             // Is this neighbour in the grid range.
             if (nx < 0 || ny < 0 || nx >= g->cols || ny >= g->rows) continue;
             
-            // Point to chosen neighbour of current.
+            // Pointer to chosen neighbour of current.
             struct Cell *neighbour = &g->cells[ny][nx];
 
             if (!isWalkableCell(neighbour) || neighbour->explored) continue;

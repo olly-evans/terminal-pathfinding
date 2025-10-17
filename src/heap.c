@@ -144,6 +144,8 @@ int getOpenSetIdx(Heap *hp, struct Cell *cell) {
     }
 }
 
-void heapFree(Heap *hp) {
-    return;
+void freeHeap(Heap *hp) {
+	free(hp->os);
+    free(hp->cs);
+    free(hp);
 }
