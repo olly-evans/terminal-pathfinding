@@ -40,7 +40,6 @@ void heapInsert(Heap *hp, struct Cell *cell) {
     } else {
         struct Cell **tmp = realloc(hp->os, (hp->os_size + 1) * sizeof(*hp->os));
         if (!tmp) return;
-        
         hp->os = tmp;
     }
 
@@ -118,7 +117,7 @@ Heap* initHeap() {
     return hp;
 }
 
-Heap* makeClosed(Heap *hp, struct Cell* curr) {
+void makeClosed(Heap *hp, struct Cell* curr) {
 
     /* 
     Add a cell to the closed set. 
@@ -126,7 +125,7 @@ Heap* makeClosed(Heap *hp, struct Cell* curr) {
     Can just flag with a bool actually but this way we know how many we have.
     */
 
-    if (curr->inClosedSet) return hp;
+    if (curr->inClosedSet) return;
 
     if (hp->cs_size == 0) {
         hp->cs = malloc(sizeof(*hp->cs));
@@ -139,7 +138,7 @@ Heap* makeClosed(Heap *hp, struct Cell* curr) {
     curr->type = CLOSED;
     curr->inClosedSet = true;
     
-    return hp;
+    return;
 }
 
 int getOpenSetIdx(Heap *hp, struct Cell *cell) {
@@ -151,6 +150,12 @@ int getOpenSetIdx(Heap *hp, struct Cell *cell) {
 }
 
 void freeHeap(Heap *hp) {
+
+    if (!hp) {
+        fprintf(stderr, "freeHeap() called with NULL\n");
+        return;
+    }
+
     free(hp->os);
     hp->os = NULL;
 

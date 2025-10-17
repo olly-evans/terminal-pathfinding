@@ -18,7 +18,7 @@ void heapBubbleUp(Heap *hp, int childIdx);
 void swap(struct Cell **a, struct Cell **b);
 Heap* heapBubbleDown(Heap *hp, int parentIdx);
 Heap* initHeap();
-Heap* makeClosed(Heap *hp, struct Cell* curr);
+void makeClosed(Heap *hp, struct Cell* curr);
 int getOpenSetIdx(Heap *hp, struct Cell *cell);
 void freeHeap(Heap *hp);
 

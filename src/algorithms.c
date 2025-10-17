@@ -49,7 +49,7 @@ void astar() {
             break;
         }
 
-        hp = makeClosed(hp, current);
+        makeClosed(hp, current);
         drawCell(current);
 
         // No diagonals, hence 4 neighbours. DIRS appendable to add diagonals.
