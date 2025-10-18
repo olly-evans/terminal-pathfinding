@@ -9,7 +9,7 @@
 /* Functions that provide functionality for a priority queue using a binary min-heap */
 
 struct Cell *heapExtract(Heap *hp) {
-    if (hp->os_size == 0) return NULL;
+    if (hp->os_size == 0) free(hp->os), hp->os = NULL;
 
     struct Cell *extracted = hp->os[0];  // the cell to pop
 
@@ -19,12 +19,12 @@ struct Cell *heapExtract(Heap *hp) {
     swap(&hp->os[0], &hp->os[lastIdx]);
     hp->os_size--;
 
-    if (hp->os_size == 0) {
-        free(hp->os);
-        hp->os = NULL;
-    } else {
-        hp->os = realloc(hp->os, sizeof(struct Cell *) * hp->os_size);
-    }
+    // if (hp->os_size == 0) {
+    //     free(hp->os);
+    //     hp->os = NULL;
+    // } else {
+    //     hp->os = realloc(hp->os, sizeof(*hp->os) * hp->os_size);
+    // }
 
     // Bubble down the new root to maintain heap property
     heapBubbleDown(hp, 0);
@@ -43,13 +43,16 @@ void heapInsert(Heap *hp, struct Cell *cell) {
     cell->inOpenSet = true;
 
     if (hp->os_size == 0) {
-        hp->os = malloc(sizeof(struct Cell *));
-    } else {
-        struct Cell **tmp = realloc(hp->os, (hp->os_size + 1) * sizeof(*hp->os));
-        if (!tmp) return;
+        hp->os = malloc(hp->os_cap * sizeof(*hp->os));
+    }
+    
+    if (hp->os_size == hp->os_cap) {
+        hp->os_cap *= 2;
+        struct Cell **tmp = realloc(hp->os, (hp->os_cap) * sizeof(*hp->os));
+        if (!tmp) return; // Not sure what to do here.
         hp->os = tmp;
     }
-
+    // no actual init for 
     hp->os[hp->os_size++] = cell;
 
     // If one cell in queue we can just return, no bubbling required.
@@ -118,10 +121,13 @@ Heap* initHeap() {
 
     hp->os = NULL;
     hp->cs = NULL;
-    hp->os_cap = 8;
 
     hp->os_size = 0;
     hp->cs_size = 0;
+
+    hp->os_cap = 16;
+    hp->cs_cap = 16;
+
     return hp;
 }
 

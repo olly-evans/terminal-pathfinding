@@ -6,7 +6,7 @@
 *.log
 
 # Ignore compiled binary
-/bin/
+path
 
 # Editor-specific
 *.swp

@@ -7,9 +7,11 @@
 typedef struct {
     struct Cell **os; // Binary minimum heap, zero-indexed so left child at 2i + 1, right at 2i + 2.
     int os_size;
+    int os_cap;
 
     struct Cell **cs; // Closed set of explored cells.
     int cs_size;
+    int cs_cap;
 } Heap;
 
 struct Cell* heapExtract(Heap *hp);
