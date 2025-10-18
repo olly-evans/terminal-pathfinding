@@ -9,11 +9,14 @@
 /* Functions that provide functionality for a priority queue using a binary min-heap */
 
 struct Cell *heapExtract(Heap *hp) {
-    if (hp->os_size == 0) free(hp->os), hp->os = NULL;
+    if (hp->os_size == 0) {
+        free(hp->os);
+        hp->os = NULL;
+        return NULL;
+    }
 
     struct Cell *extracted = hp->os[0];  // Pop the root at index 0.
 
-    
     // Swap root with last element
     int lastIdx = hp->os_size - 1;
     swap(&hp->os[0], &hp->os[lastIdx]);
@@ -43,13 +46,14 @@ void heapInsert(Heap *hp, struct Cell *cell) {
     cell->inOpenSet = true;
 
     if (hp->os_size == 0) {
-        hp->os = malloc(hp->os_cap * sizeof(*hp->os));
+        free(hp->os);
+        hp->os = malloc(hp->os_cap * sizeof(struct Cell *));
     }
     
     if (hp->os_size == hp->os_cap) {
         hp->os_cap *= 2;
-        struct Cell **tmp = realloc(hp->os, (hp->os_cap) * sizeof(*hp->os));
-        if (!tmp) return; // Not sure what to do here.
+        struct Cell **tmp = realloc(hp->os, (hp->os_cap) * sizeof(struct Cell *));
+        if (!tmp) die("heapInsert() -> realloc()"); // Not sure what to do here.
         hp->os = tmp;
     }
 
