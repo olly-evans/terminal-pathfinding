@@ -24,7 +24,7 @@ void drawCell(struct Cell *cell) {
 
     char *cell_color = getCellColor(cell);
 
-    usleep(1000); 
+    usleep(10000); 
 
     abAppend(&cell_buf, "\x1b[?25l", 6); // Hide cursor.
     abAppend(&cell_buf, cell_color, strlen(cell_color));

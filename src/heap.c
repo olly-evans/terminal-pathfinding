@@ -19,6 +19,13 @@ struct Cell *heapExtract(Heap *hp) {
     swap(&hp->os[0], &hp->os[lastIdx]);
     hp->os_size--;
 
+    if (hp->os_size == 0) {
+        free(hp->os);
+        hp->os = NULL;
+    } else {
+        hp->os = realloc(hp->os, sizeof(struct Cell *) * hp->os_size);
+    }
+
     // Bubble down the new root to maintain heap property
     heapBubbleDown(hp, 0);
 
@@ -36,7 +43,7 @@ void heapInsert(Heap *hp, struct Cell *cell) {
     cell->inOpenSet = true;
 
     if (hp->os_size == 0) {
-        hp->os = malloc(sizeof(*hp->os));
+        hp->os = malloc(sizeof(struct Cell *));
     } else {
         struct Cell **tmp = realloc(hp->os, (hp->os_size + 1) * sizeof(*hp->os));
         if (!tmp) return;
@@ -111,6 +118,7 @@ Heap* initHeap() {
 
     hp->os = NULL;
     hp->cs = NULL;
+    hp->os_cap = 8;
 
     hp->os_size = 0;
     hp->cs_size = 0;
@@ -156,10 +164,10 @@ void freeHeap(Heap *hp) {
         return;
     }
 
-    free(hp->os);
+    if (hp->os) free(hp->os);
     hp->os = NULL;
 
-    free(hp->cs);
+    if (hp->cs) free(hp->cs);
     hp->cs = NULL;
 
     free(hp);
