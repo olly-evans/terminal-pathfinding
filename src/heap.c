@@ -8,6 +8,25 @@
 
 /* Functions that provide functionality for a priority queue using a binary min-heap */
 
+Heap* initHeap() {
+
+    /* Initialise heap struct for algorithm. */
+
+    Heap *hp = malloc(sizeof(Heap));
+    if (!hp) die("initHeap() -> malloc");
+
+    hp->os = NULL;
+    hp->cs = NULL;
+
+    hp->os_size = 0;
+    hp->cs_size = 0;
+
+    hp->os_cap = INIT_OS_CAP;
+    hp->cs_cap = INIT_CS_CAP;
+
+    return hp;
+}
+
 struct Cell *heapExtract(Heap *hp) {
     if (hp->os_size == 0) {
         free(hp->os);
@@ -109,25 +128,6 @@ void swap(struct Cell **a, struct Cell **b) {
     *b = tmp;
 }
 
-Heap* initHeap() {
-
-    /* Initialise heap struct for algorithm. */
-
-    Heap *hp = malloc(sizeof(Heap));
-    if (!hp) die("initHeap() -> malloc");
-
-    hp->os = NULL;
-    hp->cs = NULL;
-
-    hp->os_size = 0;
-    hp->cs_size = 0;
-
-    hp->os_cap = 16;
-    hp->cs_cap = 16;
-
-    return hp;
-}
-
 void makeClosed(Heap *hp, struct Cell* curr) {
 
     /* 
@@ -139,12 +139,14 @@ void makeClosed(Heap *hp, struct Cell* curr) {
     if (curr->inClosedSet) return;
 
     if (hp->cs_size == 0) {
-        hp->cs = malloc(sizeof(*hp->cs));
+        hp->cs = malloc(hp->cs_cap * sizeof(*hp->cs));
     }
 
-    hp->cs = realloc(hp->cs, (hp->cs_size + 1) * sizeof(*hp->cs )); 
-    hp->cs[hp->cs_size] = curr;
-    hp->cs_size++;
+    if (hp->cs_size == hp->cs_cap) {
+        hp->cs_cap *= 2;
+        hp->cs = realloc(hp->cs, hp->cs_cap * sizeof(*hp->cs )); 
+    }
+    hp->cs[hp->cs_size++] = curr;
 
     curr->type = CLOSED;
     curr->inClosedSet = true;

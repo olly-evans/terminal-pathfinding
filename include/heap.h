@@ -4,6 +4,9 @@
 
 #define HEAP_INIT (Heap){.os = NULL, .os_size = 0, .cs = NULL, .cs_size = 0};
 
+#define INIT_OS_CAP 16
+#define INIT_CS_CAP 16
+
 typedef struct {
     struct Cell **os; // Binary minimum heap, zero-indexed so left child at 2i + 1, right at 2i + 2.
     int os_size;
