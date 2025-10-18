@@ -22,13 +22,6 @@ struct Cell *heapExtract(Heap *hp) {
     swap(&hp->os[0], &hp->os[lastIdx]);
     hp->os_size--;
 
-    // if (hp->os_size == 0) {
-    //     free(hp->os);
-    //     hp->os = NULL;
-    // } else {
-    //     hp->os = realloc(hp->os, sizeof(*hp->os) * hp->os_size);
-    // }
-
     // Bubble down the new root to maintain heap property
     heapBubbleDown(hp, 0);
 
