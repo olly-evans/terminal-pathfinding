@@ -69,8 +69,7 @@ struct Grid* initGrid(struct Grid *g, int rows, int cols) {
 			if (y == 0 || x == 0 || y == Con.screenrows - 1 || x == Con.screencols - 1) {
 				g->cells[y][x].type = PERMANENT_BARRIER;
 			} else {
-				g->cells[y][x].type = EMPTY;
-				
+				g->cells[y][x].type = EMPTY;	
 			}
 
             g->cells[y][x].ch = ' ';

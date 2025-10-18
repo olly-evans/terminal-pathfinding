@@ -11,7 +11,7 @@
 struct Cell *heapExtract(Heap *hp) {
     if (hp->os_size == 0) free(hp->os), hp->os = NULL;
 
-    struct Cell *extracted = hp->os[0];  // the cell to pop
+    struct Cell *extracted = hp->os[0];  // Pop the root at index 0.
 
     
     // Swap root with last element
@@ -52,7 +52,7 @@ void heapInsert(Heap *hp, struct Cell *cell) {
         if (!tmp) return; // Not sure what to do here.
         hp->os = tmp;
     }
-    // no actual init for 
+
     hp->os[hp->os_size++] = cell;
 
     // If one cell in queue we can just return, no bubbling required.
@@ -77,7 +77,7 @@ void heapBubbleUp(Heap *hp, int childIdx) {
     return;
 }
 
-Heap* heapBubbleDown(Heap *hp, int parentIdx) {
+void heapBubbleDown(Heap *hp, int parentIdx) {
     int os_size = hp->os_size;
 
     while (1) {
@@ -97,12 +97,12 @@ Heap* heapBubbleDown(Heap *hp, int parentIdx) {
 
         if (smallestIdx == parentIdx) break;
 
-        if (parentIdx >= hp->os_size || smallestIdx >= hp->os_size) return hp;
+        if (parentIdx >= hp->os_size || smallestIdx >= hp->os_size) return;
         
         swap(&hp->os[parentIdx], &hp->os[smallestIdx]);
         parentIdx = smallestIdx;
     }
-    return hp;
+    return;
 }
 
 void swap(struct Cell **a, struct Cell **b) {
