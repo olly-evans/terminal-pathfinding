@@ -22,7 +22,7 @@ int main(void) {
         dashProcessKeypress();  
     }
     
-    switch (M.algoIdx) {
+    switch (M.selection) {
         case 0:
             astar();
             break;

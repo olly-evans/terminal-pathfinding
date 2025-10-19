@@ -54,12 +54,12 @@ void drawMenuItems(struct abuf *ab) {
     abAppend(ab, "\r\n\r\n", 4);
     
     /* Algorithm Selection */
-    int padding = (Con.screencols - strlen(M.algorithms[M.algoIdx])) / 2;
+    int padding = (Con.screencols - strlen(M.algorithms[M.selection])) / 2;
     while(padding--) abAppend(ab, " ", 1);
     abAppend(ab, "<", 1);
     
     abAppend(ab, "\x1b[36m\x1b[1m", 9);
-    abAppend(ab, M.algorithms[M.algoIdx], strlen(M.algorithms[M.algoIdx]));
+    abAppend(ab, M.algorithms[M.selection], strlen(M.algorithms[M.selection]));
     abAppend(ab, "\x1b[0m", 4);
 
     abAppend(ab, ">", 1);

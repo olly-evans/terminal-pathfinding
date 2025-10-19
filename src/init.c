@@ -23,7 +23,7 @@ char *algorithms[] = {
 
 struct Menu M = {
 	.algoCount = sizeof(algorithms) / sizeof(algorithms[0]),
-	.algoIdx = 0,
+	.selection = 0,
 	.algorithms = algorithms
 };
 

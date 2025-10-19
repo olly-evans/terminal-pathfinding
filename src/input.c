@@ -28,14 +28,14 @@ void dashMoveCursor(int key) {
             break;
         case ARROW_RIGHT:
 
-            if (Con.state == WELCOME) M.algoIdx = (M.algoIdx + 1) % M.algoCount;
+            if (Con.state == WELCOME) M.selection = (M.selection + 1) % M.algoCount;
 
             if (Con.state == VISUALIZATION && Con.cx != Con.screencols - 1) {
                 Con.cx++;
             }
             break;
         case ARROW_LEFT:
-            if (Con.state == WELCOME) M.algoIdx = (M.algoIdx - 1 + M.algoCount) % M.algoCount;
+            if (Con.state == WELCOME) M.selection = (M.selection - 1 + M.algoCount) % M.algoCount;
 
             if (Con.state == VISUALIZATION && Con.cx != 0) {
                 Con.cx--;
@@ -52,7 +52,7 @@ void dashProcessKeypress() {
     switch (c) {
         case ('q'):
             freeGrid(g);
-            
+
             write(STDOUT_FILENO, "\x1b[2J", 4); // Clear screen.
             write(STDOUT_FILENO, "\x1b[H", 3); // Cursor home.
             write(STDOUT_FILENO, "\x1b[3J", 4); // Clear scrollback buffer.
