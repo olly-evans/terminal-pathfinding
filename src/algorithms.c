@@ -143,12 +143,15 @@ void DFS() {
     QS->push(QS, g->start_cell);
     drawCell(g->start_cell);
 
-    while (QS->rear != 0 && QS->frontier != NULL) {
+    while (QS->rear != -1) {
 
         struct Cell *current = QS->pop(QS);
         drawCell(current);
 
-        if (isEndCell(current)) return;
+        if (isEndCell(current)) {
+            reconstructPath(current);
+            break;
+        }
 
         if (!current->explored) {
             current->explored = true;
@@ -163,7 +166,7 @@ void DFS() {
                 // Point to chosen neighbour of current.
                 struct Cell *neighbour = &g->cells[ny][nx];
                 
-                if (isWalkableCell(neighbour)) continue;
+                if (!isWalkableCell(neighbour) || neighbour->explored) continue;
 
                 QS->push(QS, neighbour);
                 drawCell(neighbour);

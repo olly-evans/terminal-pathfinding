@@ -12,7 +12,7 @@ QueueStack* queue_stackInit() {
     QS->frontier = malloc(QS->capacity * sizeof(struct Cell *));
     if (!QS->frontier) die("queue_stackInit -> malloc");
 
-    QS->rear = 0;
+    QS->rear = -1;
     QS->front = 0;
 
     return QS;
@@ -29,13 +29,14 @@ void stackPush(QueueStack* S, struct Cell *cell) {
         if (!S->frontier) die("pushStack -> realloc");
     }
 
-    S->frontier[S->rear++] = cell;
+    S->frontier[++S->rear] = cell;
+
 }
 
 struct Cell* stackPop(QueueStack* S) {
 
     // need a check here ofc.
-
+    
     struct Cell *cell = S->frontier[S->rear--];
     if (!cell) die("stackPop() -> cell");
 
