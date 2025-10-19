@@ -6,7 +6,7 @@
 typedef struct Menu {
     char **algorithms;
     int algoCount;
-    int algoIdx;
+    int selection;
 } Menu;
 
 extern struct Menu M;

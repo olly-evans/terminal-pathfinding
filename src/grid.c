@@ -56,7 +56,7 @@ struct Grid* initGrid(struct Grid *g, int rows, int cols) {
 	g->rows = rows;
 	g->cols = cols;
 
-	// Allocate memory for an array of row pointers, sized for rows
+	// Allocate memory for an array of row pointers, sized for rows.
 	g->cells = malloc(sizeof(struct Cell*) * rows);
 	if (!g->cells) die("initGrid() -> malloc");
 
@@ -90,6 +90,9 @@ void freeGrid(struct Grid *g) {
 	
 	for (int y = 0; y < g->rows; y++) {
 		free(g->cells[y]);
+        g->cells[y] = NULL;
 	}
 	free(g->cells);
+    g->cells = NULL;
+    free(g);
 }

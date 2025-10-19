@@ -26,15 +26,13 @@ int main(void) {
         case 0:
             astar();
             break;
-        // case 2:
-        //     DFS();
-        //     break;
+        
         case 3:
             BFS();
             break;
     }
     dashProcessKeypress();
 
-    freeGrid(g);
+    
     return 0;
 }
