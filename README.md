@@ -2,8 +2,8 @@
 
 ### BLOG
 
--- reconstructPath for DFS with QueueStack -- 
--- get BFS working with QueueStack -- 
+-- Fix DFS logic --
+-- free QueueStack after the fact --
 
 I incremented the pointer to my dynamically allocated array (Q->qu++), which made it no longer point to the start of the memory block returned by malloc() or realloc().
 

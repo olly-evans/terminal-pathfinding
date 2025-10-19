@@ -145,6 +145,7 @@ void DFS() {
     QS->push(QS, g->start_cell);
     drawCell(g->start_cell);
 
+    // Condition works for now but won't work if no solution
     while (QS->rear != -1) {
 
         struct Cell *current = QS->pop(QS);
@@ -154,7 +155,7 @@ void DFS() {
             reconstructPath(current);
             break;
         }
-
+        
         for (int i = 0; i < sizeof(DIRS)/sizeof(DIRS[0]); i++) {
             int nx = current->x + DIRS[i][0];
             int ny = current->y + DIRS[i][1];
@@ -165,7 +166,7 @@ void DFS() {
             // Point to chosen neighbour of current.
             struct Cell *neighbour = &g->cells[ny][nx];
             
-            if (!isWalkableCell(neighbour)) continue;
+            if (!isWalkableCell(neighbour) || neighbour->explored) continue;
 
             if (!neighbour->explored) {
                 neighbour->explored = true;
