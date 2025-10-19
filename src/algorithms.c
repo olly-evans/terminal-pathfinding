@@ -137,6 +137,8 @@ void BFS() {
 void DFS() {
     QueueStack *QS = queue_stackInit();
 
+    g->start_cell->explored = true;
+
     QS->pop = stackPop;
     QS->push = stackPush;
     
@@ -153,25 +155,25 @@ void DFS() {
             break;
         }
 
-        if (!current->explored) {
-            current->explored = true;
+        for (int i = 0; i < sizeof(DIRS)/sizeof(DIRS[0]); i++) {
+            int nx = current->x + DIRS[i][0];
+            int ny = current->y + DIRS[i][1];
+            
+            // Is this neighbour in the grid range.
+            if (nx < 0 || ny < 0 || nx >= g->cols || ny >= g->rows) continue;
+            
+            // Point to chosen neighbour of current.
+            struct Cell *neighbour = &g->cells[ny][nx];
+            
+            if (!isWalkableCell(neighbour)) continue;
 
-            for (int i = 0; i < sizeof(DIRS)/sizeof(DIRS[0]); i++) {
-                int nx = current->x + DIRS[i][0];
-                int ny = current->y + DIRS[i][1];
-                
-                // Is this neighbour in the grid range.
-                if (nx < 0 || ny < 0 || nx >= g->cols || ny >= g->rows) continue;
-                
-                // Point to chosen neighbour of current.
-                struct Cell *neighbour = &g->cells[ny][nx];
-                
-                if (!isWalkableCell(neighbour) || neighbour->explored) continue;
-
+            if (!neighbour->explored) {
+                neighbour->explored = true;
+                neighbour->prev = current;
                 QS->push(QS, neighbour);
-                drawCell(neighbour);
             }
-        }
+            drawCell(neighbour);
+        }  
     }
 }
 

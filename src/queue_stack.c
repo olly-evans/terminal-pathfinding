@@ -35,8 +35,7 @@ void stackPush(QueueStack* S, struct Cell *cell) {
 
 struct Cell* stackPop(QueueStack* S) {
 
-    // need a check here ofc.
-    
+    // need a check here o
     struct Cell *cell = S->frontier[S->rear--];
     if (!cell) die("stackPop() -> cell");
 
