@@ -2,6 +2,9 @@
 
 ### BLOG
 
+-- reconstructPath for DFS with QueueStack -- 
+-- get BFS working with QueueStack -- 
+
 I incremented the pointer to my dynamically allocated array (Q->qu++), which made it no longer point to the start of the memory block returned by malloc() or realloc().
 
 Then I passed that shifted pointer to realloc(), which is undefined behavior, because realloc() must only be called on the original pointer returned by malloc() or realloc().

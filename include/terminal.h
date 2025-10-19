@@ -7,7 +7,7 @@
 
 // Move this.
 enum appState {
-	WELCOME,
+	MENU,
 	VISUALIZATION,
     RUN
 };
@@ -22,9 +22,6 @@ struct Config {
 
     int coloff;
     int rowoff;
-
-    char *algorithms;
-    int algoIdx;
 
     enum appState state;
     struct termios termiosOrig;

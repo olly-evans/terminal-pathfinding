@@ -28,14 +28,14 @@ void dashMoveCursor(int key) {
             break;
         case ARROW_RIGHT:
 
-            if (Con.state == WELCOME) M.selection = (M.selection + 1) % M.algoCount;
+            if (Con.state == MENU) M.selection = (M.selection + 1) % M.algoCount;
 
             if (Con.state == VISUALIZATION && Con.cx != Con.screencols - 1) {
                 Con.cx++;
             }
             break;
         case ARROW_LEFT:
-            if (Con.state == WELCOME) M.selection = (M.selection - 1 + M.algoCount) % M.algoCount;
+            if (Con.state == MENU) M.selection = (M.selection - 1 + M.algoCount) % M.algoCount;
 
             if (Con.state == VISUALIZATION && Con.cx != 0) {
                 Con.cx--;
@@ -73,7 +73,7 @@ void dashProcessKeypress() {
         
         // Enter is a carriage return in raw mode.
         case ('\r'):
-            if (Con.state == WELCOME) {
+            if (Con.state == MENU) {
                 Con.state = VISUALIZATION;
 
                 Con.cy = 5; // why is this here?
