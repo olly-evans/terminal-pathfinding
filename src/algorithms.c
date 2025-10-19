@@ -11,6 +11,8 @@
 #include "grid.h"
 #include "queue.h"
 
+#include "queue_stack.h"
+
 const int DIRS[4][2] = {
     { 0, -1 }, // Up
     { 0, 1 },  // Down
@@ -132,39 +134,43 @@ void BFS() {
     freeQueue(Q);
 }
 
-// void DFS() {
-//     Stack *S = stackInit();
+void DFS() {
+    QueueStack *QS = queue_stackInit();
 
-//     S = stackPush(S, g->start_cell);
-//     drawCell(g->start_cell);
+    QS->pop = stackPop;
+    QS->push = stackPush;
+    
+    QS->push(QS, g->start_cell);
+    drawCell(g->start_cell);
 
-//     while (S->st_size != 0 && S->st != NULL) {
-//         struct Cell *current = stackPop(S);
-//         drawCell(current);
+    while (QS->rear != 0 && QS->frontier != NULL) {
 
-//         if (isEndCell(current)) return;
+        struct Cell *current = QS->pop(QS);
+        drawCell(current);
 
-//         if (!current->discovered) {
-//             current->discovered = true;
+        if (isEndCell(current)) return;
 
-//             for (int i = 0; i < sizeof(DIRS)/sizeof(DIRS[0]); i++) {
-//                 int nx = current->x + DIRS[i][0];
-//                 int ny = current->y + DIRS[i][1];
+        if (!current->explored) {
+            current->explored = true;
+
+            for (int i = 0; i < sizeof(DIRS)/sizeof(DIRS[0]); i++) {
+                int nx = current->x + DIRS[i][0];
+                int ny = current->y + DIRS[i][1];
                 
-//                 // Is this neighbour in the grid range.
-//                 if (nx < 0 || ny < 0 || nx >= g->cols || ny >= g->rows) continue;
+                // Is this neighbour in the grid range.
+                if (nx < 0 || ny < 0 || nx >= g->cols || ny >= g->rows) continue;
                 
-//                 // Point to chosen neighbour of current.
-//                 struct Cell *neighbour = &g->cells[ny][nx];
+                // Point to chosen neighbour of current.
+                struct Cell *neighbour = &g->cells[ny][nx];
                 
-//                 if (isWalkableCell(neighbour)) continue;
+                if (isWalkableCell(neighbour)) continue;
 
-//                 S = (S, neighbour);
-//                 drawCell(neighbour);
-//             }
-//         }
-//     }
-// }
+                QS->push(QS, neighbour);
+                drawCell(neighbour);
+            }
+        }
+    }
+}
 
 void reconstructPath(struct Cell *end) {
     end->type = PATH;

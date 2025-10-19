@@ -2,9 +2,6 @@
 
 ### BLOG
 
-capacity for the open and closed set.
-
-
 I incremented the pointer to my dynamically allocated array (Q->qu++), which made it no longer point to the start of the memory block returned by malloc() or realloc().
 
 Then I passed that shifted pointer to realloc(), which is undefined behavior, because realloc() must only be called on the original pointer returned by malloc() or realloc().
@@ -33,7 +30,7 @@ NEW MENU IDEA:
 - saving a maze to a file and loading from a file.
 - severe flashing in my linux terminal, background color isnt the same either.
 
-# Notes 
+# Notes
 - vertical scrolling for welcome screen and edge stuff vertical then done w welcome screen i think.
 - make headerrow just below printed bits not rows/3 doesnt make sense.
 

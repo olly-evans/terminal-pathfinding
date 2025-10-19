@@ -7,7 +7,7 @@
 
 
 typedef struct {
-    struct Cell **qu; // Stack, pointer to an array of cell pointers.
+    struct Cell **qu;
     int front;
     int rear;
     int capacity;

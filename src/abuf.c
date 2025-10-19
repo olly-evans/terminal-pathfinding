@@ -23,7 +23,7 @@ void abAppendCentered(struct abuf *ab, char *s) {
     int len = strlen(s);
     if (len > Con.screencols) len = Con.screencols;
     int intro_padding = (Con.screencols - len) / 2;
-    
+
     // move cursor padding to the right...
     while (intro_padding--) abAppend(ab, " ", 1);
     abAppend(ab, s, len);

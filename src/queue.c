@@ -19,7 +19,7 @@ Queue* queueInit() {
 Queue* enqueue(Queue *Q, struct Cell  *cell) {
     
     cell->type = OPEN;
-    cell->inOpenSet = true;
+    cell->inOpenSet = true; // prob don't need.
 
     if (Q->rear == Q->capacity) {
         Q->capacity *= 2;
@@ -41,7 +41,7 @@ struct Cell* dequeue(Queue *Q) {
     if (!cell) die("dequeue() -> cell is NULL.");
 
     cell->type = CLOSED;
-    cell->inOpenSet = false;
+    cell->inOpenSet = false; // prob don't need.
     return cell;
 }
 
