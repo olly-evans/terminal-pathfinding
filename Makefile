@@ -1,9 +1,37 @@
-path: src/main.c src/terminal.c src/input.c src/init.c src/abuf.c src/heap.c src/algorithms.c src/cell.c src/grid.c src/visualizer.c \
-		src/menu.c src/queue.c src/queue_stack.c; gcc -g -O0 -Iinclude -o $@ $^
+CC := gcc
+CFLAGS := -g -O0 -Iinclude -Wall -Wextra -std=c11 -MMD -MP
 
-clean: ; rm -f path
+SRC_DIR := src
+BUILD_DIR := build
+BIN_DIR := bin
 
-CFLAGS = -g -O0 -Iinclude -o
+TARGET := $(BIN_DIR)/main
 
-main.o: main.c
-	gcc $(CFLAGS) -c main.c
+SRC := $(wildcard $(SRC_DIR)/*.c) # Pattern for .c
+OBJ := $(patsubst $(SRC_DIR)/%.c, $(BUILD_DIR)/%.o, $(SRC)) # Substitute this pattern for objects
+DEPS := $(OBJ:.o=.d)
+
+# Default goal
+all: $(TARGET)
+
+# Link all object files into the final executable
+$(TARGET): $(OBJ)
+	@mkdir -p $(BIN_DIR)
+	$(CC) $(CFLAGS) -o $@ $^
+
+# Compile each .c file into a .o object file, generating dependency files
+$(BUILD_DIR)/%.o: $(SRC_DIR)/%.c
+	@mkdir -p $(BUILD_DIR)
+	$(CC) $(CFLAGS) -c $< -o $@
+
+clean:
+	rm -rf $(BUILD_DIR) $(BIN_DIR)
+
+run: all
+	@echo "Running $(TARGET)..."
+	@./$(TARGET)
+
+-include $(DEPS)
+
+# Mark these targets as not actual files
+.PHONY: all clean run
