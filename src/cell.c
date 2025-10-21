@@ -39,7 +39,6 @@ void drawCell(struct Cell *cell) {
 
 char* getCellColor(struct Cell *cell) {
     
-    // Warnings for other enumeration values.
     switch (cell->type) {
         case PATH:
             return "\x1b[48;5;62m"; // Purpley
@@ -49,10 +48,10 @@ char* getCellColor(struct Cell *cell) {
             return "\x1b[47m"; // White
         
         case OPEN:
-            return "\x1b[46m";
+            return "\x1b[46m"; // Blue
         case CLOSED:
-            return "\x1b[45m";
-
+            return "\x1b[45m"; // Pink
+        
         default:
             die("Editing unamenable cell type");
     }   
