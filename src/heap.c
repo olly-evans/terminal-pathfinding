@@ -160,6 +160,7 @@ int getOpenSetIdx(Heap *hp, struct Cell *cell) {
             return i;
         }
     }
+    return -1;
 }
 
 void freeHeap(Heap *hp) {

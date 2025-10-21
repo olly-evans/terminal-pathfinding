@@ -6,6 +6,7 @@
 #include "abuf.h"
 #include "cell.h"
 #include "grid.h"
+#include "terminal.h"
 
 void drawCell(struct Cell *cell) {
 
@@ -38,13 +39,11 @@ void drawCell(struct Cell *cell) {
 
 char* getCellColor(struct Cell *cell) {
     
-    // need to be careful returning these.
-    // Perhaps some buffer action required.
+    // Warnings for other enumeration values.
     switch (cell->type) {
         case PATH:
-            return "\x1b[48;5;62m"; // Yellow
+            return "\x1b[48;5;62m"; // Purpley
 
-        // chance none below are printed. borders. could be from drawGrid
         case PERMANENT_BARRIER:
         case BARRIER:
             return "\x1b[47m"; // White
@@ -53,6 +52,9 @@ char* getCellColor(struct Cell *cell) {
             return "\x1b[46m";
         case CLOSED:
             return "\x1b[45m";
+
+        default:
+            die("Editing unamenable cell type");
     }   
 }
 
