@@ -10,7 +10,6 @@
 #include "cell.h"
 #include "grid.h"
 #include "queue.h"
-
 #include "queue_stack.h"
 
 const int DIRS[4][2] = {
@@ -21,14 +20,14 @@ const int DIRS[4][2] = {
 };
 
 void astar() {
-    /* 
+    /*
 
     Find shortest path to end cell using the A* algorithm.
     Shortest path drawn using cell pointers.
 
     Cell states updated and appended to buffer before being
     written to the terminal.
-        
+
     */
 
     // Init heap struct containing open and closed set, (os and cs).
@@ -39,11 +38,11 @@ void astar() {
     g->start_cell->f = g->start_cell->g + g->start_cell->md;
     g->start_cell->prev = NULL;
 
-    heapInsert(hp, g->start_cell); 
+    heapInsert(hp, g->start_cell);
     drawCell(g->start_cell);
 
     while (hp->os_size > 0 && hp->os != NULL) {
-        
+
         struct Cell *current = heapExtract(hp);
 
         if (isEndCell(current)) {
@@ -59,10 +58,10 @@ void astar() {
             // See DIRS array.
             int nx = current->x + DIRS[i][0];
             int ny = current->y + DIRS[i][1];
-            
+
             // Is this neighbour in the grid range.
             if (nx < 0 || ny < 0 || nx >= g->cols || ny >= g->rows) continue;
-            
+
             // Point to chosen neighbour of current.
             struct Cell *neighbour = &g->cells[ny][nx];
 
@@ -80,13 +79,13 @@ void astar() {
                     heapInsert(hp, neighbour);
                 } else {
                     // Indexing if in open set here is not optimal, heap_index cell member better.
-                    int idx = getOpenSetIdx(hp, neighbour); 
+                    int idx = getOpenSetIdx(hp, neighbour);
                     hp->os[idx]->f = neighbour->f;
                     heapBubbleUp(hp, idx);
                 }
             }
             drawCell(neighbour);
-        } 
+        }
     }
     freeHeap(hp);
 }
@@ -109,15 +108,15 @@ void BFS() {
             break;
         }
         drawCell(current);
-        
+
         for (int i = 0; i < sizeof(DIRS)/sizeof(DIRS[0]); i++) {
             // See DIRS array.
             int nx = current->x + DIRS[i][0];
             int ny = current->y + DIRS[i][1];
-            
+
             // Is this neighbour in the grid range.
             if (nx < 0 || ny < 0 || nx >= g->cols || ny >= g->rows) continue;
-            
+
             // Pointer to chosen neighbour of current.
             struct Cell *neighbour = &g->cells[ny][nx];
 
@@ -134,6 +133,7 @@ void BFS() {
     freeQueue(Q);
 }
 
+// takes variable for selection perhaps.
 void DFS() {
     QueueStack *QS = queue_stackInit();
 
@@ -141,7 +141,7 @@ void DFS() {
 
     QS->pop = stackPop;
     QS->push = stackPush;
-    
+
     QS->push(QS, g->start_cell);
     drawCell(g->start_cell);
 
@@ -159,13 +159,13 @@ void DFS() {
         for (int i = 0; i < sizeof(DIRS)/sizeof(DIRS[0]); i++) {
             int nx = current->x + DIRS[i][0];
             int ny = current->y + DIRS[i][1];
-            
+
             // Is this neighbour in the grid range.
             if (nx < 0 || ny < 0 || nx >= g->cols || ny >= g->rows) continue;
-            
+
             // Point to chosen neighbour of current.
             struct Cell *neighbour = &g->cells[ny][nx];
-            
+
             if (!isWalkableCell(neighbour) || neighbour->explored) continue;
 
             if (!neighbour->explored) {
@@ -174,14 +174,14 @@ void DFS() {
                 QS->push(QS, neighbour);
             }
             drawCell(neighbour);
-        }  
+        }
     }
 }
 
 void reconstructPath(struct Cell *end) {
     end->type = PATH;
     drawCell(end);
-    
+
     struct Cell *previous = g->end_cell->prev;
     while (previous != NULL) {
         previous->type = PATH;
