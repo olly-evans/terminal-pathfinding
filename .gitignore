@@ -1,14 +1,15 @@
-# Ignore build files
+/build
+/bin
+
 *.o
 *.out
 *.exe
 *.bin
 *.log
+*.d
 
-# Ignore compiled binary
-path
 
-# Editor-specific
+# Editor
 *.swp
 *.bak
 *.tmp

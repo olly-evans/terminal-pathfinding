@@ -42,7 +42,7 @@ void drawMenuItems(struct abuf *ab) {
     abAppend(ab, "\x1b[?7l", 5); // Disable terminal auto-wrap.
 
     char welcome[80];
-    int welcomelen = snprintf(welcome, sizeof(welcome), "Welcome to PATH -- Version %s", PATH_VERSION);
+    snprintf(welcome, sizeof(welcome), "Welcome to PATH -- Version %s", PATH_VERSION);
     abAppend(ab, "\x1b[1m\x1b[45m", 9);
     abAppendCentered(ab, welcome);
 
