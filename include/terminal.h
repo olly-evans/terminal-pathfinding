@@ -9,7 +9,8 @@
 enum appState {
 	MENU,
 	VISUALIZATION,
-    RUN
+    RUN,
+    END
 };
 
 /* LINUX TERMINAL DEPENDANT */

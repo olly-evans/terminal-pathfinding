@@ -33,6 +33,9 @@ int main(void) {
             BFS();
             break;
     }
+    // Allows check for run state in input.c
+    // if check at the top of dashProcessKeypress() it will auto exit upon algorithm completion due to main structure.
+    // Con.state = END;
     dashProcessKeypress();
 
     

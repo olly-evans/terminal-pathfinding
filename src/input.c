@@ -61,7 +61,7 @@ void dashProcessKeypress() {
             exit(0);
             break;
 
-        if (Con.state == RUN) return; // below c eventaully, want screen clear post-run.
+        if (Con.state == RUN) break; // Dodge af.
 
         case 'c':
             freeGrid(g);
