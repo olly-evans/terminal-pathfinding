@@ -12,7 +12,11 @@ typedef struct QueueStack {
 } QueueStack;
 
 QueueStack* queue_stackInit();
+
 void stackPush(QueueStack* S, struct Cell *cell);
 struct Cell* stackPop(QueueStack* S);
+
+void Enqueue(QueueStack* Q, struct Cell *cell);
+struct Cell * Dequeue(QueueStack *Q);
 
 #endif

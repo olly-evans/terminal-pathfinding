@@ -9,8 +9,9 @@
 #include "heap.h"
 #include "cell.h"
 #include "grid.h"
-#include "queue.h"
+// #include "queue.h"
 #include "queue_stack.h"
+#include "menu.h"
 
 const int DIRS[4][2] = {
     { 0, -1 }, // Up
@@ -90,48 +91,49 @@ void astar() {
     freeHeap(hp);
 }
 
-void BFS() {
-    Queue *Q = queueInit();
+// void BFS() {
+//     Queue *Q = queueInit();
 
-    g->start_cell->explored = true;
+//     g->start_cell->explored = true;
 
-    Q = enqueue(Q, g->start_cell);
-    drawCell(g->start_cell);
+//     if (M.selection)
+//     Q = enqueue(Q, g->start_cell);
+//     drawCell(g->start_cell);
 
-    while (Q->rear != 0 && Q->qu != NULL) {
+//     while (Q->rear != 0 && Q->qu != NULL) {
 
-        struct Cell *current = dequeue(Q);
+//         struct Cell *current = dequeue(Q);
 
-        if (!current) break; // No solution.
-        if (isEndCell(current)) {
-            reconstructPath(current);
-            break;
-        }
-        drawCell(current);
+//         if (!current) break; // No solution.
+//         if (isEndCell(current)) {
+//             reconstructPath(current);
+//             break;
+//         }
+//         drawCell(current);
 
-        for (unsigned long int i = 0; i < sizeof(DIRS)/sizeof(DIRS[0]); i++) {
-            // See DIRS array.
-            int nx = current->x + DIRS[i][0];
-            int ny = current->y + DIRS[i][1];
+//         for (unsigned long int i = 0; i < sizeof(DIRS)/sizeof(DIRS[0]); i++) {
+//             // See DIRS array.
+//             int nx = current->x + DIRS[i][0];
+//             int ny = current->y + DIRS[i][1];
 
-            // Is this neighbour in the grid range.
-            if (nx < 0 || ny < 0 || nx >= g->cols || ny >= g->rows) continue;
+//             // Is this neighbour in the grid range.
+//             if (nx < 0 || ny < 0 || nx >= g->cols || ny >= g->rows) continue;
 
-            // Pointer to chosen neighbour of current.
-            struct Cell *neighbour = &g->cells[ny][nx];
+//             // Pointer to chosen neighbour of current.
+//             struct Cell *neighbour = &g->cells[ny][nx];
 
-            if (!isWalkableCell(neighbour) || neighbour->explored) continue;
+//             if (!isWalkableCell(neighbour) || neighbour->explored) continue;
 
-            if (!neighbour->explored) {
-                neighbour->explored = true;
-                neighbour->prev = current;
-                Q = enqueue(Q, neighbour);
-            }
-            drawCell(neighbour);
-        }
-    }
-    freeQueue(Q);
-}
+//             if (!neighbour->explored) {
+//                 neighbour->explored = true;
+//                 neighbour->prev = current;
+//                 Q = enqueue(Q, neighbour);
+//             }
+//             drawCell(neighbour);
+//         }
+//     }
+//     freeQueue(Q);
+// }
 
 // takes variable for selection perhaps.
 void DFS() {
@@ -139,8 +141,14 @@ void DFS() {
 
     g->start_cell->explored = true;
 
-    QS->pop = stackPop;
-    QS->push = stackPush;
+    if (M.selection == 2) {
+        QS->pop = stackPop;
+        QS->push = stackPush;
+    } else if (M.selection == 3) {
+        QS->pop = Dequeue;
+        QS->push = Enqueue;
+    }
+    
 
     QS->push(QS, g->start_cell);
     drawCell(g->start_cell);

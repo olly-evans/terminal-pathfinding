@@ -46,10 +46,10 @@ struct Cell* stackPop(QueueStack* S) {
     
 }
 
-void enqueue(QueueStack* Q, struct Cell *cell) {
+void Enqueue(QueueStack* Q, struct Cell *cell) {
     cell->type = OPEN;
 
-    if (Q->rear == Q->front) {
+    if (Q->rear == Q->capacity) {
         Q->capacity *= 2;
         Q->frontier = realloc(Q->frontier, Q->capacity * sizeof(struct Cell *));
         if (!Q->frontier) die("enqueue() -> realloc");
@@ -57,7 +57,7 @@ void enqueue(QueueStack* Q, struct Cell *cell) {
     Q->frontier[++Q->rear] = cell;
 }
 
-struct Cell * dequeue(QueueStack *Q) {
+struct Cell * Dequeue(QueueStack *Q) {
     if (Q->rear == -1) return NULL;
     struct Cell *cell = Q->frontier[Q->front++];
     if (!cell) die("dequeue() -> cell");

@@ -15,7 +15,6 @@ int main(void) {
     enableRawMode();
     init();
 
-    // New; works but still wanna try no drawGrid().
     while (Con.state != RUN) {
         if (Con.state == MENU) drawMenu();
         if (Con.state == VISUALIZATION) drawPathfindingVisualizer();
@@ -27,11 +26,11 @@ int main(void) {
             astar();
             break;
         case 2:
+        case 3:
             DFS();
             break;
-        case 3:
-            BFS();
-            break;
+        default:
+            die("Invalid algorithm choice");
     }
     // Allows check for run state in input.c
     // if check at the top of dashProcessKeypress() it will auto exit upon algorithm completion due to main structure.
