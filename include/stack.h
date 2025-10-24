@@ -15,5 +15,6 @@ struct Cell* stackPop(Stack* S);
 
 bool stackEmpty(Stack *S);
 bool stackFull(Stack *S);
+void stackFree(Stack *S);
 
 #endif

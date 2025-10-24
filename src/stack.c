@@ -48,3 +48,8 @@ bool stackEmpty(Stack *S) {
 bool stackFull(Stack *S) {
     return S->rear == S->capacity - 1;
 }
+
+void stackFree(Stack *S) {
+    free(S->frontier);
+    free(S);
+}

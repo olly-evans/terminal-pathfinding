@@ -175,6 +175,7 @@ void DFS() {
             drawCell(neighbour);
         }
     }
+    stackFree(S);
 }
 
 void reconstructPath(struct Cell *end) {
