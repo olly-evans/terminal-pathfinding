@@ -28,39 +28,36 @@ void stackPush(QueueStack* S, struct Cell *cell) {
         S->frontier = realloc(S->frontier, S->capacity * sizeof(*S->frontier));
         if (!S->frontier) die("pushStack -> realloc");
     }
-
     S->frontier[++S->rear] = cell;
-
 }
 
 struct Cell* stackPop(QueueStack* S) {
 
     if (S->rear == -1) return NULL;
-
     struct Cell *cell = S->frontier[S->rear--];
     if (!cell) die("stackPop() -> cell");
-
     cell->type = CLOSED;
 
-    return cell;
-    
+    return cell; 
 }
 
-void Enqueue(QueueStack* Q, struct Cell *cell) {
-    cell->type = OPEN;
+/* QUEUE OPERATIONS */
 
-    if (Q->rear == Q->capacity) {
-        Q->capacity *= 2;
-        Q->frontier = realloc(Q->frontier, Q->capacity * sizeof(struct Cell *));
-        if (!Q->frontier) die("enqueue() -> realloc");
-    }
-    Q->frontier[++Q->rear] = cell;
-}
+// void Enqueue(QueueStack* Q, struct Cell *cell) {
+//     cell->type = OPEN;
 
-struct Cell * Dequeue(QueueStack *Q) {
-    if (Q->rear == -1) return NULL;
-    struct Cell *cell = Q->frontier[Q->front++];
-    if (!cell) die("dequeue() -> cell");
-    cell->type = CLOSED;
-    return cell;
-}
+//     if (Q->rear == Q->capacity) {
+//         Q->capacity *= 2;
+//         Q->frontier = realloc(Q->frontier, Q->capacity * sizeof(struct Cell *));
+//         if (!Q->frontier) die("enqueue() -> realloc");
+//     } 
+//     Q->frontier[++Q->rear] = cell;
+// }
+
+// struct Cell * Dequeue(QueueStack *Q) {
+//     if (Q->rear == -1) return NULL;
+//     struct Cell *cell = Q->frontier[Q->front++];
+//     if (!cell) die("dequeue() -> cell");
+//     cell->type = CLOSED;
+//     return cell;
+// }

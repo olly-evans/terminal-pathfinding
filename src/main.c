@@ -26,8 +26,10 @@ int main(void) {
             astar();
             break;
         case 2:
-        case 3:
             DFS();
+            break;
+        case 3:
+            BFS();
             break;
         default:
             die("Invalid algorithm choice");
