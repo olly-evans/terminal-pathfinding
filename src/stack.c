@@ -1,11 +1,11 @@
 #include <stdlib.h>
 
-#include "queue_stack.h"
+#include "stack.h"
 #include "cell.h"
 #include "terminal.h"
 
-QueueStack* queue_stackInit() {
-    QueueStack* QS = malloc(sizeof(QueueStack));
+Stack* stackInit() {
+    Stack* QS = malloc(sizeof(Stack));
     if (!QS) die("queue_stackInit -> malloc");
 
     QS->capacity = 8;
@@ -20,20 +20,24 @@ QueueStack* queue_stackInit() {
 
 /* STACK OPERATIONS */
 
-void stackPush(QueueStack* S, struct Cell *cell) {
+void stackPush(Stack* S, struct Cell *cell) {
     cell->type = OPEN;
 
-    if (S->rear == S->capacity) {
+    if (S->rear == S->capacity - 1) {
         S->capacity *= 2;
         S->frontier = realloc(S->frontier, S->capacity * sizeof(*S->frontier));
         if (!S->frontier) die("pushStack -> realloc");
     }
+
+    // S->rear + 1.
     S->frontier[++S->rear] = cell;
 }
 
-struct Cell* stackPop(QueueStack* S) {
+struct Cell* stackPop(Stack* S) {
 
     if (S->rear == -1) return NULL;
+
+    // S->rear
     struct Cell *cell = S->frontier[S->rear--];
     if (!cell) die("stackPop() -> cell");
     cell->type = CLOSED;

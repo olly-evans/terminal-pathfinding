@@ -10,7 +10,7 @@
 #include "cell.h"
 #include "grid.h"
 #include "queue.h"
-#include "queue_stack.h"
+#include "stack.h"
 #include "menu.h"
 
 const int DIRS[4][2] = {
@@ -137,26 +137,17 @@ void BFS() {
 
 // takes variable for selection perhaps.
 void DFS() {
-    QueueStack *QS = queue_stackInit();
+    Stack *S = stackInit();
 
     g->start_cell->explored = true;
 
-    // if (M.selection == 2) {
-    //     QS->pop = stackPop;
-    //     QS->push = stackPush;
-    // } else if (M.selection == 3) {
-    //     QS->pop = Dequeue;
-    //     QS->push = Enqueue;
-    // }
-    
-
-    stackPush(QS, g->start_cell);
+    stackPush(S, g->start_cell);
     drawCell(g->start_cell);
 
     // Condition works for now but won't work if no solution
-    while (QS->rear != -1) {
+    while (S->rear != -1) {
 
-        struct Cell *current = stackPop(QS);
+        struct Cell *current = stackPop(S);
         drawCell(current);
 
         if (isEndCell(current)) {
@@ -179,7 +170,7 @@ void DFS() {
             if (!neighbour->explored) {
                 neighbour->explored = true;
                 neighbour->prev = current;
-                stackPush(QS, neighbour);
+                stackPush(S, neighbour);
             }
             drawCell(neighbour);
         }
