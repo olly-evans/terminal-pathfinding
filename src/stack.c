@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <stdbool.h>
 
 #include "stack.h"
 #include "cell.h"
@@ -18,29 +19,32 @@ Stack* stackInit() {
     return QS;
 }
 
-/* STACK OPERATIONS */
-
 void stackPush(Stack* S, struct Cell *cell) {
     cell->type = OPEN;
 
-    if (S->rear == S->capacity - 1) {
+    if (stackFull(S)) {
         S->capacity *= 2;
         S->frontier = realloc(S->frontier, S->capacity * sizeof(*S->frontier));
         if (!S->frontier) die("pushStack -> realloc");
     }
-
-    // S->rear + 1.
     S->frontier[++S->rear] = cell;
 }
 
 struct Cell* stackPop(Stack* S) {
 
-    if (S->rear == -1) return NULL;
+    if (stackEmpty(S)) return NULL;
 
-    // S->rear
     struct Cell *cell = S->frontier[S->rear--];
     if (!cell) die("stackPop() -> cell");
     cell->type = CLOSED;
 
     return cell; 
+}
+
+bool stackEmpty(Stack *S) {
+    return S->rear == -1;
+}
+
+bool stackFull(Stack *S) {
+    return S->rear == S->capacity - 1;
 }

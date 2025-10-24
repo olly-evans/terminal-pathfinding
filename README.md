@@ -3,7 +3,8 @@
 ### BLOG
 
 -- Fix DFS logic --
--- free QueueStack after the fact --
+-- free Stack after the fact --
+-- make dfs more random with selection --
 
 I incremented the pointer to my dynamically allocated array (Q->qu++), which made it no longer point to the start of the memory block returned by malloc() or realloc().
 

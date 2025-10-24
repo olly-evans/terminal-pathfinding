@@ -13,4 +13,7 @@ Stack* stackInit();
 void stackPush(Stack* S, struct Cell *cell);
 struct Cell* stackPop(Stack* S);
 
+bool stackEmpty(Stack *S);
+bool stackFull(Stack *S);
+
 #endif
