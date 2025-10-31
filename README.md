@@ -5,6 +5,10 @@
 -- Fix DFS logic --
 -- make dfs more random with selection --
 
+MACROS FOR ESCAPE CODES FOR THE LOVE OF GOD
+IF AN ERROR MOVE CURSOR TO BELOW VISUALISATION.
+Exiting with controls.
+
 I incremented the pointer to my dynamically allocated array (Q->qu++), which made it no longer point to the start of the memory block returned by malloc() or realloc().
 
 Then I passed that shifted pointer to realloc(), which is undefined behavior, because realloc() must only be called on the original pointer returned by malloc() or realloc().

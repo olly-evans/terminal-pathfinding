@@ -10,18 +10,6 @@ void *Malloc(size_t n)
     return p;
 }
 
-void *Realloc(void **orig_ptr, size_t newsize) {
-    /* realloc() with error-checks. */
-    if (orig_ptr == NULL) return NULL;
-
-    void *tmp = realloc(*orig_ptr, newsize);
-    
-    if (tmp == NULL) return *orig_ptr;
-
-    *orig_ptr = tmp;
-    return *orig_ptr;
-}
-
 // void heapShowOpenSet(Heap* hp) {
     
 //     disableRawMode(); 

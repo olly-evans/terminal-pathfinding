@@ -24,7 +24,7 @@ Queue* enqueue(Queue *Q, struct Cell  *cell) {
 
     if (Q->rear == Q->capacity) {
         Q->capacity *= 2;
-        Q->qu = Realloc((void**)&Q->qu, Q->capacity * sizeof(struct Cell *));
+        Q->qu = realloc(Q->qu, Q->capacity * sizeof(struct Cell *));
         if (!Q->qu) die("enqueue() -> realloc");
 
     }

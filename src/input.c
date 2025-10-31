@@ -60,7 +60,7 @@ void dashProcessKeypress() {
             write(STDOUT_FILENO, "\x1b[?25h", 6); // Give user their cursor back.
             exit(0);
             break;
-
+        
         if (Con.state == RUN) break; // Dodge af.
 
         case 'c':
