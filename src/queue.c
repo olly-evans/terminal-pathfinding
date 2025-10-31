@@ -2,13 +2,14 @@
 
 #include "queue.h"
 #include "terminal.h"
+#include "utils.h"
 
 Queue* queueInit() {
-    Queue *Q = malloc(sizeof(Queue));
+    Queue *Q = Malloc(sizeof(Queue));
     if (!Q) die("queueInit() -> malloc");
 
     Q->capacity = 2;
-    Q->qu = malloc(Q->capacity * sizeof(struct Cell *));
+    Q->qu = Malloc(Q->capacity * sizeof(struct Cell *));
     if (!Q->qu) die("queueInit() -> malloc");
 
     Q->front = 0;
@@ -23,11 +24,10 @@ Queue* enqueue(Queue *Q, struct Cell  *cell) {
 
     if (Q->rear == Q->capacity) {
         Q->capacity *= 2;
-        Q->qu = realloc(Q->qu, Q->capacity * sizeof(struct Cell *));
+        Q->qu = Realloc((void**)&Q->qu, Q->capacity * sizeof(struct Cell *));
         if (!Q->qu) die("enqueue() -> realloc");
 
     }
-
     Q->qu[Q->rear++] = cell;
     return Q;
 }
