@@ -50,7 +50,6 @@ struct Config {
 
 extern struct Config Con;
 
-
 void die(char *s);
 void disableRawMode();
 void enableRawMode();

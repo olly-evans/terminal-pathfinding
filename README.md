@@ -5,7 +5,6 @@
 -- Fix DFS logic --
 -- make dfs more random with selection --
 
-MACROS FOR ESCAPE CODES FOR THE LOVE OF GOD
 IF AN ERROR MOVE CURSOR TO BELOW VISUALISATION.
 Exiting with controls.
 
