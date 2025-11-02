@@ -7,10 +7,10 @@
 #include "grid.h"
 
 
-const char *vis_controls_text =
-    "Arrows"      "\x1b[46mMove/Scroll\x1b[0m"
-    "Space"          "\x1b[46mSelect Algorithm\x1b[0m"
-    " CTRL-Q"         "\x1b[46mQuit\x1b[0m";
+// const char *vis_controls_text =
+//     "Arrows"      BG_BLUE "Move/Scroll" RESET_F
+//     "Space"          BG_PINK "Select Algorithm" RESET_F
+//     " CTRL-Q"         BG_PINK "Quit" RESET_F;
 
 
 /* VISUALIZER */

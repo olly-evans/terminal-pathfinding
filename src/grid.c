@@ -20,25 +20,25 @@ void drawGrid(struct abuf *ab) {
             
             switch (c->type) {
                 case START:
-                    abAppend(ab, "\x1b[32m", 5); // Green
+                    abAppend(ab, TXT_GREEN, 5); // Green
                     abAppend(ab, &c->ch, 1);
                     break;
 
                 case END:
-                    abAppend(ab, "\x1b[31m", 5); // Red
+                    abAppend(ab, TXT_RED, 5); // Red
                     abAppend(ab, &c->ch, 1);
                     break;
 
                 case BARRIER:
                 case PERMANENT_BARRIER:
-                    abAppend(ab, "\x1b[47m", 5); // White
+                    abAppend(ab, BG_WHITE, 5); // White
                     abAppend(ab, &c->ch, 1);
-                    abAppend(ab, "\x1b[0m", 4);
+                    abAppend(ab, RESET_F, 4);
                     break;
                 case EMPTY:
-                    abAppend(ab, "\x1b[40m", 5); 
+                    abAppend(ab, BG_BLACK, 5); 
                     abAppend(ab, &c->ch, 1);
-                    abAppend(ab, "\x1b[0m", 4);
+                    abAppend(ab, RESET_F, 4);
                     break;
                 default:
                     abAppend(ab, &c->ch, 1);  // No color

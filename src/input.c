@@ -53,11 +53,11 @@ void dashProcessKeypress() {
         case ('q'):
             freeGrid(g);
 
-            write(STDOUT_FILENO, "\x1b[2J", 4); // Clear screen.
-            write(STDOUT_FILENO, "\x1b[H", 3); // Cursor home.
+            write(STDOUT_FILENO, CLEAR_SCRN, 4); // Clear screen.
+            write(STDOUT_FILENO, HOME_CURSOR, 3); 
             write(STDOUT_FILENO, "\x1b[3J", 4); // Clear scrollback buffer.
-            write(STDOUT_FILENO, "\x1b[0m", 4); // Reset terminal text-styles.
-            write(STDOUT_FILENO, "\x1b[?25h", 6); // Give user their cursor back.
+            write(STDOUT_FILENO, RESET_F, 4); 
+            write(STDOUT_FILENO, SHOW_CURSOR, 6); 
             exit(0);
             break;
         

@@ -23,10 +23,10 @@ void drawMenu() {
     Con.state = MENU;
     struct abuf wel_ab = ABUF_INIT;
 
-    abAppend(&wel_ab, "\x1b[?25l", 6);
-    abAppend(&wel_ab, "\x1b[2J", 4);
-    abAppend(&wel_ab, "\x1b[3J", 4);
-    abAppend(&wel_ab, "\x1b[H", 3);
+    abAppend(&wel_ab, HIDE_CURSOR, 6);
+    abAppend(&wel_ab, CLEAR_SCRN, 4);
+    abAppend(&wel_ab, CLEAR_SCROLLBACK_BUF, 4);
+    abAppend(&wel_ab, HOME_CURSOR, 3);
 
 
     drawMenuItems(&wel_ab);
@@ -39,15 +39,14 @@ void drawMenuItems(struct abuf *ab) {
     
     /* Welcome message */
     
-    abAppend(ab, "\x1b[?7l", 5); // Disable terminal auto-wrap.
-
+    abAppend(ab, DISABLE_TERMINAL_AUTOWRAP, 5);
     char welcome[80];
     snprintf(welcome, sizeof(welcome), "Welcome to PATH -- Version %s", PATH_VERSION);
-    abAppend(ab, "\x1b[1m\x1b[45m", 9);
+    abAppend(ab, "\x1b[1m"BG_PINK, 9);
     abAppendCentered(ab, welcome);
 
-    abAppend(ab, "\x1b[K", 3); // Not great but works.
-    abAppend(ab, "\x1b[0m", 4); // Reset styles.
+    abAppend(ab, "\x1b[K", 3); // Clear right from cursor.
+    abAppend(ab, RESET_F, 4); 
     abAppend(ab, "\r\n\r\n", 4); // Double new line.
 
     abAppendCentered(ab, "An in-terminal pathfinding algorithm visualizer!");
@@ -58,9 +57,9 @@ void drawMenuItems(struct abuf *ab) {
     while(padding--) abAppend(ab, " ", 1);
     abAppend(ab, "<", 1);
     
-    abAppend(ab, "\x1b[36m\x1b[1m", 9);
+    abAppend(ab, TXT_BLUE"\x1b[1m", 9);
     abAppend(ab, M.algorithms[M.selection], strlen(M.algorithms[M.selection]));
-    abAppend(ab, "\x1b[0m", 4);
+    abAppend(ab, RESET_F, 4);
 
     abAppend(ab, ">", 1);
     abAppend(ab, "\r\n\r\n", 4);
@@ -81,9 +80,9 @@ void drawMenuItems(struct abuf *ab) {
     for (int y = 0; y < num_controls; y++) {
 
         abAppend(ab, controls[y].key, strlen(controls[y].key));
-        abAppend(ab, "\x1b[45m\x1b[1m", 9);
+        abAppend(ab, BG_PINK"\x1b[1m", 9);
         abAppend(ab, controls[y].action, strlen(controls[y].action));
-        abAppend(ab, "\x1b[0m", 4);
+        abAppend(ab, RESET_F, 4);
     }
 }
 

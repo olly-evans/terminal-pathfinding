@@ -27,10 +27,10 @@ void drawCell(struct Cell *cell) {
 
     usleep(10000); 
 
-    abAppend(&cell_buf, "\x1b[?25l", 6); // Hide cursor.
+    abAppend(&cell_buf, HIDE_CURSOR, 6);
     abAppend(&cell_buf, cell_color, strlen(cell_color));
     abAppend(&cell_buf, &cell->ch, 1);
-    abAppend(&cell_buf, "\x1b[0m", 4);
+    abAppend(&cell_buf, RESET_F, 4);
     abAppend(&cell_buf, "\r\n", 2);
 
     write(STDOUT_FILENO, cell_buf.b, cell_buf.len); 
@@ -45,12 +45,12 @@ char* getCellColor(struct Cell *cell) {
 
         case PERMANENT_BARRIER:
         case BARRIER:
-            return "\x1b[47m"; // White
+            return BG_WHITE; // White
         
         case OPEN:
-            return "\x1b[46m"; // Blue
+            return BG_BLUE; // Blue
         case CLOSED:
-            return "\x1b[45m"; // Pink
+            return BG_PINK; // Pink
         
         default:
             die("Editing unamenable cell type");
