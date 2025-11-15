@@ -33,5 +33,4 @@ run: all
 
 -include $(DEPS)
 
-# Mark these targets as not actual files
 .PHONY: all clean run

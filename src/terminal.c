@@ -15,9 +15,9 @@ struct Config Con;
 void die(char *s) {
     write(STDOUT_FILENO, CLEAR_SCRN, 4); // Clear screen.
     write(STDOUT_FILENO, HOME_CURSOR, 3); // Cursor home.
-	write(STDOUT_FILENO, CLEAR_SCROLLBACK_BUF, 4); // Clear scrollback buffer.
-	write(STDOUT_FILENO, RESET_F, 4); // Reset terminal colors.
-	write(STDOUT_FILENO, SHOW_CURSOR, 6);
+	  write(STDOUT_FILENO, CLEAR_SCROLLBACK_BUF, 4); // Clear scrollback buffer.
+	  write(STDOUT_FILENO, RESET_F, 4); // Reset terminal colors.
+	  write(STDOUT_FILENO, SHOW_CURSOR, 6);
 
 
     fprintf(stderr, "%s", s);
@@ -31,7 +31,7 @@ void disableRawMode() {
 void enableRawMode() {
     if (tcgetattr(STDIN_FILENO, &Con.termiosOrig) == -1) die("enableRawMode() -> tcgetattr");
     atexit(disableRawMode);
-	
+
 
     struct termios termiosRaw = Con.termiosOrig;
     termiosRaw.c_iflag &= ~(BRKINT | ICRNL | INPCK | ISTRIP | IXON);
@@ -46,7 +46,7 @@ void enableRawMode() {
 }
 
 int dashReadKey() {
-    
+
   int nread;
   char c;
   while ((nread = read(STDIN_FILENO, &c, 1)) != 1) {

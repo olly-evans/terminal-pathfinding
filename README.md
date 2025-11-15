@@ -1,63 +1,66 @@
-## IN-PROGRESS
+(IN PROGRESS)
 
-### BLOG
+# WELCOME TO PATH
+A dynamic pathfinding algorithm visualiser written in C.
 
--- Fix DFS logic --
--- make dfs more random with selection --
+# Build
 
-IF AN ERROR MOVE CURSOR TO BELOW VISUALISATION.
-Exiting with controls.
+Clone the repository using:
+```console
+git clone https://github.com/olly-evans/terminal-pathfinding
+```
 
-I incremented the pointer to my dynamically allocated array (Q->qu++), which made it no longer point to the start of the memory block returned by malloc() or realloc().
+Change into the new directory using:
 
-Then I passed that shifted pointer to realloc(), which is undefined behavior, because realloc() must only be called on the original pointer returned by malloc() or realloc().
+```console 
+cd foldername
+```
 
-This corrupted my memory layout and caused a segmentation fault when the program tried to access or resize the modified pointer.
+Use make to build the project:
 
-## AGENDA
-- Cursor shows when pressing arrow at the arrows in menu.
-- Write a test to check abAppend bytes input.
+```console 
+make run
+```
+
+Or alternatively just:
+```console 
+make
+```
+
+and then:
+
+```console
+make run
+```
+
+Make command alone will compile without running afterwards, the executable can then be found in the /bin/ folder and ran manually using:
+
+```console
+./bin/main
+```
+
+# Usage
+
+After running you will see the main menu where you can select an algorithm using the arrow keys and then pressing enter.
+
+This will then take you to the main visualisation. The cursor can be moved using the arrow keys. The start (S) and end cell (E) can be chosen using the space bar when the cursor is in the wanted position. These are the cells that the chosen algorithm will start at and then try to find a path to. Once the start and end are placed barriers (white) can be inserted to obstruct the algorithm also using the space bar, the algorithm cannot use these barriers in its search.
+
+Once you are happy with the layout you have created for the algorithm you can press enter and the algorithm will find a path. Whether this is the shortest path or not depends on the algorithm selected.
+
+Pink represents cells that have been considered by the algorithm whereas blue ones are cells that it is considering.
+
+# Algorithms 
+
+## A*
+A* finds the shortest path with respect for given weights with a start and end node. I used a binary min-heap to most efficiently store the open set of nodes.
+
+## Breadth-First Search
+Breadth-first search starts at the tree root and explores all nodes at the present depth prior to moving on to the nodes at the next depth level. A queue was needed to keep track of the child nodes that were encountered but not yet explored. 
+
+## Depth-First Search
+DFS starts at the root node (selecting some arbitrary node as the root node in the case of a graph) and explores as far as possible along each branch before backtracking. A stack was needed to keep track of the nodes discovered so far along a specified branch which helps in backtracking of the graph. 
+
+# TODO
 - Vertical padding for menu. Abort if screenrows less than appropriate no.
-- by printing more lines i can go past the terminal rows, user can scroll with the mouse/bar.
-
-NEW MENU IDEA:
-
-- selection for algorithm with numbers.
-- taken to info page read in from text file.
-- then you can press enter to go to visualization.
-- or go back to the main menu.
-
-- How to store/find selected algorithm in welcome menu.
-- Maze algorithms.
-- Random barriers.
-- Control bar for visualizer.
-- Legend for when algorithm is running
-- Refresh after algorithm finished.
-- saving a maze to a file and loading from a file.
-- severe flashing in my linux terminal, background color isnt the same either.
-
-# Notes
-- vertical scrolling for welcome screen and edge stuff vertical then done w welcome screen i think.
-- make headerrow just below printed bits not rows/3 doesnt make sense.
-
-- I want vertical scrolling to work but the welcomeRows function is a complete fucking mess and so
-are all of its constituent functions, work on the algorithms and have fun before coming back to fix
-that shit, and really think about the logic for vertical scrolling.
-
-# General
-
-- print info with correct padding for terminal cols.
-- HORIZONTAL SCROLLING FOR SMALLER TERMINAL WIDTHS. START CURSOR AT SCREENCOLS-1.
-- POTENTIALLY MAKE CX INCREMENT BY 10 OR SOMETHING OTHERWISE.
-
-- better way to get the maximum width Con.cx can scroll.
-- Better data structure i think for table data.
-
-
-- Might be able to disable auto-wrap in disableRawMode(), but this will affect visualizer.
-- setup welcome menu with algorithm selection using cursor.
-
-- Could also add fn + arrkey to skip to top/bottom and far left/right.
-- need to think about how user can draw barriers in a quick fashion one by one too slow and tedious to draw something meaningful.
-
-- add button to reset everything to empty cells except perm_barriers.
+- Fix DFS logic where occasionally a 
+- make dfs more random with selection --
