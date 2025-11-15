@@ -27,12 +27,6 @@ Or alternatively just:
 make
 ```
 
-and then:
-
-```console
-make run
-```
-
 Make command alone will compile without running afterwards, the executable can then be found in the /bin/ folder and ran manually using:
 
 ```console
@@ -62,5 +56,6 @@ DFS starts at the root node (selecting some arbitrary node as the root node in t
 
 # TODO
 - Vertical padding for menu. Abort if screenrows less than appropriate no.
-- Fix DFS logic where occasionally a 
-- make dfs more random with selection --
+- Fix DFS logic where occasionally it won't fully explore to depth.
+- Make dfs more random with selection.
+- Controls in main visualisation.
