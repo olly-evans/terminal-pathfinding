@@ -25,10 +25,10 @@ int main(void) {
         case 0:
             astar();
             break;
-        case 2:
+        case 1:
             DFS();
             break;
-        case 3:
+        case 2:
             BFS();
             break;
         default:

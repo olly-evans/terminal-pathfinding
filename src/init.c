@@ -16,7 +16,6 @@ struct Grid *g = NULL;
 
 char *algorithms[] = {
     "A*",
-    "Dijkstra",
     "Depth-First Search",
     "Breadth-First Search"
 };
