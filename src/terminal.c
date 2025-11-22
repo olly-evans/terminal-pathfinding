@@ -15,9 +15,9 @@ struct Config Con;
 void die(char *s) {
     write(STDOUT_FILENO, CLEAR_SCRN, 4); // Clear screen.
     write(STDOUT_FILENO, HOME_CURSOR, 3); // Cursor home.
-	  write(STDOUT_FILENO, CLEAR_SCROLLBACK_BUF, 4); // Clear scrollback buffer.
-	  write(STDOUT_FILENO, RESET_F, 4); // Reset terminal colors.
-	  write(STDOUT_FILENO, SHOW_CURSOR, 6);
+	write(STDOUT_FILENO, CLEAR_SCROLLBACK_BUF, 4); // Clear scrollback buffer.
+	write(STDOUT_FILENO, RESET_F, 4); // Reset terminal colors.
+	write(STDOUT_FILENO, SHOW_CURSOR, 6);
 
 
     fprintf(stderr, "%s", s);

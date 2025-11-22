@@ -96,3 +96,13 @@ void freeGrid(struct Grid *g) {
     g->cells = NULL;
     free(g);
 }
+
+struct Grid* randomizeGrid(struct Grid *g) {
+    unsigned int n = rand() % (g->cols * g->rows);
+
+    for (int y = 0; y < g->rows; y++) {
+        for (int x = 0; x < g->cols; x++) {
+            g->cells[y][x].type = BARRIER;
+        }
+    }
+}
