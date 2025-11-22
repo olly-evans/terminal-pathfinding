@@ -6,6 +6,8 @@
 #include "cell.h"
 #include "terminal.h"
 
+#define BARRIER_CHANCE_FOR_RANDOMIZE 10
+
 void drawGrid(struct abuf *ab) {
     
     /* Loop through the Cells in the row pointers and append their color and char to abuf. */
@@ -98,11 +100,19 @@ void freeGrid(struct Grid *g) {
 }
 
 struct Grid* randomizeGrid(struct Grid *g) {
-    unsigned int n = rand() % (g->cols * g->rows);
+    unsigned int start = rand() % (g->cols * g->rows);
+    unsigned int end = rand() % (g->cols * g->rows);
+    
 
     for (int y = 0; y < g->rows; y++) {
         for (int x = 0; x < g->cols; x++) {
-            g->cells[y][x].type = BARRIER;
+            int toBarrier = rand() % 10;
+            // place start and end cell.
+
+            // check to make sure its not the start/end cell.
+            if (toBarrier == 1) {
+                g->cells[y][x].type = BARRIER;
+            }
         }
     }
 }

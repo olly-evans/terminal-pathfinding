@@ -92,7 +92,10 @@ void dashProcessKeypress() {
             // Place start, end and barrier cells one by one.
             if (Con.state == VISUALIZATION) handleSpacePress(curr_cell);
             break;
-
+        
+        case 'h':
+            randomizeGrid(g);
+            break;
         case 'r':
             // r press removes starts/ends or non-permanent barriers at cursor location.
             if (Con.state == VISUALIZATION) handleRPress(curr_cell);
