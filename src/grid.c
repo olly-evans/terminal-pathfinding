@@ -103,27 +103,41 @@ void freeGrid(struct Grid *g) {
 struct Grid* randomizeGrid(struct Grid *g) {
     srand(time(NULL));
 
-    unsigned int startRow = rand() % (g->rows);
-    unsigned int startCol = rand() % (g->cols);
+    int startRow = rand() % (g->rows);
+    int startCol = rand() % (g->cols);
 
-    unsigned int endRow = rand() % (g->rows);
-    unsigned int endCol = rand() % (g->cols);
-
-    g->start_cell->y = startRow;
-    g->start_cell->x = startCol;
-
-    g->end_cell->y = endRow;
-    g->end_cell->x = endCol;
+    int endRow = rand() % (g->rows);
+    int endCol = rand() % (g->cols);
 
     for (int y = 0; y < g->rows; y++) {
         for (int x = 0; x < g->cols; x++) {
-            struct Cell curr = g->cells[y][x];
-            // bit meh.
-            int toBarrier = rand() % 10;
-            // check to make sure its not the start/end cell.
-            if (toBarrier == 0) {
-                g->cells[y][x].type = BARRIER;
+
+            struct Cell *curr = &g->cells[y][x];
+            int toBarrier = rand() % 5;
+
+            // look in handleSpacePress for making start/end cell.
+            // make into seperate function i think in cells.c.
+
+            // check x and y.
+            if ((g->start_cell == NULL) && (!isEndCell(curr)) && (!isPermBarrier(curr))) {
+                g->start_cell = curr;
+
+                g->start_cell->type = START;
+                g->start_cell->ch = 'S';
+                continue;
+            } 
+
+            if ((g->end_cell == NULL) && (!isStartCell(curr)) && (!isPermBarrier(curr))) {
+                g->end_cell = curr;
+
+                g->end_cell->type = END;
+                g->end_cell->ch = 'E';
+                continue;
             }
+
+            if (toBarrier != 0) continue;
+            curr->type = BARRIER;
+
         }
     }
 }

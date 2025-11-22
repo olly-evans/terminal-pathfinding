@@ -40,6 +40,7 @@ char* getCellColor(struct Cell *cell);
 bool isStartCell(struct Cell *c);
 bool isEndCell(struct Cell *c);
 bool isWalkableCell(struct Cell *c);
+bool isPermBarrier(struct Cell *c);
 int getManhattanDist(struct Cell *c1, struct Cell *end);
 
 #endif

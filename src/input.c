@@ -58,6 +58,9 @@ void dashProcessKeypress() {
             write(STDOUT_FILENO, CLEAR_SCROLLBACK_BUF, 4); // Clear scrollback buffer.
             write(STDOUT_FILENO, RESET_F, 4); 
             write(STDOUT_FILENO, SHOW_CURSOR, 6); 
+
+            // cool stats about the run.
+            
             exit(0);
             break;
         
@@ -76,8 +79,8 @@ void dashProcessKeypress() {
             if (Con.state == MENU) {
                 Con.state = VISUALIZATION;
 
-                Con.cy = 5; // why is this here?
-                Con.cx = 37;
+                Con.cy = Con.screenrows/2; // why is this here?
+                Con.cx = Con.screencols/2;
                 break;
  
             }

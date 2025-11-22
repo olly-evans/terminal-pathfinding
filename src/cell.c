@@ -69,6 +69,10 @@ bool isWalkableCell(struct Cell *c) {
     return !(c->type == PERMANENT_BARRIER || c->type == BARRIER);
 }
 
+bool isPermBarrier(struct Cell *c) {
+    return (c->type == PERMANENT_BARRIER);
+}
+
 int getManhattanDist(struct Cell *c1, struct Cell *end) {
     return 2*(abs(end->x - c1->x) + abs(end->y - c1->y));
 }
