@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <limits.h>
+#include <time.h>
 
 #include "abuf.h"
 #include "grid.h"
@@ -100,17 +101,27 @@ void freeGrid(struct Grid *g) {
 }
 
 struct Grid* randomizeGrid(struct Grid *g) {
-    unsigned int start = rand() % (g->cols * g->rows);
-    unsigned int end = rand() % (g->cols * g->rows);
-    
+    srand(time(NULL));
+
+    unsigned int startRow = rand() % (g->rows);
+    unsigned int startCol = rand() % (g->cols);
+
+    unsigned int endRow = rand() % (g->rows);
+    unsigned int endCol = rand() % (g->cols);
+
+    g->start_cell->y = startRow;
+    g->start_cell->x = startCol;
+
+    g->end_cell->y = endRow;
+    g->end_cell->x = endCol;
 
     for (int y = 0; y < g->rows; y++) {
         for (int x = 0; x < g->cols; x++) {
+            struct Cell curr = g->cells[y][x];
+            // bit meh.
             int toBarrier = rand() % 10;
-            // place start and end cell.
-
             // check to make sure its not the start/end cell.
-            if (toBarrier == 1) {
+            if (toBarrier == 0) {
                 g->cells[y][x].type = BARRIER;
             }
         }
