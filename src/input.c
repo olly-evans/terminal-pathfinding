@@ -97,6 +97,11 @@ void dashProcessKeypress() {
             break;
         
         case 'h':
+            freeGrid(g);
+            g = initGrid(g, Con.screenrows, Con.screencols);
+            g->end_cell = NULL;
+            g->start_cell = NULL;
+            
             randomizeGrid(g);
             break;
         case 'r':
