@@ -116,10 +116,8 @@ void dashProcessKeypress() {
 void handleSpacePress(struct Cell *curr_cell) {
     /* Handles a space press, by updating start, end and then barrier cells in that order. */
 
-    bool isPermBarrier = (curr_cell->type == PERMANENT_BARRIER);
-
     // If no start cell, init one.
-    if ((g->start_cell == NULL) && (!isPermBarrier)) {
+    if ((g->start_cell == NULL) && (!isPermBarrier(curr_cell))) {
         g->start_cell = curr_cell;
 
         g->start_cell->type = START;
