@@ -59,3 +59,5 @@ DFS starts at the root node (selecting some arbitrary node as the root node in t
 - Fix DFS logic where occasionally it won't fully explore to depth.
 - Make dfs more random with selection.
 - Controls in main visualisation.
+
+- Can randomize and place S but not E. Being overwritten by something.

@@ -128,10 +128,8 @@ struct Grid* randomizeGrid(struct Grid *g) {
             // make into seperate function i think in cells.c.
             // assign start/end before loop.
 
-            // check x and y.
             if (y == startRow && x == startCol && (g->start_cell == NULL) && (!isPermBarrier(curr))) {
                 g->start_cell = curr;
-
                 g->start_cell->type = START;
                 g->start_cell->ch = 'S';
                 continue;
@@ -139,7 +137,6 @@ struct Grid* randomizeGrid(struct Grid *g) {
 
             if (y == endRow && x == endCol && (g->end_cell == NULL) && (!isPermBarrier(curr))) {
                 g->end_cell = curr;
-
                 g->end_cell->type = END;
                 g->end_cell->ch = 'E';
                 continue;
