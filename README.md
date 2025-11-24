@@ -41,7 +41,7 @@ Make command alone will compile without running afterwards, the executable can t
 
 After running you will see the main menu where you can select an algorithm using the arrow keys and then pressing enter.
 
-This will then take you to the main visualisation. The cursor can be moved using the arrow keys. The start (S) and end cell (E) can be chosen using the space bar when the cursor is in the wanted position. These are the cells that the chosen algorithm will start at and then try to find a path to. Once the start and end are placed barriers (white) can be inserted to obstruct the algorithm also using the space bar, the algorithm cannot use these barriers in its search.
+This will then take you to the main visualisation. The cursor can be moved using the arrow keys. The start (S) and end cell (E) can be chosen using the space bar when the cursor is in the wanted position. These are the cells that the chosen algorithm will start at and then try to find a path to. Once the start and end are placed barriers (white) can be inserted to obstruct the algorithm also using the space bar, the algorithm cannot use these barriers in its search. Or alternatively the grid can be assigned randomly using the H key.
 
 Once you are happy with the layout you have created for the algorithm you can press enter and the algorithm will find a path. Whether this is the shortest path or not depends on the algorithm selected.
 
