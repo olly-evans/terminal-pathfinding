@@ -1,7 +1,11 @@
 (IN PROGRESS)
 
 # WELCOME TO PATH
-A dynamic pathfinding algorithm visualiser written in C.
+A dynamic pathfinding algorithm visualiser written in C. Demo below uses A* algorithm.
+
+<video width="320" height="240" controls>
+  <source src="assets/path_demo.mp4" type="video/mp4">
+</video>
 
 # Build
 
@@ -46,7 +50,7 @@ Pink represents cells that have been considered by the algorithm whereas blue on
 # Algorithms 
 
 ## A*
-A* finds the shortest path with respect for given weights with a start and end node. I used a binary min-heap to most efficiently store the open set of nodes.
+A* finds the shortest path with respect for given weights with a start and end node. I used a binary min-heap to most efficiently store the open set of nodes. 
 
 ## Breadth-First Search
 Breadth-first search starts at the tree root and explores all nodes at the present depth prior to moving on to the nodes at the next depth level. A queue was needed to keep track of the child nodes that were encountered but not yet explored. 

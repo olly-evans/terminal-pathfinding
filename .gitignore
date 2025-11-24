@@ -1,5 +1,6 @@
 /build
 /bin
+/assets
 
 *.o
 *.out
@@ -12,3 +13,4 @@
 *.swp
 *.bak
 *.tmp
+
