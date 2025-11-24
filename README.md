@@ -3,7 +3,7 @@
 # WELCOME TO PATH
 A dynamic pathfinding algorithm visualiser written in C. Demo below uses A* algorithm.
 
-<video width="320" height="240" controls>
+<video width="100%" height="240" controls>
   <source src="assets/path_demo.mp4" type="video/mp4">
 </video>
 
