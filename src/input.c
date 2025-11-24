@@ -67,11 +67,7 @@ void dashProcessKeypress() {
         if (Con.state == RUN) break; // Dodge af.
 
         case 'c':
-            freeGrid(g);
-            g = initGrid(g, Con.screenrows, Con.screencols);
-            g->end_cell = NULL;
-            g->start_cell = NULL;
-
+            resetGrid(g);
             break;
         
         // Enter is a carriage return in raw mode.
@@ -97,10 +93,7 @@ void dashProcessKeypress() {
             break;
         
         case 'h':
-            freeGrid(g);
-            g = initGrid(g, Con.screenrows, Con.screencols);
-            g->end_cell = NULL;
-            g->start_cell = NULL;
+            resetGrid(g);
             randomizeGrid(g);
             break;
         case 'r':

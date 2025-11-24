@@ -122,6 +122,8 @@ struct Grid* randomizeGrid(struct Grid *g) {
         for (int x = 0; x < g->cols; x++) {
 
             struct Cell *curr = &g->cells[y][x];
+
+            //fucking horrific
             int toBarrier = rand() % 5;
 
             // look in handleSpacePress for making start/end cell.
@@ -142,9 +144,17 @@ struct Grid* randomizeGrid(struct Grid *g) {
                 continue;
             }
 
+            // also fucking horrific.
             if (toBarrier != 0) continue;
             curr->type = BARRIER;
 
         }
     }
+}
+
+void resetGrid(struct Grid* g) {
+    freeGrid(g);
+    g = initGrid(g, Con.screenrows, Con.screencols);
+    g->end_cell = NULL;
+    g->start_cell = NULL;
 }
