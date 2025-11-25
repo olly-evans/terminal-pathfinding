@@ -1,6 +1,5 @@
 /build
 /bin
-/assets
 
 *.o
 *.out
