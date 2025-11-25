@@ -103,6 +103,7 @@ void freeGrid(struct Grid *g) {
 struct Grid* randomizeGrid(struct Grid *g) {
     srand(time(NULL));
 
+    // Generate two random coordinates for the start and end cell.
     int startRow = 0;
     int startCol = 0;
 
