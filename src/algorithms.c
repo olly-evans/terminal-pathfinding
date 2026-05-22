@@ -32,7 +32,7 @@ void astar() {
 
     */
 
-    // Init heap struct containing open and closed set, (os and cs).
+    // Init heap struct containing open and closed set, (openSet and cs).
     Heap *hp = initHeap();
 
     g->start_cell->g = 0;
@@ -43,10 +43,9 @@ void astar() {
     heapInsert(hp, g->start_cell);
     drawCell(g->start_cell);
     
-    while (hp->os_size > 0 && hp->os != NULL) {
+    while (hp->openSetSize > 0 && hp->openSet != NULL) {
 
         struct Cell *current = heapExtract(hp);
-
 
         if (isEndCell(current)) {
             reconstructPath(current);
@@ -85,7 +84,7 @@ void astar() {
                 } else {
                     // Indexing if in open set here is not optimal, heap_index cell member better.
                     int idx = getOpenSetIdx(hp, neighbour);
-                    hp->os[idx]->f = neighbour->f;
+                    hp->openSet[idx]->f = neighbour->f;
                     heapBubbleUp(hp, idx);
                 }
             }

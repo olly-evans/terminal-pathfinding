@@ -1,12 +1,18 @@
 #ifndef CELL_H
 #define CELL_H
 
-
 #include <stdbool.h>
-
 #include "abuf.h"
 
-#define DRAW_DELAY_MICRO_SEC 8000
+
+/* Anything between 3000-8000 I've found to look best. Does depend on this algorithm though.
+*
+*  3000: Fast and smooth, harder to see changes.
+*  8000: Not as smooth, easier to see changes.
+*
+*/
+
+#define DRAW_DELAY_MICRO_SEC 5000
 
 enum CellTypes {
     START,

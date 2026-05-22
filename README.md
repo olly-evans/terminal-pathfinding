@@ -1,5 +1,5 @@
 # WELCOME TO PATH
-A dynamic pathfinding algorithm visualiser written in C. Demo below uses A* algorithm.
+A dynamic in-terminal pathfinding algorithm visualiser written in C. Demo below uses A* algorithm.
 
 ![Demo](assets/path_demo.gif)
 

@@ -7,7 +7,7 @@
 #include "cell.h"
 #include "terminal.h"
 
-#define BARRIER_CHANCE_FOR_RANDOMIZE 10
+#define PERCENT_BARRIER 25 // % Chance of a cell being a barrier when we randomize
 
 void drawGrid(struct abuf *ab) {
     
@@ -103,7 +103,6 @@ void freeGrid(struct Grid *g) {
 struct Grid* randomizeGrid(struct Grid *g) {
     srand(time(NULL));
 
-    // Generate two random coordinates for the start and end cell.
     int startRow = 0;
     int startCol = 0;
 
@@ -114,6 +113,7 @@ struct Grid* randomizeGrid(struct Grid *g) {
     int maxRow = g->rows-2; // g->rows/cols init to screenrows-padding
     int maxCol = g->cols-2; // 2 should be a global config grid padding var.
 
+    // Generate two random independant coordinates for the start and end cell.
     while(startRow == endRow || startCol == endCol) {
         startRow = rand() % (maxRow + 1 - minRowCol) + minRowCol;//9
         startCol = rand() % (maxCol + 1 - minRowCol) + minRowCol;//
@@ -121,16 +121,11 @@ struct Grid* randomizeGrid(struct Grid *g) {
         endRow = rand() % (maxRow + 1 - minRowCol) + minRowCol; //9
         endCol = rand() % (maxCol + 1 - minRowCol) + minRowCol;
     }
-    
-    printf("start: %d,%d\n", startRow,startCol);
-    printf("end: %d,%d\n", endRow, endCol);
 
     for (int y = 0; y < g->rows; y++) {
         for (int x = 0; x < g->cols; x++) {
 
             struct Cell *curr = &g->cells[y][x];
-
-            //fucking horrific
 
             // look in handleSpacePress for making start/end cell.
             // make into seperate function i think in cells.c.
@@ -150,11 +145,9 @@ struct Grid* randomizeGrid(struct Grid *g) {
                 continue;
             }
 
-            // also fucking horrific.
-            int toBarrier = rand() % 5;
+            int toBarrier = rand() % (100 / PERCENT_BARRIER);
             if (toBarrier != 0) continue;
             curr->type = BARRIER;
-
         }
     }
 }
