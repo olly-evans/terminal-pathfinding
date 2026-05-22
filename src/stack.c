@@ -4,6 +4,7 @@
 #include "stack.h"
 #include "cell.h"
 #include "terminal.h"
+#include "grid.h"
 
 Stack* stackInit() {
     Stack* QS = malloc(sizeof(Stack));
@@ -20,7 +21,9 @@ Stack* stackInit() {
 }
 
 void stackPush(Stack* S, struct Cell *cell) {
-    cell->type = OPEN;
+    if (cell != g->start_cell && cell != g->end_cell)
+        cell->type = OPEN;
+        
     Con.cellsSearched++;
     if (stackFull(S)) {
         S->capacity *= 2;
@@ -36,7 +39,9 @@ struct Cell* stackPop(Stack* S) {
 
     struct Cell *cell = S->frontier[S->rear--];
     if (!cell) die("stackPop() -> cell");
-    cell->type = CLOSED;
+    
+    if (cell != g->start_cell && cell != g->end_cell)
+        cell->type = CLOSED;
 
     return cell; 
 }

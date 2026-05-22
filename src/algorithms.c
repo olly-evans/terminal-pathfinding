@@ -184,16 +184,15 @@ void DFS() {
 
 void reconstructPath(struct Cell *end) {
     
-// g->start_cell->type = START;
-//     drawCell(g->start_cell);
-//     end->type = END;
-//     drawCell(end);
+
 
     struct Cell *previous = end->prev;
     // surely were not setting end to PATH no?
     while (previous != NULL) {
+        if (!isStartCell(previous))
+            previous->type = PATH;
         drawCell(previous);
-        previous->type = PATH;
+
         previous = previous->prev;
     }
     

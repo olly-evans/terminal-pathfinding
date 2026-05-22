@@ -3,6 +3,7 @@
 #include "queue.h"
 #include "terminal.h"
 #include "utils.h"
+#include "grid.h"
 
 Queue* queueInit() {
     Queue *Q = Malloc(sizeof(Queue));
@@ -19,7 +20,10 @@ Queue* queueInit() {
 
 Queue* enqueue(Queue *Q, struct Cell  *cell) {
     Con.cellsSearched++;
-    cell->type = OPEN;
+
+    // Visual indicator. Want start/end to remain as their color.
+    if (cell != g->start_cell && cell != g->end_cell)
+        cell->type = OPEN;
     cell->inOpenSet = true; // prob don't need.
 
     if (Q->rear == Q->capacity) {
@@ -40,7 +44,8 @@ struct Cell* dequeue(Queue *Q) {
 
     if (!cell) die("dequeue() -> cell is NULL.");
 
-    cell->type = CLOSED;
+    if (cell != g->start_cell && cell != g->end_cell)
+        cell->type = CLOSED;
     cell->inOpenSet = false; // prob don't need.
     return cell;
 }
