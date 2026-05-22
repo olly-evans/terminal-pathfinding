@@ -78,7 +78,5 @@ Whilst being a much more maze-oriented algorithm its still fun to watch it explo
 - Fix DFS logic where occasionally it won't fully explore to depth.
 - Make dfs more random with selection.
 - Controls in main visualisation.
-
-- support for random placement after runtime.
-
-- make start end bright color.
+- 
+- Support for random placement after runtime.
