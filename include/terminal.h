@@ -13,8 +13,9 @@
 #define BG_PINK      "\x1b[45m"
 #define BG_BLUE      "\x1b[46m"
 #define BG_WHITE     "\x1b[47m"
-#define BG_NEON_CYAN "\x1b[96m"
-#define BG_NEON_PINK "\x1b[95m"
+
+#define BG_NEON_CYAN "\x1b[42m"
+#define BG_NEON_PINK "\x1b[101m"
 
 
 #define CLEAR_SCRN           "\x1b[2J"
