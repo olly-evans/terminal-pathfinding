@@ -6,7 +6,9 @@ A dynamic pathfinding algorithm visualiser written in C. Demo below uses A* algo
 
 If you would like the algorithm to run faster or slower you can change the `DRAW_DELAY_MICRO_SEC` macro in cell.h.
 
-# Build (ONLY LINUX SUPPORTED)
+# Build
+
+As of right now only Linux is supported due to the termios library.
 
 Clone the repository using:
 ```console
