@@ -67,3 +67,4 @@ DFS starts at the root node (selecting some arbitrary node as the root node in t
 
 - placing end on start bug.
 - placing E in randomize.
+- draw bottom rows controls for visualizer.

@@ -133,7 +133,6 @@ void handleSpacePress(struct Cell *curr_cell) {
         curr_cell->ch = ' ';
         return;
     }
-    free(curr_cell);
 }
 
 void handleRPress(struct Cell *curr_cell) {
