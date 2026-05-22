@@ -47,7 +47,7 @@ This will then take you to the main visualisation.
 Visualisation key controls:
 
 - ArrowKeys: Move the cursor.
-- Space: Place S, E and barriers at cursors position manually.
+- Space: Place the start, end and barriers at cursors position manually.
 - H: Randomize the grid and start/end points.
 - C: Clear/reset the grid.
 - Enter: Start the chosen algorithm (S and E must be placed.)
