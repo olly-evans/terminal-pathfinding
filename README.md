@@ -1,7 +1,7 @@
 # WELCOME TO PATH
 A dynamic pathfinding algorithm visualiser written in C. Demo below uses A* algorithm.
 
-[Watch demo](assets/path_demo.mp4)
+![Demo](assets/path_demo.gif)
 
 
 If you would like the algorithm to run faster or slower you can change the `DRAW_DELAY_MICRO_SEC` macro in cell.h.
