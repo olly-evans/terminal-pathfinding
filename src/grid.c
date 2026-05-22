@@ -110,22 +110,27 @@ struct Grid* randomizeGrid(struct Grid *g) {
     int endRow = 0;
     int endCol = 0;
 
-    while(startRow == endRow || startCol == endCol) {
-        startRow = rand() % (g->rows);
-        startCol = rand() % (g->cols);
+    int minRowCol = 1;
+    int maxRow = g->rows-2;
+    int maxCol = g->cols-2;
 
-        endRow = rand() % (g->rows);
-        endCol = rand() % (g->cols);
+    while(startRow == endRow || startCol == endCol) {
+        startRow = rand() % (maxRow + 1 - minRowCol) + minRowCol;//9
+        startCol = rand() % (maxCol + 1 - minRowCol) + minRowCol;//
+
+        endRow = rand() % (maxRow + 1 - minRowCol) + minRowCol; //9
+        endCol = rand() % (maxCol + 1 - minRowCol) + minRowCol;
     }
     
-    
+    printf("start: %d,%d\n", startRow,startCol);
+    printf("end: %d,%d\n", endRow, endCol);
+
     for (int y = 0; y < g->rows; y++) {
         for (int x = 0; x < g->cols; x++) {
 
             struct Cell *curr = &g->cells[y][x];
 
             //fucking horrific
-            int toBarrier = rand() % 5;
 
             // look in handleSpacePress for making start/end cell.
             // make into seperate function i think in cells.c.
@@ -146,6 +151,7 @@ struct Grid* randomizeGrid(struct Grid *g) {
             }
 
             // also fucking horrific.
+            int toBarrier = rand() % 5;
             if (toBarrier != 0) continue;
             curr->type = BARRIER;
 
