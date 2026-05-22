@@ -26,8 +26,7 @@ void drawCell(struct Cell *cell) {
 
     char *cell_color = getCellColor(cell);
 
-    if (Con.state == RUN)
-        usleep(DRAW_DELAY_MICRO_SEC); 
+    usleep(DRAW_DELAY_MICRO_SEC); 
 
     abAppend(&cell_buf, HIDE_CURSOR, 6);
     abAppend(&cell_buf, cell_color, strlen(cell_color));

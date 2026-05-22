@@ -5,6 +5,7 @@
 #include "algorithms.h"
 #include "cell.h"
 #include "terminal.h"
+#include "grid.h"
 
 /* Functions that provide functionality for a priority queue using a binary min-heap */
 
@@ -56,7 +57,8 @@ void heapInsert(Heap *hp, struct Cell *cell) {
     
     Con.cellsSearched++;
     
-    cell->type = OPEN;
+    if (cell != g->start_cell && cell != g->end_cell)
+        cell->type = OPEN;
     cell->inOpenSet = true;
 
     if (hp->openSetSize == 0) {
@@ -150,7 +152,8 @@ void makeClosed(Heap *hp, struct Cell* curr) {
     }
     hp->closed_set[hp->closedSetSize++] = curr;
 
-    curr->type = CLOSED;
+    if (curr != g->start_cell && curr != g->end_cell)
+        curr->type = CLOSED;
     curr->inClosedSet = true;
     
     return;

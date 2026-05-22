@@ -34,35 +34,7 @@ void drawGrid(struct abuf *ab) {
             abAppend(ab, cell_color, strlen(cell_color));
             abAppend(ab, &c->ch, 1);
             abAppend(ab, RESET_F, 4);
-            // abAppend(&vis_ab, "\r\n", 2);
 
-        //     switch (c->type) {
-        //         case START:
-        //             abAppend(ab, BG_NEON_PINK, 5); // Green
-        //             abAppend(ab, &c->ch, 1);
-        //             break;
-
-        //         case END:
-        //             abAppend(ab, BG_NEON_CYAN, 5); // Red
-        //             abAppend(ab, &c->ch, 1);
-        //             break;
-
-        //         case BARRIER:
-        //         case PERMANENT_BARRIER:
-        //             abAppend(ab, BG_WHITE, 5); // White
-        //             abAppend(ab, &c->ch, 1);
-        //             abAppend(ab, RESET_F, 4);
-        //             break;
-        //         case EMPTY:
-        //             abAppend(ab, BG_BLACK, 5); 
-        //             abAppend(ab, &c->ch, 1);
-        //             abAppend(ab, RESET_F, 4);
-        //             break;
-        //         default:
-        //             abAppend(ab, &c->ch, 1);  // No color
-        //             break;
-        //     }
-        // }
         if (y < g->rows - 1) abAppend(ab, "\r\n", 2);
         }
     }

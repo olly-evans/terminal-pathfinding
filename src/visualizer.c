@@ -24,8 +24,8 @@ void drawPathfindingVisualizer() {
     // abAppend(&vis_ab, "\x1b[K", 3);
     // abAppend(&vis_ab, "\x1b[3J", 4);
 
-    drawGrid(&vis_ab); // cell by cell, must abappend all at once.
-    
+    drawGrid(&vis_ab); 
+
     char buf[32];
     snprintf(buf, sizeof(buf), "\x1b[%d;%dH", Con.cy + 1, Con.cx + 1);
     abAppend(&vis_ab, buf, strlen(buf)); 
