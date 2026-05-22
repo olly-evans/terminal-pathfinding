@@ -96,7 +96,6 @@ void BFS() {
 
     g->start_cell->explored = true;
 
-    if (M.selection)
     Q = enqueue(Q, g->start_cell);
     drawCell(g->start_cell);
 

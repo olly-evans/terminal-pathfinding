@@ -16,7 +16,7 @@ int main(void) {
     init();
 
     while (Con.state != RUN) {
-        if (Con.state == MENU) drawMenu();
+        if (Con.state == MENU_) drawMenu();
         if (Con.state == VISUALIZATION) drawPathfindingVisualizer();
         dashProcessKeypress();  
     }

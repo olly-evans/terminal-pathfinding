@@ -28,14 +28,14 @@ void dashMoveCursor(int key) {
             break;
         case ARROW_RIGHT:
 
-            if (Con.state == MENU) M.selection = (M.selection + 1) % M.algoCount;
+            if (Con.state == MENU_) M.selection = (M.selection + 1) % M.algoCount;
 
             if (Con.state == VISUALIZATION && Con.cx != Con.screencols - 1) {
                 Con.cx++;
             }
             break;
         case ARROW_LEFT:
-            if (Con.state == MENU) M.selection = (M.selection - 1 + M.algoCount) % M.algoCount;
+            if (Con.state == MENU_) M.selection = (M.selection - 1 + M.algoCount) % M.algoCount;
 
             if (Con.state == VISUALIZATION && Con.cx != 0) {
                 Con.cx--;
@@ -62,9 +62,9 @@ void dashProcessKeypress() {
             // cool stats about the run.
             
             exit(0);
-            break;
         
-        if (Con.state == RUN) break; // Dodge af.
+        if (Con.state == RUN) 
+            break; // Dodge af.
 
         case 'c':
             resetGrid(g);
@@ -72,7 +72,7 @@ void dashProcessKeypress() {
         
         // Enter is a carriage return in raw mode.
         case ('\r'):
-            if (Con.state == MENU) {
+            if (Con.state == MENU_) {
                 Con.state = VISUALIZATION;
 
                 Con.cy = Con.screenrows/2; // why is this here?
@@ -93,6 +93,8 @@ void dashProcessKeypress() {
             break;
         
         case 'h':
+            // Con.state = VISUALIZATION;
+            // are we in rawmode.
             resetGrid(g);
             randomizeGrid(g);
             break;
@@ -137,6 +139,7 @@ void handleSpacePress(struct Cell *curr_cell) {
         curr_cell->ch = ' ';
         return;
     }
+    free(curr_cell);
 }
 
 void handleRPress(struct Cell *curr_cell) {

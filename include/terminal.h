@@ -28,7 +28,7 @@
 
 // Move this.
 enum appState {
-	MENU,
+	MENU_,
 	VISUALIZATION,
     RUN
 };
