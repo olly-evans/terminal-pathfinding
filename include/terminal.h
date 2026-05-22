@@ -24,8 +24,6 @@
 
 #define DISABLE_TERMINAL_AUTOWRAP  "\x1b[?7l"
 
-#define DRAW_DELAY_MICRO_SEC 5000
-
 // Move this.
 enum appState {
 	MENU_,

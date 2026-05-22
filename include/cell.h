@@ -1,10 +1,12 @@
 #ifndef CELL_H
 #define CELL_H
 
+
 #include <stdbool.h>
 
 #include "abuf.h"
 
+#define DRAW_DELAY_MICRO_SEC 8000
 
 enum CellTypes {
     START,
