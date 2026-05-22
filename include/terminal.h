@@ -24,7 +24,7 @@
 
 #define DISABLE_TERMINAL_AUTOWRAP  "\x1b[?7l"
 
-
+#define DRAW_DELAY_MICRO_SEC 5000
 
 // Move this.
 enum appState {
@@ -32,8 +32,6 @@ enum appState {
 	VISUALIZATION,
     RUN
 };
-
-/* LINUX TERMINAL DEPENDANT */
 
 struct Config {
     int screenrows;

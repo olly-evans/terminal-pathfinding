@@ -206,7 +206,7 @@ void showSearchStats() {
 
     float percentage = Con.cellsSearched / total_cells;
 
-    sprintf(percentGridSearchedBuf, "Percentage of Grid Searched: %f", percentage*(float)100);
+    sprintf(percentGridSearchedBuf, "Walkable Grid Searched: %.2f (%%)", percentage*(float)100);
     
     printf("%s\n", cellSearchedBuf);
     printf("%s\n", percentGridSearchedBuf);
