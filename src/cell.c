@@ -42,17 +42,17 @@ char* getCellColor(struct Cell *cell) {
     
     switch (cell->type) {
         case PATH:
-            return "\x1b[48;5;62m"; // Purpley
+            return BG_PATH; // Purpley
 
         case PERMANENT_BARRIER:
         case BARRIER:
             return BG_WHITE; // White
 
         case START:
-            return BG_NEON_PINK; // Blue
+            return BG_START; // Blue
 
         case END:
-            return BG_NEON_CYAN; // Pink
+            return BG_END; // Pink
         case CLOSED:
             return BG_PINK;
         case OPEN:

@@ -114,7 +114,6 @@ void handleSpacePress(struct Cell *curr_cell) {
         g->start_cell = curr_cell;
 
         g->start_cell->type = START;
-        g->start_cell->ch = 'S';
         return;
     } 
 
@@ -123,7 +122,6 @@ void handleSpacePress(struct Cell *curr_cell) {
         g->end_cell = curr_cell;
 
         g->end_cell->type = END;
-        g->end_cell->ch = 'E';
         return;
     }
     

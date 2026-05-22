@@ -14,10 +14,9 @@
 #define BG_BLUE      "\x1b[46m"
 #define BG_WHITE     "\x1b[47m"
 
-#define BG_NEON_CYAN "\x1b[101m"
-#define BG_NEON_PINK "\x1b[42m"
-
-
+#define BG_PATH      "\x1b[48;5;62m"
+#define BG_START     "\x1b[101m"
+#define BG_END       "\x1b[48;2;0;204;102m"
 
 #define CLEAR_SCRN           "\x1b[2J"
 #define CLEAR_SCROLLBACK_BUF "\x1b[3J"

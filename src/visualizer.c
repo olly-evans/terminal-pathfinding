@@ -19,11 +19,6 @@ void drawPathfindingVisualizer() {
 
     struct abuf vis_ab = ABUF_INIT;
 
-    // abAppend(&vis_ab, HIDE_CURSOR, 6);
-    // abAppend(&vis_ab, HOME_CURSOR, 4);
-    // abAppend(&vis_ab, "\x1b[K", 3);
-    // abAppend(&vis_ab, "\x1b[3J", 4);
-
     drawGrid(&vis_ab); 
 
     char buf[32];
@@ -36,6 +31,5 @@ void drawPathfindingVisualizer() {
     // Don't forget this is a linux file descriptor.
     write(STDOUT_FILENO, vis_ab.b, vis_ab.len);
 
-    // this writes cell by cell. need one big flush.
     abFree(&vis_ab);
 }
