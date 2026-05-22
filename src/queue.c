@@ -18,7 +18,7 @@ Queue* queueInit() {
 }
 
 Queue* enqueue(Queue *Q, struct Cell  *cell) {
-    
+    Con.cellsSearched++;
     cell->type = OPEN;
     cell->inOpenSet = true; // prob don't need.
 

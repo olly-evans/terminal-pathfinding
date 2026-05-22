@@ -1,5 +1,3 @@
-(IN PROGRESS)
-
 # WELCOME TO PATH
 A dynamic pathfinding algorithm visualiser written in C. Demo below uses A* algorithm.
 
@@ -7,7 +5,7 @@ A dynamic pathfinding algorithm visualiser written in C. Demo below uses A* algo
   <source src="assets/path_demo.mp4" type="video/mp4">
 </video>
 
-# Build
+# Build (ONLY LINUX SUPPORTED)
 
 Clone the repository using:
 ```console
@@ -66,3 +64,6 @@ DFS starts at the root node (selecting some arbitrary node as the root node in t
 
 - Can randomize and place S but not E. Being overwritten by something.
 - support for random placement after runtime.
+
+- placing end on start bug.
+- placing E in randomize.

@@ -49,14 +49,14 @@ void dashProcessKeypress() {
 
     struct Cell *curr_cell = &g->cells[Con.cy][Con.cx];
     
+    // processKeyPress for RUN and VISUALIZATION seperately perhaps.
     switch (c) {
         case ('q'):
+
             freeGrid(g);
             disableRawMode();
-            
+            showSearchStats();     
 
-            // cool stats about the run.
-            
             exit(0);
         
         if (Con.state == RUN) 
@@ -81,7 +81,6 @@ void dashProcessKeypress() {
                 break;
 
             }
-            break;
 
         case (' '):
             // Place start, end and barrier cells one by one.
@@ -90,7 +89,6 @@ void dashProcessKeypress() {
         
         case 'h':
             // Con.state = VISUALIZATION;
-            // are we in rawmode.
             resetGrid(g);
             randomizeGrid(g);
             break;

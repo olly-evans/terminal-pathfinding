@@ -21,7 +21,7 @@ Stack* stackInit() {
 
 void stackPush(Stack* S, struct Cell *cell) {
     cell->type = OPEN;
-
+    Con.cellsSearched++;
     if (stackFull(S)) {
         S->capacity *= 2;
         S->frontier = realloc(S->frontier, S->capacity * sizeof(*S->frontier));

@@ -7,5 +7,6 @@ void astar();
 void DFS();
 void BFS();
 void reconstructPath();
+void showSearchStats();
 
 #endif

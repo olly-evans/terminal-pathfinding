@@ -54,6 +54,8 @@ void heapInsert(Heap *hp, struct Cell *cell) {
 
     if (cell->inOpenSet) return;
     
+    Con.cellsSearched++;
+    
     cell->type = OPEN;
     cell->inOpenSet = true;
 

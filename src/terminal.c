@@ -13,30 +13,25 @@
 struct Config Con;
 
 void die(char *s) {
-    write(STDOUT_FILENO, CLEAR_SCRN, 4); // Clear screen.
-    write(STDOUT_FILENO, HOME_CURSOR, 3); // Cursor home.
-	write(STDOUT_FILENO, CLEAR_SCROLLBACK_BUF, 4); // Clear scrollback buffer.
-	write(STDOUT_FILENO, RESET_F, 4); // Reset terminal colors.
-	write(STDOUT_FILENO, SHOW_CURSOR, 6);
-
+	disableRawMode();
 
     fprintf(stderr, "%s", s);
     exit(1);
 }
 
 void disableRawMode() {
-	write(STDOUT_FILENO, CLEAR_SCRN, 4); // Clear screen.
+	
+    if (tcsetattr(STDIN_FILENO, TCSANOW, &Con.termiosOrig) == -1) die("disableRawMode() -> tcsetattr");
+
+	write(STDOUT_FILENO, CLEAR_SCRN, 4); 
 	write(STDOUT_FILENO, HOME_CURSOR, 3); 
-	write(STDOUT_FILENO, CLEAR_SCROLLBACK_BUF, 4); // Clear scrollback buffer.
+	write(STDOUT_FILENO, CLEAR_SCROLLBACK_BUF, 4); 
 	write(STDOUT_FILENO, RESET_F, 4); 
 	write(STDOUT_FILENO, SHOW_CURSOR, 6); 
-    if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &Con.termiosOrig) == -1) die("disableRawMode() -> tcsetattr");
 }
 
 void enableRawMode() {
     if (tcgetattr(STDIN_FILENO, &Con.termiosOrig) == -1) die("enableRawMode() -> tcgetattr");
-    atexit(disableRawMode);
-
 
     struct termios termiosRaw = Con.termiosOrig;
     termiosRaw.c_iflag &= ~(BRKINT | ICRNL | INPCK | ISTRIP | IXON);

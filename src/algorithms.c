@@ -12,6 +12,7 @@
 #include "queue.h"
 #include "stack.h"
 #include "menu.h"
+#include "terminal.h"
 
 const int DIRS[4][2] = {
     { 0, -1 }, // Up
@@ -41,10 +42,11 @@ void astar() {
 
     heapInsert(hp, g->start_cell);
     drawCell(g->start_cell);
-
+    
     while (hp->os_size > 0 && hp->os != NULL) {
 
         struct Cell *current = heapExtract(hp);
+
 
         if (isEndCell(current)) {
             reconstructPath(current);
@@ -52,8 +54,9 @@ void astar() {
         }
 
         makeClosed(hp, current);
-        drawCell(current);
 
+        drawCell(current);
+        
         // No diagonals, hence 4 neighbours. DIRS appendable to add diagonals.
         for (unsigned long  i = 0; i < sizeof(DIRS)/sizeof(DIRS[0]); i++) {
             // See DIRS array.
@@ -66,8 +69,9 @@ void astar() {
             // Point to chosen neighbour of current.
             struct Cell *neighbour = &g->cells[ny][nx];
 
-            if (neighbour->inClosedSet) continue;
-            if (!isWalkableCell(neighbour)) continue;
+            if (neighbour->inClosedSet || !isWalkableCell(neighbour)) {
+                continue;
+            }
 
             int tentative_g = current->g + neighbour->weight;
 
@@ -120,7 +124,7 @@ void BFS() {
 
             // Pointer to chosen neighbour of current.
             struct Cell *neighbour = &g->cells[ny][nx];
-
+            
             if (!isWalkableCell(neighbour) || neighbour->explored) continue;
 
             if (!neighbour->explored) {
@@ -163,6 +167,8 @@ void DFS() {
 
             // Point to chosen neighbour of current.
             struct Cell *neighbour = &g->cells[ny][nx];
+            
+            // Con.cellsSearched++;
 
             if (!isWalkableCell(neighbour) || neighbour->explored) continue;
 
@@ -188,4 +194,20 @@ void reconstructPath(struct Cell *end) {
 
         previous = previous->prev;
     }
+}
+
+void showSearchStats() {
+    char cellSearchedBuf[100];
+    sprintf(cellSearchedBuf, "Cells searched: %d", Con.cellsSearched);
+    
+    char percentGridSearchedBuf[100];
+
+    const float total_cells = (Con.screencols - 2)*(Con.screenrows - 2);
+
+    float percentage = Con.cellsSearched / total_cells;
+
+    sprintf(percentGridSearchedBuf, "Percentage of Grid Searched: %f", percentage*(float)100);
+    
+    printf("%s\n", cellSearchedBuf);
+    printf("%s\n", percentGridSearchedBuf);
 }
