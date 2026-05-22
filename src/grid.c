@@ -111,8 +111,8 @@ struct Grid* randomizeGrid(struct Grid *g) {
     int endCol = 0;
 
     int minRowCol = 1;
-    int maxRow = g->rows-2;
-    int maxCol = g->cols-2;
+    int maxRow = g->rows-2; // g->rows/cols init to screenrows-padding
+    int maxCol = g->cols-2; // 2 should be a global config grid padding var.
 
     while(startRow == endRow || startCol == endCol) {
         startRow = rand() % (maxRow + 1 - minRowCol) + minRowCol;//9

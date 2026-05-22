@@ -5,6 +5,8 @@ A dynamic pathfinding algorithm visualiser written in C. Demo below uses A* algo
   <source src="assets/path_demo.mp4" type="video/mp4">
 </video>
 
+If you would like the algorithm to run faster or slower you can change the `DRAW_DELAY_MICRO_SEC` macro in cell.h.
+
 # Build (ONLY LINUX SUPPORTED)
 
 Clone the repository using:
@@ -39,9 +41,20 @@ Make command alone will compile without running afterwards, the executable can t
 
 After running you will see the main menu where you can select an algorithm using the arrow keys and then pressing enter.
 
-This will then take you to the main visualisation. The cursor can be moved using the arrow keys. The start (S) and end cell (E) can be chosen using the space bar when the cursor is in the wanted position. These are the cells that the chosen algorithm will start at and then try to find a path to. Once the start and end are placed barriers (white) can be inserted to obstruct the algorithm also using the space bar, the algorithm cannot use these barriers in its search. Or alternatively the grid can be assigned randomly using the H key.
+This will then take you to the main visualisation.
 
-Once you are happy with the layout you have created for the algorithm you can press enter and the algorithm will find a path. Whether this is the shortest path or not depends on the algorithm selected.
+Visualisation key controls:
+
+- ArrowKeys: Move the cursor.
+- Space: Place S, E and barriers at cursors position manually.
+- H: Randomize the grid and start/end points.
+- C: Clear/reset the grid.
+- Enter: Start the chosen algorithm (S and E must be placed.)
+- Q: Quit.
+
+This is a more verbose explanation of the key controls in the visualiser. The cursor can be moved using the arrow keys. The start (S) and end cell (E) can be chosen using the space bar when the cursor is in the wanted position. These are the cells that the chosen algorithm will start at and then try to find a path to. Once the start and end are placed barriers (white) can be inserted to obstruct the algorithm also using the space bar, the algorithm cannot use these barriers in its search. Or alternatively the grid can be assigned randomly using the H key.
+
+Once you are happy with the layout you have created for the algorithm you can press enter and the algorithm will find a path. Whether this is the shortest path or not depends on the algorithm selected, see the algorithms section below for more info.
 
 Pink represents cells that have been considered by the algorithm whereas blue ones are cells that it is considering.
 
@@ -62,9 +75,5 @@ DFS starts at the root node (selecting some arbitrary node as the root node in t
 - Make dfs more random with selection.
 - Controls in main visualisation.
 
-- Can randomize and place S but not E. Being overwritten by something.
 - support for random placement after runtime.
 
-- placing end on start bug.
-- placing E in randomize.
-- draw bottom rows controls for visualizer.
