@@ -10,7 +10,7 @@
 typedef struct {
     struct Cell **openSet; // Binary minimum heap, zero-indexed so left child at 2i + 1, right at 2i + 2.
     int openSetSize;
-    int os_cap;
+    int openSetCapacity;
 
     struct Cell **closed_set; // Closed set of explored cells.
     int closedSetSize;

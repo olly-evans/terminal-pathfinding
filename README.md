@@ -4,7 +4,8 @@ A dynamic in-terminal pathfinding algorithm visualiser written in C. Demo below 
 ![Demo](assets/path_demo.gif)
 
 
-If you would like the algorithm to run faster or slower you can change the `DRAW_DELAY_MICRO_SEC` macro in cell.h.
+If you would like the algorithm to run faster or slower you can change the `DRAW_DELAY_MICRO_SEC` macro in cell.h. Anything between 3000-8000 I've found to look best. Does depend on this algorithm though, for A* use something higher as there won't be as many cells searched.
+
 
 # Build
 
@@ -69,6 +70,8 @@ Breadth-first search starts at the tree root and explores all nodes at the prese
 
 ## Depth-First Search
 DFS starts at the root node (selecting some arbitrary node as the root node in the case of a graph) and explores as far as possible along each branch before backtracking. A stack was needed to keep track of the nodes discovered so far along a specified branch which helps in backtracking of the graph. 
+
+Whilst being a much more maze-oriented algorithm its still fun to watch it explore.
 
 # TODO
 - Vertical padding for menu. Abort if screenrows less than appropriate no.

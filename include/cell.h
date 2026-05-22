@@ -10,9 +10,10 @@
 *  3000: Fast and smooth, harder to see changes.
 *  8000: Not as smooth, easier to see changes.
 *
+*  Definitely use something slower for A* though.
 */
 
-#define DRAW_DELAY_MICRO_SEC 5000
+#define DRAW_DELAY_MICRO_SEC 10000
 
 enum CellTypes {
     START,

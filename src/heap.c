@@ -21,7 +21,7 @@ Heap* initHeap() {
     hp->openSetSize = 0;
     hp->closedSetSize = 0;
 
-    hp->os_cap = INIT_OS_CAP;
+    hp->openSetCapacity = INIT_OS_CAP;
     hp->cs_cap = INIT_CS_CAP;
 
     return hp;
@@ -61,12 +61,12 @@ void heapInsert(Heap *hp, struct Cell *cell) {
 
     if (hp->openSetSize == 0) {
         free(hp->openSet);
-        hp->openSet = malloc(hp->os_cap * sizeof(struct Cell *));
+        hp->openSet = malloc(hp->openSetCapacity * sizeof(struct Cell *));
     }
     
-    if (hp->openSetSize == hp->os_cap) {
-        hp->os_cap *= 2;
-        struct Cell **tmp = realloc(hp->openSet, (hp->os_cap) * sizeof(struct Cell *));
+    if (hp->openSetSize == hp->openSetCapacity) {
+        hp->openSetCapacity *= 2;
+        struct Cell **tmp = realloc(hp->openSet, (hp->openSetCapacity) * sizeof(struct Cell *));
         if (!tmp) die("heapInsert() -> realloc()"); // Not sure what to do here.
         hp->openSet = tmp;
     }
