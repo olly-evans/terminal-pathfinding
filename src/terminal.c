@@ -25,6 +25,11 @@ void die(char *s) {
 }
 
 void disableRawMode() {
+	write(STDOUT_FILENO, CLEAR_SCRN, 4); // Clear screen.
+	write(STDOUT_FILENO, HOME_CURSOR, 3); 
+	write(STDOUT_FILENO, CLEAR_SCROLLBACK_BUF, 4); // Clear scrollback buffer.
+	write(STDOUT_FILENO, RESET_F, 4); 
+	write(STDOUT_FILENO, SHOW_CURSOR, 6); 
     if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &Con.termiosOrig) == -1) die("disableRawMode() -> tcsetattr");
 }
 

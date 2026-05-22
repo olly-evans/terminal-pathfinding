@@ -52,14 +52,8 @@ void dashProcessKeypress() {
     switch (c) {
         case ('q'):
             freeGrid(g);
-
             disableRawMode();
-
-            write(STDOUT_FILENO, CLEAR_SCRN, 4); // Clear screen.
-            write(STDOUT_FILENO, HOME_CURSOR, 3); 
-            write(STDOUT_FILENO, CLEAR_SCROLLBACK_BUF, 4); // Clear scrollback buffer.
-            write(STDOUT_FILENO, RESET_F, 4); 
-            write(STDOUT_FILENO, SHOW_CURSOR, 6); 
+            
 
             // cool stats about the run.
             
