@@ -49,10 +49,10 @@ char* getCellColor(struct Cell *cell) {
             return BG_WHITE; // White
 
         case START:
-            return BG_START; // Blue
+            return BG_START; 
 
         case END:
-            return BG_END; // Pink
+            return BG_END;
         case CLOSED:
             return BG_PINK;
         case OPEN:

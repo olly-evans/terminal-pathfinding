@@ -112,7 +112,6 @@ void handleSpacePress(struct Cell *curr_cell) {
     // If no start cell, init one.
     if ((g->start_cell == NULL) && (!isPermBarrier(curr_cell))) {
         g->start_cell = curr_cell;
-
         g->start_cell->type = START;
         return;
     } 
@@ -120,7 +119,6 @@ void handleSpacePress(struct Cell *curr_cell) {
     // If no end cell, init one.
     if ((g->end_cell == NULL) && (curr_cell->type != START) && (!isPermBarrier(curr_cell))) {
         g->end_cell = curr_cell;
-
         g->end_cell->type = END;
         return;
     }

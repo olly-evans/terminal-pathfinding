@@ -80,3 +80,5 @@ Whilst being a much more maze-oriented algorithm its still fun to watch it explo
 - Controls in main visualisation.
 - 
 - Support for random placement after runtime.
+
+- arrow key bug in run state.
