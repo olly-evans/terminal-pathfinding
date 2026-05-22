@@ -123,7 +123,7 @@ void handleSpacePress(struct Cell *curr_cell) {
     } 
 
     // If no end cell, init one.
-    if ((g->end_cell == NULL) && (curr_cell->type != START) && (!isPermBarrier)) {
+    if ((g->end_cell == NULL) && (curr_cell->type != START) && (!isPermBarrier(curr_cell))) {
         g->end_cell = curr_cell;
 
         g->end_cell->type = END;
@@ -132,7 +132,7 @@ void handleSpacePress(struct Cell *curr_cell) {
     }
     
     // Make anything that isn't start/end cell a border thereafter.
-    if (curr_cell->type != START && curr_cell->type != END && (!isPermBarrier)) {
+    if (curr_cell->type != START && curr_cell->type != END && (!isPermBarrier(curr_cell))) {
         curr_cell->type = BARRIER;
         curr_cell->ch = ' ';
         return;
