@@ -18,6 +18,7 @@ void drawCell(struct Cell *cell) {
     
     */
 
+
     struct abuf cell_buf = ABUF_INIT;
     char buf[32];
     snprintf(buf, sizeof(buf), "\x1b[%d;%dH", cell->y + 1, cell->x + 1);
@@ -25,7 +26,8 @@ void drawCell(struct Cell *cell) {
 
     char *cell_color = getCellColor(cell);
 
-    usleep(DRAW_DELAY_MICRO_SEC); 
+    if (Con.state == RUN)
+        usleep(DRAW_DELAY_MICRO_SEC); 
 
     abAppend(&cell_buf, HIDE_CURSOR, 6);
     abAppend(&cell_buf, cell_color, strlen(cell_color));
@@ -46,12 +48,16 @@ char* getCellColor(struct Cell *cell) {
         case PERMANENT_BARRIER:
         case BARRIER:
             return BG_WHITE; // White
-        
+
         case OPEN:
-            return BG_BLUE; // Blue
+            return BG_NEON_PINK; // Blue
+
         case CLOSED:
-            return BG_PINK; // Pink
-        
+            return BG_NEON_CYAN; // Pink
+
+        case EMPTY:
+            return BG_BLACK;
+
         default:
             die("Editing unamenable cell type");
     }   

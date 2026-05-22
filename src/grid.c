@@ -1,6 +1,8 @@
 #include <stdlib.h>
 #include <limits.h>
 #include <time.h>
+#include <unistd.h>
+
 
 #include "abuf.h"
 #include "grid.h"
@@ -15,40 +17,54 @@ void drawGrid(struct abuf *ab) {
     
     int y;
     int x;
+    
     for (y = 0; y < g->rows; y++) {
         for (x = 0; x < g->cols; x++) {
 
             // Current Cell
             struct Cell *c = &g->cells[y][x];
             
-            switch (c->type) {
-                case START:
-                    abAppend(ab, TXT_GREEN, 5); // Green
-                    abAppend(ab, &c->ch, 1);
-                    break;
+            char buf[32];
+            snprintf(buf, sizeof(buf), "\x1b[%d;%dH", c->y + 1, c->x + 1);
+            abAppend(ab, buf, strlen(buf)); 
 
-                case END:
-                    abAppend(ab, TXT_RED, 5); // Red
-                    abAppend(ab, &c->ch, 1);
-                    break;
+            char *cell_color = getCellColor(c);
 
-                case BARRIER:
-                case PERMANENT_BARRIER:
-                    abAppend(ab, BG_WHITE, 5); // White
-                    abAppend(ab, &c->ch, 1);
-                    abAppend(ab, RESET_F, 4);
-                    break;
-                case EMPTY:
-                    abAppend(ab, BG_BLACK, 5); 
-                    abAppend(ab, &c->ch, 1);
-                    abAppend(ab, RESET_F, 4);
-                    break;
-                default:
-                    abAppend(ab, &c->ch, 1);  // No color
-                    break;
-            }
-        }
+            abAppend(ab, HIDE_CURSOR, 6);
+            abAppend(ab, cell_color, strlen(cell_color));
+            abAppend(ab, &c->ch, 1);
+            abAppend(ab, RESET_F, 4);
+            // abAppend(&vis_ab, "\r\n", 2);
+
+        //     switch (c->type) {
+        //         case START:
+        //             abAppend(ab, BG_NEON_PINK, 5); // Green
+        //             abAppend(ab, &c->ch, 1);
+        //             break;
+
+        //         case END:
+        //             abAppend(ab, BG_NEON_CYAN, 5); // Red
+        //             abAppend(ab, &c->ch, 1);
+        //             break;
+
+        //         case BARRIER:
+        //         case PERMANENT_BARRIER:
+        //             abAppend(ab, BG_WHITE, 5); // White
+        //             abAppend(ab, &c->ch, 1);
+        //             abAppend(ab, RESET_F, 4);
+        //             break;
+        //         case EMPTY:
+        //             abAppend(ab, BG_BLACK, 5); 
+        //             abAppend(ab, &c->ch, 1);
+        //             abAppend(ab, RESET_F, 4);
+        //             break;
+        //         default:
+        //             abAppend(ab, &c->ch, 1);  // No color
+        //             break;
+        //     }
+        // }
         if (y < g->rows - 1) abAppend(ab, "\r\n", 2);
+        }
     }
 }
 

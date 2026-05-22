@@ -81,3 +81,4 @@ Whilst being a much more maze-oriented algorithm its still fun to watch it explo
 
 - support for random placement after runtime.
 
+- make start end bright color.

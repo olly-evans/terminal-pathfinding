@@ -5,15 +5,15 @@
 #include "abuf.h"
 
 
-/* Anything between 3000-8000 I've found to look best. Does depend on this algorithm though.
+/* Anything between 3000-8000 I've found to look best. Does depend on the algorithm though.
 *
 *  3000: Fast and smooth, harder to see changes.
 *  8000: Not as smooth, easier to see changes.
 *
-*  Definitely use something slower for A* though.
+*  Definitely use something higher for A* though.
 */
 
-#define DRAW_DELAY_MICRO_SEC 10000
+#define DRAW_DELAY_MICRO_SEC 3000
 
 enum CellTypes {
     START,
