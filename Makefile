@@ -28,7 +28,6 @@ clean:
 	rm -rf $(BUILD_DIR) $(BIN_DIR)
 
 run: all
-	@echo "Running $(TARGET)..."
 	@./$(TARGET)
 
 -include $(DEPS)
