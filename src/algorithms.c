@@ -212,4 +212,6 @@ void showSearchStats() {
     
     printf("%s\n", cellSearchedBuf);
     printf("%s\n", percentGridSearchedBuf);
+
+    // Doesn't factor in air bubbles/closed off cells, another time perhaps.
 }
