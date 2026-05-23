@@ -13,8 +13,6 @@
 struct Config Con;
 
 void die(char *s) {
-	disableRawMode();
-
     fprintf(stderr, "%s", s);
     exit(1);
 }
@@ -28,10 +26,13 @@ void disableRawMode() {
 	write(STDOUT_FILENO, CLEAR_SCROLLBACK_BUF, 4); 
 	write(STDOUT_FILENO, RESET_F, 4); 
 	write(STDOUT_FILENO, SHOW_CURSOR, 6); 
+
+	showSearchStats();
 }
 
 void enableRawMode() {
     if (tcgetattr(STDIN_FILENO, &Con.termiosOrig) == -1) die("enableRawMode() -> tcgetattr");
+	atexit(disableRawMode);
 
     struct termios termiosRaw = Con.termiosOrig;
     termiosRaw.c_iflag &= ~(BRKINT | ICRNL | INPCK | ISTRIP | IXON);

@@ -34,8 +34,7 @@ int main(void) {
         default:
             die("Invalid algorithm choice");
     }
-    dashProcessKeypress();
 
-    
+    dashProcessKeypress(); // want to reset/ re-randomize.    
     return 0;
 }

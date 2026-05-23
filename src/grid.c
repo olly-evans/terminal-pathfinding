@@ -9,7 +9,7 @@
 #include "cell.h"
 #include "terminal.h"
 
-#define PERCENT_BARRIER 25 // % Chance of a cell being a barrier when we randomize the grid.
+#define PERCENT_BARRIER 20 // % Chance of a cell being a barrier when we randomize the grid.
 
 void drawGrid(struct abuf *ab) {
     
