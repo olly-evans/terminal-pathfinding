@@ -26,6 +26,12 @@ void drawCell(struct Cell *cell) {
 
     char *cell_color = getCellColor(cell);
 
+    if (cell->type == PATH) {
+        usleep(DRAW_PATH_DELAY_MICRO_SEC);
+    } else {
+        usleep(DRAW_DELAY_MICRO_SEC);
+    }
+        
     usleep(DRAW_DELAY_MICRO_SEC); 
 
     abAppend(&cell_buf, HIDE_CURSOR, 6);

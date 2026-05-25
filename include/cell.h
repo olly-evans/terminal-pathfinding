@@ -13,7 +13,8 @@
 *  Definitely use something higher for A* though.
 */
 
-#define DRAW_DELAY_MICRO_SEC 3000
+#define DRAW_DELAY_MICRO_SEC 2000
+#define DRAW_PATH_DELAY_MICRO_SEC 30000
 
 enum CellTypes {
     START,
