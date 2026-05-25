@@ -13,7 +13,7 @@
 *  Definitely use something higher for A* though.
 */
 
-#define DRAW_DELAY_MICRO_SEC 2000
+#define DRAW_DELAY_MICRO_SEC 1000
 #define DRAW_PATH_DELAY_MICRO_SEC 30000
 
 enum CellTypes {
@@ -30,7 +30,7 @@ enum CellTypes {
 struct Cell {
     enum CellTypes type; // What is the cells type, see enum.
     int x, y; // Cell's y (row) and x (col) in g->cells.
-    char ch; // Cell's outward character.
+    char ch; // Cell's outward character, just a space so we can use highlights.
 
     struct Cell *prev; // Pointer to cell this cell came from to retrace best path.
     
