@@ -23,7 +23,7 @@ BIN_DIR := bin
 OBJ_DIR := $(BUILD_DIR)/obj
 DEP_DIR := $(BUILD_DIR)/dep
 
-TARGET := $(BIN_DIR)/main.$(TAR)
+TARGET := $(BIN_DIR)/main.$(TARGET_EXTENSION)
 
 SRC := $(wildcard $(SRC_DIR)/*.c)
 OBJ := $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC))
