@@ -1,3 +1,18 @@
+ifeq ($(OS),Windows_NT)
+  ifeq ($(shell uname -s),) # not in a bash-like shell
+    CLEANUP = del /F /Q
+    MKDIR = mkdir
+  else # in a bash-like shell, like msys
+    CLEANUP = rm -f
+    MKDIR = mkdir -p
+  endif
+    TARGET_EXTENSION=exe
+else
+    CLEANUP = rm -f
+    MKDIR = mkdir -p
+    TARGET_EXTENSION=out
+endif
+
 CC := gcc
 CFLAGS := -g -O0 -Iinclude -Wall -Wextra -std=c11 -MMD -MP
 
@@ -19,12 +34,12 @@ all: $(TARGET)
 
 # Link all object files into the final executable
 $(TARGET): $(OBJ)
-	@mkdir -p $(BIN_DIR)
+	@$(MKDIR) -p $(BIN_DIR)
 	$(CC) $(CFLAGS) -o $@ $^
 
 # Compile .c to .o and direct .d output to $(DEP_DIR)
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
-	@mkdir -p $(OBJ_DIR) $(DEP_DIR)
+	@$(MKDIR) -p $(OBJ_DIR) $(DEP_DIR)
 	$(CC) $(CFLAGS) -MF $(DEP_DIR)/$*.d -c $< -o $@
 
 clean:
