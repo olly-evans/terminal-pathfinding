@@ -29,6 +29,7 @@ Heap* initHeap() {
 }
 
 struct Cell *heapExtract(Heap *hp) {
+
     if (hp->openSetSize == 0) {
         free(hp->openSet);
         hp->openSet = NULL;
@@ -84,6 +85,7 @@ void heapInsert(Heap *hp, struct Cell *cell) {
 void heapBubbleUp(Heap *hp, int childIdx) {
 
     /* Try and make this account for g score too */
+    
     if (childIdx == 0) return;
 
     int parentIdx = ((childIdx - 1) / 2);
@@ -94,7 +96,6 @@ void heapBubbleUp(Heap *hp, int childIdx) {
         childIdx = parentIdx;
         parentIdx = ((childIdx - 1) / 2);
     }
-    return;
 }
 
 void heapBubbleDown(Heap *hp, int parentIdx) {

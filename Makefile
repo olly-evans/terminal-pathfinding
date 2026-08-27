@@ -5,11 +5,14 @@ SRC_DIR := src
 BUILD_DIR := build
 BIN_DIR := bin
 
+OBJ_DIR := $(BUILD_DIR)/obj
+DEP_DIR := $(BUILD_DIR)/dep
+
 TARGET := $(BIN_DIR)/main
 
-SRC := $(wildcard $(SRC_DIR)/*.c) # Pattern for .c
-OBJ := $(patsubst $(SRC_DIR)/%.c, $(BUILD_DIR)/%.o, $(SRC)) # Substitute this pattern for objects
-DEPS := $(OBJ:.o=.d)
+SRC := $(wildcard $(SRC_DIR)/*.c)
+OBJ := $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC))
+DEPS := $(patsubst $(SRC_DIR)/%.c, $(DEP_DIR)/%.d, $(SRC))
 
 # Default goal
 all: $(TARGET)
@@ -19,10 +22,10 @@ $(TARGET): $(OBJ)
 	@mkdir -p $(BIN_DIR)
 	$(CC) $(CFLAGS) -o $@ $^
 
-# Compile each .c file into a .o object file, generating dependency files
-$(BUILD_DIR)/%.o: $(SRC_DIR)/%.c
-	@mkdir -p $(BUILD_DIR)
-	$(CC) $(CFLAGS) -c $< -o $@
+# Compile .c to .o and direct .d output to $(DEP_DIR)
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
+	@mkdir -p $(OBJ_DIR) $(DEP_DIR)
+	$(CC) $(CFLAGS) -MF $(DEP_DIR)/$*.d -c $< -o $@
 
 clean:
 	rm -rf $(BUILD_DIR) $(BIN_DIR)
