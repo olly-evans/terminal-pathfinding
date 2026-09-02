@@ -34,22 +34,7 @@ enum appState {
     RUN
 };
 
-struct Config {
-    int screenrows;
-    int screencols;
-    int headerrow;
-    int cx, cy;
 
-    int coloff;
-    int rowoff;
-
-    int cellsSearched;
-
-    enum appState state;
-    struct termios termiosOrig;
-};
-
-extern struct Config Con;
 
 void die(char *s);
 void disableRawMode();

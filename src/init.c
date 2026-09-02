@@ -13,6 +13,7 @@
 #define MIN_COLS 48
 
 struct Grid *g = NULL;
+struct Config Con;
 
 char *algorithms[] = {
     "A*",
@@ -35,11 +36,14 @@ void init() {
 	Con.cellsSearched = 0; // Incremented upon cell addition to respective algorithms data structure
 
 	// Allocate rows and cols of terminal, initialise grid with these values.
-	if (getWindowSize(&Con.screenrows, &Con.screencols) == -1) die("init() -> getWindowSize");
-	if (Con.screenrows < MIN_ROWS || Con.screencols < MIN_COLS) die("Terminal window too small!");
+	if (getWindowSize(&Con.screenrows, &Con.screencols) == -1) 
+		die("init() -> getWindowSize");
+	if (Con.screenrows < MIN_ROWS || Con.screencols < MIN_COLS) 
+		die("Terminal window too small!");
 
 	g = initGrid(g, Con.screenrows, Con.screencols);
-	if (!g) die("init() -> initGrid");
+	if (!g) 
+		die("init() -> initGrid");
 
 	// Pointers to start/end cell.
 	g->start_cell = NULL;
