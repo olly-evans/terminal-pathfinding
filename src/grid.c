@@ -145,4 +145,5 @@ void resetGrid(struct Grid* g) {
     g = initGrid(g, Con.screenrows, Con.screencols);
     g->end_cell = NULL;
     g->start_cell = NULL;
+    Con.numBarriers = 0;
 }

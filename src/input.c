@@ -127,6 +127,7 @@ void handleSpacePress(struct Cell *curr_cell) {
     if (curr_cell->type != START && curr_cell->type != END && (!isPermBarrier(curr_cell))) {
         curr_cell->type = BARRIER;
         curr_cell->ch = ' ';
+        Con.numBarriers++;
         return;
     }
 }
