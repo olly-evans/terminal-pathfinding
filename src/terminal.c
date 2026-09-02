@@ -9,6 +9,7 @@
 #include "terminal.h"
 #include "input.h"
 
+struct Config Con;
 
 void die(char *s) {
     fprintf(stderr, "%s", s);

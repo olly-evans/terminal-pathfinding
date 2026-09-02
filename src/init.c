@@ -13,7 +13,6 @@
 #define MIN_COLS 48
 
 struct Grid *g = NULL;
-struct Config Con;
 
 char *algorithms[] = {
     "A*",
