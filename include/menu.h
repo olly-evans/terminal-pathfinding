@@ -16,12 +16,6 @@ typedef struct {
     char *action;
 } MenuControl;
 
-// enum AlgorithmSelection {
-//     ASTAR = 0,
-//     DFS,
-//     BFS
-// };
-
 void drawMenu();
 void drawMenuItems(struct abuf *ab);
 int totalControlsChars(MenuControl controls[], int num_controls);
