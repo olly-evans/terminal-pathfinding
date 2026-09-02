@@ -8,6 +8,7 @@
 #include "grid.h"
 #include "cell.h"
 #include "terminal.h"
+#include "utils.h"
 
 #define PERCENT_BARRIER 22 // % Chance of a cell being a barrier when we randomize the grid.
 
@@ -41,20 +42,20 @@ void drawGrid(struct abuf *ab) {
 }
 
 struct Grid* initGrid(struct Grid *g, int rows, int cols) {
-	g = malloc(sizeof(struct Grid));
-	if (!g) die("initGrid() -> malloc");
+	g = Malloc(sizeof(struct Grid));
+	if (!g) die("initGrid() -> Malloc");
 
 	g->rows = rows;
 	g->cols = cols;
 
 	// Allocate memory for an array of row pointers, sized for rows.
-	g->cells = malloc(sizeof(struct Cell*) * rows);
-	if (!g->cells) die("initGrid() -> malloc");
+	g->cells = Malloc(sizeof(struct Cell*) * rows);
+	if (!g->cells) die("initGrid() -> Malloc");
 
 	for (int y = 0; y < rows; y++) {
 		// Allocate memory for a row of cells, sized for cols
-		g->cells[y] = malloc(sizeof(struct Cell) * cols);
-		if (!g->cells[y]) die("initGrid() -> malloc");
+		g->cells[y] = Malloc(sizeof(struct Cell) * cols);
+		if (!g->cells[y]) die("initGrid() -> Malloc");
 
 		for (int x = 0; x < cols; x++) {
 			if (y == 0 || x == 0 || y == Con.screenrows - 1 || x == Con.screencols - 1) {
