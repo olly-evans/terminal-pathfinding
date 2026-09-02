@@ -135,6 +135,7 @@ struct Grid* randomizeGrid(struct Grid *g) {
             int toBarrier = rand() % (100 / PERCENT_BARRIER);
             if (toBarrier != 0) continue;
             curr->type = BARRIER;
+            Con.numBarriers++;
         }
     }
 }

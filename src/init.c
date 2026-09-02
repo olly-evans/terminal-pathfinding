@@ -32,6 +32,7 @@ void init() {
 	Con.cx = 0;
 	Con.cy = 0;
 
+	Con.numBarriers = 0;
 	Con.cellsSearched = 0; // Incremented upon cell addition to respective algorithms data structure
 
 	// Allocate rows and cols of terminal, initialise grid with these values.

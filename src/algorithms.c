@@ -204,11 +204,12 @@ void showSearchStats() {
     
     char percentGridSearchedBuf[100];
 
-    const float total_cells = (Con.screencols - 2)*(Con.screenrows - 2);
+    const float totalCells = (Con.screencols - 2)*(Con.screenrows - 2);
+    const float walkableCells = totalCells - Con.numBarriers;
 
-    float percentage = Con.cellsSearched / total_cells;
+    float percentage = Con.cellsSearched / walkableCells;
 
-    sprintf(percentGridSearchedBuf, "Walkable Grid Searched: %.2f (%%)", percentage*(float)100);
+    sprintf(percentGridSearchedBuf, "Cells Searched: %.2f (%%)", percentage*(float)100);
     
     printf("%s\n", cellSearchedBuf);
     printf("%s\n", percentGridSearchedBuf);

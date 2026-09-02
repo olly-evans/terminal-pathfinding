@@ -44,6 +44,7 @@ struct Config {
     int rowoff;
 
     int cellsSearched;
+    int numBarriers;
 
     enum appState state;
     struct termios termiosOrig;

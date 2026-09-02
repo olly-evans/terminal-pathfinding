@@ -82,3 +82,5 @@ Whilst being a much more maze-oriented algorithm its still fun to watch it explo
 - Support for random placement after runtime.
 
 - arrow key bug in run state.
+
+- termios only used in terminal.c. means termios included all over which doesn't make windows functionality easier. put termios data in other struct or something.
