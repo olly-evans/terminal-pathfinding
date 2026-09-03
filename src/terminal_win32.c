@@ -4,25 +4,42 @@
 
 /* 
 
-Windows implementations of required functions
+Windows console implementations of required functions
 
     - getWindowSize
     - dashReadKey
     - enableRawMode
+    - disableRawMode
 
 */
 
-HANDLE hStdin; // feels like a global
+HANDLE hStdin;
+
+static DWORD fdwSaveOldMode; // Old console state.
+DWORD fdwRawMode;
 
 VOID ErrorExit(LPCSTR);
 VOID KeyEventProc(KEY_EVENT_RECORD);
+
+
+void enableRawMode() {
+
+    hStdin = GetStdHandle(STD_INPUT_HANDLE);
+    if (hStdin == INVALID_HANDLE_VALUE)
+        ErrorExit("GetStdHandle()");
+
+    if (!GetConsoleMode(hStdin, &fdwSaveOldMode))
+        ErrorExit("GetConsoleMode()");
+
+    fdwRawMode = // choose flags for raw mode.
+
+    // SetConsoleMode()
+}
 
 int dashReadKey() {
 
     INPUT_RECORD record;
     DWORD events;
-
-    hStdin = GetStdHandle(STD_INPUT_HANDLE);
 
     for (;;) {
         if (!ReadConsoleInput(hStdin, &record, 1, &events))
