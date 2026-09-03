@@ -10,16 +10,44 @@ Windows implementations of required functions
 
 */
 
-HANLDE hStdin;
+HANDLE hStdin;
+
+VOID ErrorExit(LPCSTR);
+VOID KeyEventProc(KEY_EVENT_RECORD);
 
 int dashReadKey() {
-    INPUT_RECORD irInBuf[120];
+
+    INPUT_RECORD record;
     DWORD cNumRead;
 
     hStdin = GetStdHandle(STD_INPUT_HANDLE);
 
-    if (!ReadConsoleInput(hStdin, irInBuf, 128, &cNumRead))
-        ErrorExit("ReadConsoleInput");
+    while (ReadConsoleInput(hStdin, &record, 1, &cNumRead)) {
+        if (record.EventType == KEY_EVENT && record.Event.KeyEvent.bKeyDown) {
+            char c = record.Event.KeyEvent.uChar.AsciiChar;
+
+            if (c == '\x1b') {
+                char seq[2];
+
+                if (read(STDIN_FILENO, &seq[0], 1) != 1) return '\x1b';
+                if (read(STDIN_FILENO, &seq[1], 1) != 1) return '\x1b';
+
+                if (seq[0] == '[') {
+                    switch (seq[1]) {
+                        case 'A': return ARROW_UP;
+                        case 'B': return ARROW_DOWN;
+                        case 'C': return ARROW_RIGHT;
+                        case 'D': return ARROW_LEFT;
+                    }
+                }
+
+                return '\x1b';
+            } else {
+                return c;
+            }
+
+        }
+    }
 
 
 }
