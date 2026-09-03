@@ -1,6 +1,6 @@
 #include <unistd.h>
-#include <stdlib.h>
-#include <stdio.h>
+// #include <stdlib.h>
+// #include <stdio.h>
 #include <errno.h>
 #include <sys/ioctl.h>
 #include <ctype.h>
@@ -11,11 +11,6 @@
 #include "input.h"
 
 static struct termios termiosOrig; // Global tc original state.
-
-void die(char *s) {
-    fprintf(stderr, "%s", s);
-    exit(1);
-}
 
 void disableRawMode() {
 	
