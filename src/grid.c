@@ -8,6 +8,7 @@
 #include "grid.h"
 #include "cell.h"
 #include "terminal.h"
+#include "config.h"
 #include "utils.h"
 
 #define PERCENT_BARRIER 21 // % Chance of a cell being a barrier when we randomize the grid.

@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
+#include "config.h"
 #include "terminal.h"
 #include "abuf.h"
 #include "input.h"

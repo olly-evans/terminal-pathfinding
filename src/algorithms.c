@@ -12,7 +12,7 @@
 #include "queue.h"
 #include "stack.h"
 #include "menu.h"
-#include "terminal.h"
+#include "config.h"
 
 const int DIRS[4][2] = {
     { 0, -1 }, // Up

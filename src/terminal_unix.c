@@ -7,9 +7,9 @@
 #include <termios.h>
 
 #include "terminal.h"
+#include "config.h"
 #include "input.h"
 
-struct Config Con; // Global app config var.
 static struct termios termiosOrig; // Global tc original state.
 
 void die(char *s) {

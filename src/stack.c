@@ -3,7 +3,7 @@
 
 #include "stack.h"
 #include "cell.h"
-#include "terminal.h"
+#include "config.h"
 #include "grid.h"
 
 Stack* stackInit() {

@@ -3,6 +3,7 @@
 #include <stdio.h>
 
 #include "abuf.h"
+#include "config.h"
 #include "terminal.h"
 #include "grid.h"
 

@@ -3,6 +3,7 @@
 
 #include "abuf.h"
 #include "terminal.h"
+#include "config.h"
 
 void abAppend(struct abuf *ab, char *s, int len) {
     // Get more mem to add len onto the end of &ab.b.

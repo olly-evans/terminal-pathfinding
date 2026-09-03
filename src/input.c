@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 
-#include "terminal.h"
+#include "config.h"
 #include "input.h"
 #include "init.h"
 #include "algorithms.h"

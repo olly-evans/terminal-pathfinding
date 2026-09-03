@@ -26,28 +26,28 @@
 
 #define DISABLE_TERMINAL_AUTOWRAP "\x1b[?7l"
 
-enum appState {
-	MENU_,
-	VISUALIZATION,
-    RUN
-};
+// enum appState {
+// 	MENU_,
+// 	VISUALIZATION,
+//     RUN
+// };
 
-struct Config {
-    int screenrows;
-    int screencols;
-    int headerrow;
-    int cx, cy;
+// struct Config {
+//     int screenrows;
+//     int screencols;
+//     int headerrow;
+//     int cx, cy;
 
-    int coloff;
-    int rowoff;
+//     int coloff;
+//     int rowoff;
 
-    int cellsSearched;
-    int numBarriers;
+//     int cellsSearched;
+//     int numBarriers;
 
-    enum appState state;
-};
+//     enum appState state;
+// };
 
-extern struct Config Con;
+// extern struct Config Con;
 
 void die(char *s);
 void disableRawMode();

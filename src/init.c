@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "terminal.h"
+#include "config.h"
 #include "init.h"
 #include "algorithms.h"
 #include "heap.h"

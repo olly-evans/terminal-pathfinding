@@ -3,7 +3,7 @@
 #include <errno.h>
 #include <ctype.h>
 
-#include "terminal.h"
+#include "config.h"
 #include "input.h"
 #include "visualizer.h"
 #include "menu.h"
