@@ -4,6 +4,7 @@
 #include <errno.h>
 #include <sys/ioctl.h>
 #include <ctype.h>
+#include <termios.h>
 
 #include "terminal.h"
 #include "input.h"

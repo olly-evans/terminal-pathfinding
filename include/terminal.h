@@ -1,4 +1,3 @@
-#include <termios.h>
 
 #ifndef TERMINAL_H
 #define TERMINAL_H
