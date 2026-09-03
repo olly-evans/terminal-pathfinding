@@ -1,6 +1,7 @@
 #include <windows.h>
 
 #include "input.h"
+#include "algorithms.h"
 
 /* 
 
@@ -20,20 +21,31 @@ static DWORD fdwSaveOldMode; // Old console state.
 VOID ErrorExit(LPCSTR);
 VOID KeyEventProc(KEY_EVENT_RECORD);
 
+void disableRawMode() {
+    if (!SetConsoleMode(hStdin, &fdwSaveOldMode))
+        die("SetConsoleMode");
+    
+    // writes.
+
+    showSearchStats();
+}
 void enableRawMode() {
 
-    
     hStdin = GetStdHandle(STD_INPUT_HANDLE);
     if (hStdin == INVALID_HANDLE_VALUE)
-        ErrorExit("GetStdHandle()");
+        die("GetStdHandle()");
 
     if (!GetConsoleMode(hStdin, &fdwSaveOldMode))
-        ErrorExit("GetConsoleMode()");
+        die("GetConsoleMode()");
 
     DWORD fdwRawMode;
-    fdwRawMode = // choose flags for raw mode.
+    fdwRawMode = ~(ENABLE_ECHO_INPUT |
+              ENABLE_LINE_INPUT |
+              ENABLE_PROCESSED_INPUT);
 
-    // SetConsoleMode()
+    fdwRawMode |= ENABLE_WINDOW_INPUT;
+
+    SetConsoleMode(hStdin, fdwRawMode);
 }
 
 int dashReadKey() {
@@ -41,36 +53,42 @@ int dashReadKey() {
     INPUT_RECORD record;
     DWORD events;
 
-    for (;;) {
-        if (!ReadConsoleInput(hStdin, &record, 1, &events))
-            return '\x1b';
+    DWORD result = WaitForSingleObject(hStdin, 100);
 
-        if (record.EventType != KEY_EVENT)
-            continue;
+    if (result == WAIT_TIMEOUT)
+        return -1;
 
-        KEY_EVENT_RECORD *key = &record.Event.KeyEvent;
+    if (result != WAIT_OBJECT_0)
+        return -1;
 
-        if (!key->bKeyDown)
-            continue;
+    if (!ReadConsoleInput(hStdin, &record, 1, &events))
+        return -1;
 
-        switch (key->wVirtualKeyCode) {
-            case VK_UP:    return ARROW_UP;
-            case VK_DOWN:  return ARROW_DOWN;
-            case VK_LEFT:  return ARROW_LEFT;
-            case VK_RIGHT: return ARROW_RIGHT;
-        }
+    if (record.EventType != KEY_EVENT)
+        return -1;
 
-        if (key->uChar.AsciiChar != 0)
-            return key->uChar.AsciiChar;
+    KEY_EVENT_RECORD *key = &record.Event.KeyEvent;
+
+    if (!key->bKeyDown)
+        return -1;
+
+    switch (key->wVirtualKeyCode) {
+        case VK_UP:    return ARROW_UP;
+        case VK_DOWN:  return ARROW_DOWN;
+        case VK_LEFT:  return ARROW_LEFT;
+        case VK_RIGHT: return ARROW_RIGHT;
     }
+
+    return key->uChar.AsciiChar;
 }
 
 int getWindowSize(int *rows, int *cols) {
 
-    // will need a backdrop presumably incase failure, write cursor to 999, 999 and return cursor pos.
+    // will need a backdrop presumably incase of failure, write cursor to 999, 999 and return cursor pos.
 
     CONSOLE_SCREEN_BUFFER_INFO csbi;
 
+    // may need our global handle may not if just queries stdout.
     if (GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi) == -1)
         return;
     
