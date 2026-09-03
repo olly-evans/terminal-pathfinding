@@ -1,5 +1,7 @@
 #include <windows.h>
 
+#include "input.h"
+
 /* 
 
 Windows implementations of required functions
@@ -10,7 +12,7 @@ Windows implementations of required functions
 
 */
 
-HANDLE hStdin;
+HANDLE hStdin; // feels like a global
 
 VOID ErrorExit(LPCSTR);
 VOID KeyEventProc(KEY_EVENT_RECORD);
@@ -18,7 +20,7 @@ VOID KeyEventProc(KEY_EVENT_RECORD);
 int dashReadKey() {
 
     INPUT_RECORD record;
-    DWORD cNumRead;
+    DWORD events;
 
     hStdin = GetStdHandle(STD_INPUT_HANDLE);
 
@@ -48,7 +50,7 @@ int dashReadKey() {
 
 int getWindowSize(int *rows, int *cols) {
 
-    // will need a backdrop presumably, write cursor to 999, 999 and return cursor pos.
+    // will need a backdrop presumably incase failure, write cursor to 999, 999 and return cursor pos.
 
     CONSOLE_SCREEN_BUFFER_INFO csbi;
 

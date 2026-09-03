@@ -1,6 +1,8 @@
 #ifndef TERMINAL_H
 #define TERMINAL_H
 
+/* File contains terminal functionality, used by both Unix and Windows port. */
+
 #define CTRL_KEY(k) ((k) & 0x1f)
 
 #define TXT_RED      "\x1b[31m"
@@ -25,29 +27,6 @@
 #define RESET_F              "\x1b[0m"
 
 #define DISABLE_TERMINAL_AUTOWRAP "\x1b[?7l"
-
-// enum appState {
-// 	MENU_,
-// 	VISUALIZATION,
-//     RUN
-// };
-
-// struct Config {
-//     int screenrows;
-//     int screencols;
-//     int headerrow;
-//     int cx, cy;
-
-//     int coloff;
-//     int rowoff;
-
-//     int cellsSearched;
-//     int numBarriers;
-
-//     enum appState state;
-// };
-
-// extern struct Config Con;
 
 void die(char *s);
 void disableRawMode();
