@@ -22,34 +22,28 @@ int dashReadKey() {
 
     hStdin = GetStdHandle(STD_INPUT_HANDLE);
 
-    while (ReadConsoleInput(hStdin, &record, 1, &cNumRead)) {
-        if (record.EventType == KEY_EVENT && record.Event.KeyEvent.bKeyDown) {
-            char c = record.Event.KeyEvent.uChar.AsciiChar;
+    for (;;) {
+        if (!ReadConsoleInput(hStdin, &record, 1, &events))
+            return '\x1b';
 
-            if (c == '\x1b') {
-                char seq[2];
+        if (record.EventType != KEY_EVENT)
+            continue;
 
-                if (read(STDIN_FILENO, &seq[0], 1) != 1) return '\x1b';
-                if (read(STDIN_FILENO, &seq[1], 1) != 1) return '\x1b';
+        KEY_EVENT_RECORD *key = &record.Event.KeyEvent;
 
-                if (seq[0] == '[') {
-                    switch (seq[1]) {
-                        case 'A': return ARROW_UP;
-                        case 'B': return ARROW_DOWN;
-                        case 'C': return ARROW_RIGHT;
-                        case 'D': return ARROW_LEFT;
-                    }
-                }
+        if (!key->bKeyDown)
+            continue;
 
-                return '\x1b';
-            } else {
-                return c;
-            }
-
+        switch (key->wVirtualKeyCode) {
+            case VK_UP:    return ARROW_UP;
+            case VK_DOWN:  return ARROW_DOWN;
+            case VK_LEFT:  return ARROW_LEFT;
+            case VK_RIGHT: return ARROW_RIGHT;
         }
+
+        if (key->uChar.AsciiChar != 0)
+            return key->uChar.AsciiChar;
     }
-
-
 }
 
 int getWindowSize(int *rows, int *cols) {
