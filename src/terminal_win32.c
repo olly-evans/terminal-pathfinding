@@ -13,17 +13,16 @@ Windows console implementations of required functions
 
 */
 
-HANDLE hStdin;
+HANDLE hStdin; // Global handle for console input queue.
 
 static DWORD fdwSaveOldMode; // Old console state.
-DWORD fdwRawMode;
 
 VOID ErrorExit(LPCSTR);
 VOID KeyEventProc(KEY_EVENT_RECORD);
 
-
 void enableRawMode() {
 
+    
     hStdin = GetStdHandle(STD_INPUT_HANDLE);
     if (hStdin == INVALID_HANDLE_VALUE)
         ErrorExit("GetStdHandle()");
@@ -31,6 +30,7 @@ void enableRawMode() {
     if (!GetConsoleMode(hStdin, &fdwSaveOldMode))
         ErrorExit("GetConsoleMode()");
 
+    DWORD fdwRawMode;
     fdwRawMode = // choose flags for raw mode.
 
     // SetConsoleMode()
