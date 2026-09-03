@@ -47,7 +47,6 @@ struct Config {
     int numBarriers;
 
     enum appState state;
-    struct termios termiosOrig;
 };
 
 extern struct Config Con;

@@ -55,7 +55,9 @@ void dashProcessKeypress() {
 
             freeGrid(g);
             disableRawMode();
-            showSearchStats();     
+
+            if (Con.state == VISUALIZATION)
+                showSearchStats();     
 
             exit(0);
         

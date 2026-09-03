@@ -8,7 +8,8 @@
 #include "terminal.h"
 #include "input.h"
 
-struct Config Con;
+struct Config Con; // Global app config.
+static struct termios termiosOrig; // Global tc original state.
 
 void die(char *s) {
     fprintf(stderr, "%s", s);
@@ -17,7 +18,7 @@ void die(char *s) {
 
 void disableRawMode() {
 	
-    if (tcsetattr(STDIN_FILENO, TCSANOW, &Con.termiosOrig) == -1) die("disableRawMode() -> tcsetattr");
+    if (tcsetattr(STDIN_FILENO, TCSANOW, &termiosOrig) == -1) die("disableRawMode() -> tcsetattr");
 
 	write(STDOUT_FILENO, CLEAR_SCRN, 4); 
 	write(STDOUT_FILENO, HOME_CURSOR, 3); 
@@ -29,10 +30,10 @@ void disableRawMode() {
 }
 
 void enableRawMode() {
-    if (tcgetattr(STDIN_FILENO, &Con.termiosOrig) == -1) die("enableRawMode() -> tcgetattr");
+    if (tcgetattr(STDIN_FILENO, &termiosOrig) == -1) die("enableRawMode() -> tcgetattr");
 	atexit(disableRawMode);
 
-    struct termios termiosRaw = Con.termiosOrig;
+    struct termios termiosRaw = termiosOrig;
     termiosRaw.c_iflag &= ~(BRKINT | ICRNL | INPCK | ISTRIP | IXON);
     termiosRaw.c_oflag &= ~(OPOST);
     termiosRaw.c_cflag |= (CS8);
