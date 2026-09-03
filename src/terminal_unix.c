@@ -9,7 +9,7 @@
 #include "terminal.h"
 #include "input.h"
 
-struct Config Con; // Global app config.
+struct Config Con; // Global app config var.
 static struct termios termiosOrig; // Global tc original state.
 
 void die(char *s) {

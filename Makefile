@@ -25,8 +25,8 @@ SRC_DIR := src
 BUILD_DIR := build
 BIN_DIR := bin
 
-OBJ_DIR := $(BUILD_DIR)/obj
-DEP_DIR := $(BUILD_DIR)/dep
+OBJ_DIR := $(BUILD_DIR)/obj-unix
+DEP_DIR := $(BUILD_DIR)/dep-unix
 
 OBJ_DIR_WIN := $(BUILD_DIR)/obj-win
 DEP_DIR_WIN := $(BUILD_DIR)/dep-win
@@ -36,7 +36,7 @@ TARGET_WIN := $(BIN_DIR)/main.exe
 
 SRC := $(wildcard $(SRC_DIR)/*.c)
 SRC := $(filter-out $(SRC_DIR)/terminal_win32.c, $(SRC))
-SRC_WIN := $(filter-out $(SRC_DIR)/terminal.c, $(wildcard $(SRC_DIR)/*.c))
+SRC_WIN := $(filter-out $(SRC_DIR)/terminal_unix.c, $(wildcard $(SRC_DIR)/*.c))
 
 OBJ := $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC))
 DEPS := $(patsubst $(SRC_DIR)/%.c, $(DEP_DIR)/%.d, $(SRC))
