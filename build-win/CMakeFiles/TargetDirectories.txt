@@ -1,4 +1,0 @@
-C:/Users/Olly/Documents/terminal-pathfinding/build-win/CMakeFiles/main.dir
-C:/Users/Olly/Documents/terminal-pathfinding/build-win/CMakeFiles/run.dir
-C:/Users/Olly/Documents/terminal-pathfinding/build-win/CMakeFiles/edit_cache.dir
-C:/Users/Olly/Documents/terminal-pathfinding/build-win/CMakeFiles/rebuild_cache.dir
