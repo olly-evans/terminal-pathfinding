@@ -1,9 +1,11 @@
 #include <windows.h>
+#include <stdio.h>
 
 #include "input.h"
 #include "algorithms.h"
 #include "utils.h"
 #include "terminal.h"
+
 
 /* 
 
@@ -80,7 +82,7 @@ int dashReadKey() {
         case VK_LEFT:  return ARROW_LEFT;
         case VK_RIGHT: return ARROW_RIGHT;
     }
-    
+
     if (key->uChar.UnicodeChar != 0)
         return (int)key->uChar.UnicodeChar;
     

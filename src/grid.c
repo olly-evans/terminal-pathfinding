@@ -142,7 +142,7 @@ struct Grid* randomizeGrid(struct Grid *g) {
 }
 
 void resetGrid(struct Grid* g) {
-    freeGrid(g);
+    // freeGrid(g); // windows doesnt like this, we dont need to be freeing mem regardless. test w ubuntu.
     g = initGrid(g, Con.screenrows, Con.screencols);
     g->end_cell = NULL;
     g->start_cell = NULL;

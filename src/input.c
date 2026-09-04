@@ -47,7 +47,7 @@ void dashMoveCursor(int key) {
 
 void dashProcessKeypress() {
     int c = dashReadKey();
-
+    
     struct Cell *curr_cell = &g->cells[Con.cy][Con.cx];
     
     // processKeyPress for RUN and VISUALIZATION seperately perhaps.
@@ -66,7 +66,7 @@ void dashProcessKeypress() {
             break; // Dodge af.
 
         case 'c':
-            resetGrid(g);
+            // resetGrid(g);
             break;
         
         // Enter is a carriage return in raw mode.
@@ -90,7 +90,7 @@ void dashProcessKeypress() {
             break;
         
         case 'h':
-            // Con.state = VISUALIZATION;
+            // if (Con.state = VISUALIZATION;
             resetGrid(g);
             randomizeGrid(g);
             break;
