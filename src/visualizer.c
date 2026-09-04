@@ -7,7 +7,6 @@
 #include "terminal.h"
 #include "grid.h"
 
-
 // const char *vis_controls_text =
 //     "Arrows"      BG_BLUE "Move/Scroll" RESET_F
 //     "Space"          BG_PINK "Select Algorithm" RESET_F
