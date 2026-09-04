@@ -12,9 +12,6 @@
 //     "Space"          BG_PINK "Select Algorithm" RESET_F
 //     " CTRL-Q"         BG_PINK "Quit" RESET_F;
 
-
-/* VISUALIZER */
-
 void drawPathfindingVisualizer() {
 
     struct abuf vis_ab = ABUF_INIT;
