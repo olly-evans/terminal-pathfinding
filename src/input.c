@@ -46,11 +46,15 @@ void dashMoveCursor(int key) {
 }
 
 void dashProcessKeypress() {
+
+
     int c = dashReadKey();
     
     struct Cell *curr_cell = &g->cells[Con.cy][Con.cx];
     
     // processKeyPress for RUN and VISUALIZATION seperately perhaps.
+
+    // TODO: Sort out this horrific switch.
     switch (c) {
         case ('q'):
 
@@ -59,8 +63,8 @@ void dashProcessKeypress() {
             if (Con.state == VISUALIZATION)
                 showSearchStats();     
 
-            exit(0);
-        
+            exit(0); //not calling disable raw mode for some reason.
+            
         if (Con.state == RUN) 
             break; // Dodge af.
 
