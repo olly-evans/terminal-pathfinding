@@ -82,7 +82,6 @@ void dashProcessKeypress() {
             if (Con.state == VISUALIZATION && g->end_cell != NULL && g->start_cell != NULL) {
                 Con.state = RUN;
                 break;
-
             }
 
         case (' '):
@@ -106,6 +105,8 @@ void dashProcessKeypress() {
         case ARROW_LEFT:
             dashMoveCursor(c);
             break;
+        default:
+            return;
     }
 }
 

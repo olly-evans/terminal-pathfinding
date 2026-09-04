@@ -3,6 +3,7 @@
 #include "input.h"
 #include "algorithms.h"
 #include "utils.h"
+#include "terminal.h"
 
 /* 
 
@@ -19,14 +20,13 @@ HANDLE hStdin; // Global handle for console input queue.
 
 static DWORD fdwSaveOldMode = 0; // Old console state.
 
-VOID ErrorExit(LPCSTR);
 VOID KeyEventProc(KEY_EVENT_RECORD);
 
 void disableRawMode() {
+
     if (!SetConsoleMode(hStdin, fdwSaveOldMode))
         die("SetConsoleMode");
     
-    // Writes to reset console perhaps.
 
     showSearchStats();
 }
@@ -41,8 +41,9 @@ void enableRawMode() {
 
     DWORD fdwRawMode = 0;
     fdwRawMode = ~(ENABLE_ECHO_INPUT |
-              ENABLE_LINE_INPUT |
-              ENABLE_PROCESSED_INPUT);
+                ENABLE_LINE_INPUT |
+                ENABLE_PROCESSED_INPUT |
+                ENABLE_VIRTUAL_TERMINAL_INPUT);
 
     fdwRawMode |= ENABLE_WINDOW_INPUT;
 
@@ -79,8 +80,11 @@ int dashReadKey() {
         case VK_LEFT:  return ARROW_LEFT;
         case VK_RIGHT: return ARROW_RIGHT;
     }
-
-    return key->uChar.AsciiChar;
+    
+    if (key->uChar.UnicodeChar != 0)
+        return (int)key->uChar.UnicodeChar;
+    
+    return -1;
 }
 
 int getWindowSize(int *rows, int *cols) {
