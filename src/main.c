@@ -10,6 +10,8 @@
 #include "init.h"
 #include "algorithms.h"
 #include "grid.h"
+#include "utils.h"
+#include "terminal.h"
 
 int main(void) {
     enableRawMode();

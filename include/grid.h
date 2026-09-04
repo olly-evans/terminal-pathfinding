@@ -16,5 +16,6 @@ extern struct Grid *g;
 
 void drawGrid(struct abuf *ab);
 struct Grid* randomizeGrid(struct Grid *g);
+void resetGrid(struct Grid* g);
 
 #endif

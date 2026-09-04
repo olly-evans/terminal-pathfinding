@@ -8,6 +8,8 @@
 #include "cell.h"
 #include "grid.h"
 #include "menu.h"
+#include "utils.h"
+#include "terminal.h"
 
 #define MIN_ROWS 7
 #define MIN_COLS 48

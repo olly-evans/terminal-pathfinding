@@ -6,6 +6,7 @@
 #include "cell.h"
 #include "config.h"
 #include "grid.h"
+#include "utils.h"
 
 /* Functions that provide functionality for a priority queue using a binary min-heap */
 

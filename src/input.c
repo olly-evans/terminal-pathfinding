@@ -11,6 +11,7 @@
 #include "cell.h"
 #include "grid.h"
 #include "menu.h"
+#include "terminal.h"
 
 void dashMoveCursor(int key) {
     switch (key) {
