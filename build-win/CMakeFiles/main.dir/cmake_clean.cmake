@@ -1,0 +1,40 @@
+file(REMOVE_RECURSE
+  "/home/olly/Documents/terminal-path/bin/main.exe"
+  "/home/olly/Documents/terminal-path/bin/main.pdb"
+  "CMakeFiles/main.dir/src/abuf.c.obj"
+  "CMakeFiles/main.dir/src/abuf.c.obj.d"
+  "CMakeFiles/main.dir/src/algorithms.c.obj"
+  "CMakeFiles/main.dir/src/algorithms.c.obj.d"
+  "CMakeFiles/main.dir/src/cell.c.obj"
+  "CMakeFiles/main.dir/src/cell.c.obj.d"
+  "CMakeFiles/main.dir/src/config.c.obj"
+  "CMakeFiles/main.dir/src/config.c.obj.d"
+  "CMakeFiles/main.dir/src/grid.c.obj"
+  "CMakeFiles/main.dir/src/grid.c.obj.d"
+  "CMakeFiles/main.dir/src/heap.c.obj"
+  "CMakeFiles/main.dir/src/heap.c.obj.d"
+  "CMakeFiles/main.dir/src/init.c.obj"
+  "CMakeFiles/main.dir/src/init.c.obj.d"
+  "CMakeFiles/main.dir/src/input.c.obj"
+  "CMakeFiles/main.dir/src/input.c.obj.d"
+  "CMakeFiles/main.dir/src/main.c.obj"
+  "CMakeFiles/main.dir/src/main.c.obj.d"
+  "CMakeFiles/main.dir/src/menu.c.obj"
+  "CMakeFiles/main.dir/src/menu.c.obj.d"
+  "CMakeFiles/main.dir/src/queue.c.obj"
+  "CMakeFiles/main.dir/src/queue.c.obj.d"
+  "CMakeFiles/main.dir/src/stack.c.obj"
+  "CMakeFiles/main.dir/src/stack.c.obj.d"
+  "CMakeFiles/main.dir/src/terminal_win32.c.obj"
+  "CMakeFiles/main.dir/src/terminal_win32.c.obj.d"
+  "CMakeFiles/main.dir/src/utils.c.obj"
+  "CMakeFiles/main.dir/src/utils.c.obj.d"
+  "CMakeFiles/main.dir/src/visualizer.c.obj"
+  "CMakeFiles/main.dir/src/visualizer.c.obj.d"
+  "libmain.dll.a"
+)
+
+# Per-language clean rules from dependency scanning.
+foreach(lang C)
+  include(CMakeFiles/main.dir/cmake_clean_${lang}.cmake OPTIONAL)
+endforeach()

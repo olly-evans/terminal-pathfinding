@@ -25,7 +25,7 @@ void disableRawMode() {
     if (!SetConsoleMode(hStdin, &fdwSaveOldMode))
         die("SetConsoleMode");
     
-    // writes.
+    // Writes to reset console perhaps.
 
     showSearchStats();
 }
@@ -38,7 +38,7 @@ void enableRawMode() {
     if (!GetConsoleMode(hStdin, &fdwSaveOldMode))
         die("GetConsoleMode()");
 
-    DWORD fdwRawMode;
+    DWORD fdwRawMode = 0;
     fdwRawMode = ~(ENABLE_ECHO_INPUT |
               ENABLE_LINE_INPUT |
               ENABLE_PROCESSED_INPUT);
