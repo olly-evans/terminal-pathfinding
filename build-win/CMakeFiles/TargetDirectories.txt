@@ -1,0 +1,4 @@
+/home/olly/Documents/terminal-path/build-win/CMakeFiles/main.dir
+/home/olly/Documents/terminal-path/build-win/CMakeFiles/run.dir
+/home/olly/Documents/terminal-path/build-win/CMakeFiles/edit_cache.dir
+/home/olly/Documents/terminal-path/build-win/CMakeFiles/rebuild_cache.dir

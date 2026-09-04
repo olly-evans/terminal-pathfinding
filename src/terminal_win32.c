@@ -2,6 +2,7 @@
 
 #include "input.h"
 #include "algorithms.h"
+#include "utils.h"
 
 /* 
 
@@ -16,13 +17,13 @@ Windows console implementations of required functions
 
 HANDLE hStdin; // Global handle for console input queue.
 
-static DWORD fdwSaveOldMode; // Old console state.
+static DWORD fdwSaveOldMode = 0; // Old console state.
 
 VOID ErrorExit(LPCSTR);
 VOID KeyEventProc(KEY_EVENT_RECORD);
 
 void disableRawMode() {
-    if (!SetConsoleMode(hStdin, &fdwSaveOldMode))
+    if (!SetConsoleMode(hStdin, fdwSaveOldMode))
         die("SetConsoleMode");
     
     // Writes to reset console perhaps.
@@ -90,7 +91,7 @@ int getWindowSize(int *rows, int *cols) {
 
     // may need our global handle may not if just queries stdout.
     if (GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi) == -1)
-        return;
+        return -1;
     
     *cols = csbi.srWindow.Right - csbi.srWindow.Left + 1;
     *rows = csbi.srWindow.Bottom - csbi.srWindow.Top + 1;

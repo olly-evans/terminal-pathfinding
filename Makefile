@@ -50,7 +50,7 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	$(CC) $(CFLAGS) -MMD -MP -MF $(DEP_DIR)/$*.d -c $< -o $@
 
 clean:
-	$(CLEANUP) $(BUILD_DIR) $(BIN_DIR)
+	$(CLEANUP) $(BUILD_DIR) $(BIN_DIR) build-win
 
 run: all
 	@./$(TARGET)

@@ -5,6 +5,7 @@
 #include "cell.h"
 #include "config.h"
 #include "grid.h"
+#include "utils.h"
 
 Stack* stackInit() {
     Stack* QS = malloc(sizeof(Stack));
