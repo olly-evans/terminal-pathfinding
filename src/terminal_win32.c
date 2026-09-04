@@ -6,7 +6,6 @@
 #include "utils.h"
 #include "terminal.h"
 
-
 /* 
 
 Windows console implementations of required functions
@@ -19,22 +18,39 @@ Windows console implementations of required functions
 */
 
 HANDLE hStdin; // Global handle for console input queue.
+HANDLE hStdout;
 
 static DWORD fdwSaveOldMode = 0; // Old console state.
 
 VOID KeyEventProc(KEY_EVENT_RECORD);
 
 void disableRawMode() {
+    // assign stdout with getstdhandle, not sure where though.
+    // if (!SetConsoleMode(hStdin, fdwSaveOldMode))
+    //     die("SetConsoleMode");
 
-    if (!SetConsoleMode(hStdin, fdwSaveOldMode))
-        die("SetConsoleMode");
-    
+    SetConsoleMode(hStdin, fdwSaveOldMode);
+
+    const char text[] = 
+        CLEAR_SCRN
+        HOME_CURSOR
+        CLEAR_SCROLLBACK_BUF
+        RESET_F
+        SHOW_CURSOR;
+
+    DWORD written;
+    WriteConsoleA(hStdout, text, 21, &written, NULL);
 
     showSearchStats();
 }
+
 void enableRawMode() {
 
+    atexit(disableRawMode);
+
     hStdin = GetStdHandle(STD_INPUT_HANDLE);
+    hStdout = GetStdHandle(STD_OUTPUT_HANDLE);
+
     if (hStdin == INVALID_HANDLE_VALUE)
         die("GetStdHandle()");
 

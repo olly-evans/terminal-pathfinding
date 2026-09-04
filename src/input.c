@@ -55,7 +55,6 @@ void dashProcessKeypress() {
         case ('q'):
 
             freeGrid(g);
-            disableRawMode();
 
             if (Con.state == VISUALIZATION)
                 showSearchStats();     
@@ -66,7 +65,7 @@ void dashProcessKeypress() {
             break; // Dodge af.
 
         case 'c':
-            // resetGrid(g);
+            g = resetGrid(g);
             break;
         
         // Enter is a carriage return in raw mode.
