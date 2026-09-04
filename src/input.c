@@ -91,7 +91,7 @@ void dashProcessKeypress() {
         
         case 'h':
             // if (Con.state = VISUALIZATION;
-            resetGrid(g);
+            g = resetGrid(g);
             randomizeGrid(g);
             break;
         case 'r':
