@@ -1,6 +1,7 @@
 /build
 /bin
 /build-win
+/cmake
 
 *.o
 *.out
@@ -8,6 +9,7 @@
 *.bin
 *.log
 *.d
+*.cmake
 
 # Editor
 *.swp
