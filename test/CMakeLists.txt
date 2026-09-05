@@ -1,4 +1,3 @@
-
 include(CTest)
 
 add_executable(test_grid test_grid.c)

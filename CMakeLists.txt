@@ -7,16 +7,17 @@ set(CMAKE_C_EXTENSIONS OFF)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin)
 
-#[===[              Test Library              ]===]
+add_compile_options(-g -O0 -Wall -Wextra)
 
+# Test Library
 add_library(pathfinding_core STATIC
     ${CMAKE_SOURCE_DIR}/src/algorithms.c
+    ${CMAKE_SOURCE_DIR}/src/grid.c
 )
 
 target_include_directories(pathfinding_core PUBLIC include)
 
-add_compile_options(-g -O0 -Wall -Wextra)
-
+# Main executable.
 file(GLOB SRC_FILES CONFIGURE_DEPENDS ${CMAKE_SOURCE_DIR}/src/*.c)
 
 if(WIN32)
