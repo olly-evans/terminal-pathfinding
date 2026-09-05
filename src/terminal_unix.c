@@ -1,6 +1,4 @@
 #include <unistd.h>
-// #include <stdlib.h>
-// #include <stdio.h>
 #include <errno.h>
 #include <sys/ioctl.h>
 #include <ctype.h>
