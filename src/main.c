@@ -29,13 +29,13 @@ int main() {
     // Perhaps we could call drawCell() upon some other condition.
     switch (M.selection) {
         case 0:
-            astar();
+            astar(g);
             break;
         case 1:
-            DFS();
+            DFS(g);
             break;
         case 2:
-            BFS();
+            BFS(g);
             break;
         default:
             die("Invalid algorithm choice");
