@@ -1,1 +1,0 @@
-/usr/bin/cc CMakeFiles/test_grid.dir/test_grid.c.o -o /home/olly/Documents/terminal-path/bin/test_grid  ../libpathfinding_core.a 

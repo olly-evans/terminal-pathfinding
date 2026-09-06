@@ -1,7 +1,7 @@
 #ifndef MENU_H
 #define MENU_H
 
-#define PATH_VERSION "0.0.1"
+#define PATH_VERSION "0.0.2"
 
 typedef struct Menu {
     char **algorithms;

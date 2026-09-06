@@ -3,12 +3,12 @@ ifeq ($(OS),Windows_NT)
     CLEANUP = del /F /Q
     MKDIR = mkdir
   else
-    CLEANUP = rm -r
+    CLEANUP = rm -rf
     MKDIR = mkdir -p
   endif
     TARGET_EXTENSION=exe
 else
-    CLEANUP = rm -r
+    CLEANUP = rm -rf
     MKDIR = mkdir -p
     TARGET_EXTENSION=out
 endif
