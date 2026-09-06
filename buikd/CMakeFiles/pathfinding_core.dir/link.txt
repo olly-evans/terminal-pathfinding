@@ -1,0 +1,2 @@
+/usr/bin/ar qc libpathfinding_core.a CMakeFiles/pathfinding_core.dir/src/algorithms.c.o CMakeFiles/pathfinding_core.dir/src/grid.c.o
+/usr/bin/ranlib libpathfinding_core.a
