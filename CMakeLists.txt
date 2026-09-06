@@ -12,17 +12,22 @@ add_compile_options(-g -O0 -Wall -Wextra)
 # Main executable.
 file(GLOB SRC_FILES CONFIGURE_DEPENDS ${CMAKE_SOURCE_DIR}/src/*.c)
 
+set(LIB_SRC_FILES ${SRC_FILES})
+list(FILTER LIB_SRC_FILES EXCLUDE REGEX "main\\.c$")
+
+
 if(WIN32)
     list(FILTER SRC_FILES EXCLUDE REGEX "terminal_unix\\.c$")
 else()
     list(FILTER SRC_FILES EXCLUDE REGEX "terminal_win32\\.c$")
 endif()
 
-add_library(test_lib STATIC ${SRC_FILES})
-target_include_directories(test_lib PUBLIC ${CMAKE_SOURCE_DIR}/include)
+add_library(app_lib STATIC ${SRC_FILES})
+target_include_directories(app_lib PUBLIC ${CMAKE_SOURCE_DIR}/include)
 
-add_executable(main ${SRC_FILES})
-target_include_directories(main PRIVATE ${CMAKE_SOURCE_DIR}/include)
+
+add_executable(main src/main.c)
+target_link_libraries(main PRIVATE app_lib)
 
 if(WIN32)
     target_link_libraries(main PRIVATE kernel32)
@@ -32,10 +37,3 @@ endif()
 
 enable_testing()
 add_subdirectory(test)
-
-add_custom_target(run
-    COMMAND $<TARGET_FILE:main>
-    DEPENDS main
-    WORKING_DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}
-    USES_TERMINAL
-)
