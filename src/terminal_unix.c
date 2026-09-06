@@ -3,10 +3,13 @@
 #include <sys/ioctl.h>
 #include <ctype.h>
 #include <termios.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 #include "terminal.h"
 #include "config.h"
 #include "input.h"
+#include "algorithms.h"
 
 static struct termios termiosOrig; // Global tc original state.
 

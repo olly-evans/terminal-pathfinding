@@ -22,6 +22,7 @@ const int DIRS[4][2] = {
 };
 
 void astar() {
+
     /*
 
     Find shortest path to end cell using the A* algorithm.
@@ -92,6 +93,7 @@ void astar() {
         }
     }
     freeHeap(hp);
+    freeGrid(g);
 }
 
 void BFS() {
@@ -135,6 +137,7 @@ void BFS() {
         }
     }
     freeQueue(Q);
+    freeGrid(g);
 }
 
 // takes variable for selection perhaps.
@@ -180,6 +183,7 @@ void DFS() {
         }
     }
     stackFree(S);
+    freeGrid(g);
 }
 
 void reconstructPath(struct Cell *end) {

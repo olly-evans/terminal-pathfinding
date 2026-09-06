@@ -3,12 +3,12 @@ ifeq ($(OS),Windows_NT)
     CLEANUP = del /F /Q
     MKDIR = mkdir
   else
-    CLEANUP = rm -rf
+    CLEANUP = rm -r
     MKDIR = mkdir -p
   endif
     TARGET_EXTENSION=exe
 else
-    CLEANUP = rm -rf
+    CLEANUP = rm -r
     MKDIR = mkdir -p
     TARGET_EXTENSION=out
 endif
@@ -53,7 +53,7 @@ clean:
 	$(CLEANUP) $(BUILD_DIR) $(BIN_DIR)
 
 run: all
-	@./$(TARGET)
+	@./$(TARGET) -S
 
 -include $(DEPS)
 

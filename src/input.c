@@ -47,9 +47,10 @@ void dashMoveCursor(int key) {
 
 void dashProcessKeypress() {
 
-
     int c = dashReadKey();
     
+    if (!g)
+        return;
     struct Cell *curr_cell = &g->cells[Con.cy][Con.cx];
     
     // processKeyPress for RUN and VISUALIZATION seperately perhaps.

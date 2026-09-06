@@ -43,7 +43,7 @@ void init() {
 	if (Con.screenrows < MIN_ROWS || Con.screencols < MIN_COLS) 
 		die("Terminal window too small!");
 	
-	g = initGrid(Con.screenrows, Con.screencols);
+	g = initGrid(g, Con.screenrows, Con.screencols);
 	if (!g) 
 		die("init() -> initGrid");
 
