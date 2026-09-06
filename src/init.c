@@ -14,7 +14,7 @@
 #define MIN_ROWS 7
 #define MIN_COLS 48
 
-struct Grid *g = NULL;
+Grid *g = NULL;
 
 char *algorithms[] = {
     "A*",

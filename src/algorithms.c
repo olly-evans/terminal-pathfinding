@@ -21,7 +21,7 @@ const int DIRS[4][2] = {
     { 1, 0 }   // Right
 };
 
-void astar(struct Grid *g) {
+void astar(Grid *g) {
 
     /*
 
@@ -96,7 +96,7 @@ void astar(struct Grid *g) {
     freeGrid(g);
 }
 
-void BFS(struct Grid *g) {
+void BFS(Grid *g) {
     Queue *Q = queueInit();
 
     g->start_cell->explored = true;
@@ -142,7 +142,7 @@ void BFS(struct Grid *g) {
 }
 
 // takes variable for selection perhaps.
-void DFS(struct Grid *g) {
+void DFS(Grid *g) {
     Stack *S = stackInit();
 
     g->start_cell->explored = true;

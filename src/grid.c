@@ -13,7 +13,7 @@
 
 #define PERCENT_BARRIER 20 // % Chance of a cell being a barrier when we randomize the grid.
 
-void drawGrid(struct Grid *g, struct abuf *ab) {
+void drawGrid(Grid *g, struct abuf *ab) {
     
     /* Loop through the Cells in the row pointers and append their color and char to abuf. */
 
@@ -38,8 +38,8 @@ void drawGrid(struct Grid *g, struct abuf *ab) {
     }
 }
 
-struct Grid* initGrid(int rows, int cols) {
-	g = Malloc(sizeof(struct Grid));
+Grid* initGrid(int rows, int cols) {
+	g = Malloc(sizeof(Grid));
 	if (!g) die("initGrid() -> Malloc");
 
 	g->rows = rows;
@@ -75,7 +75,7 @@ struct Grid* initGrid(int rows, int cols) {
 	return g;
 }
 
-void freeGrid(struct Grid *g) {
+void freeGrid(Grid *g) {
 	
 	for (int y = 0; y < g->rows; y++) {
 		free(g->cells[y]);
@@ -86,7 +86,7 @@ void freeGrid(struct Grid *g) {
     free(g);
 }
 
-struct Grid* randomizeGrid(struct Grid *g) {
+Grid* randomizeGrid(Grid *g) {
     srand(time(NULL));
 
     int startRow = 0;
@@ -137,7 +137,7 @@ struct Grid* randomizeGrid(struct Grid *g) {
     }
 }
 
-struct Grid* resetGrid(struct Grid* g) {
+Grid* resetGrid(Grid* g) {
     freeGrid(g); // windows doesnt like this, we dont need to be freeing mem regardless. test w ubuntu.
     g = initGrid(Con.screenrows, Con.screencols);
     g->end_cell = NULL;

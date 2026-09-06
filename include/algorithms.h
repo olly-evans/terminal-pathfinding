@@ -7,6 +7,7 @@
 void astar(Grid *g);
 void DFS(Grid *g);
 void BFS(Grid *g);
+
 void reconstructPath();
 void showSearchStats();
 
