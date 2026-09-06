@@ -188,8 +188,6 @@ void DFS() {
 
 void reconstructPath(struct Cell *end) {
     
-
-
     struct Cell *previous = end->prev;
     // surely were not setting end to PATH no?
     while (previous != NULL) {
@@ -203,8 +201,8 @@ void reconstructPath(struct Cell *end) {
 }
 
 void showSearchStats() {
-    char cellSearchedBuf[100];
-    sprintf(cellSearchedBuf, "Cells searched: %d", Con.cellsSearched);
+    char cellsSearchedBuf[100];
+    sprintf(cellsSearchedBuf, "Cells searched: %d", Con.cellsSearched);
     
     char percentGridSearchedBuf[100];
 
@@ -215,7 +213,7 @@ void showSearchStats() {
 
     sprintf(percentGridSearchedBuf, "Cells Searched: %.2f (%%)", percentage*(float)100);
     
-    printf("%s\n", cellSearchedBuf);
+    printf("%s\n", cellsSearchedBuf);
     printf("%s\n", percentGridSearchedBuf);
 
     // Doesn't factor in air bubbles/closed off cells, another time perhaps.
