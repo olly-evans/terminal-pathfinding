@@ -8,3 +8,11 @@
 !/CMakeLists.txt
 !/Makefile
 !/README.md
+
+*.log
+*.exe
+*.o
+*.d
+*.out
+
+/build/
