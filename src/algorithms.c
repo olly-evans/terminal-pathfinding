@@ -136,6 +136,7 @@ void BFS() {
             drawCell(neighbour);
         }
     }
+    
     freeQueue(Q);
     freeGrid(g);
 }
@@ -182,6 +183,7 @@ void DFS() {
             drawCell(neighbour);
         }
     }
+
     stackFree(S);
     freeGrid(g);
 }

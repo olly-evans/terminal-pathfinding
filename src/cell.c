@@ -20,6 +20,7 @@ void drawCell(struct Cell *cell) {
 
 
     struct abuf cell_buf = ABUF_INIT;
+
     char buf[32];
     snprintf(buf, sizeof(buf), "\x1b[%d;%dH", cell->y + 1, cell->x + 1);
     abAppend(&cell_buf, buf, strlen(buf)); 

@@ -16,14 +16,10 @@
 void drawGrid(struct abuf *ab) {
     
     /* Loop through the Cells in the row pointers and append their color and char to abuf. */
-    
-    int y;
-    int x;
-    
-    for (y = 0; y < g->rows; y++) {
-        for (x = 0; x < g->cols; x++) {
 
-            // Current Cell
+    for (int y = 0; y < g->rows; y++) {
+        for (int x = 0; x < g->cols; x++) {
+
             struct Cell *c = &g->cells[y][x];
             
             char buf[32];
