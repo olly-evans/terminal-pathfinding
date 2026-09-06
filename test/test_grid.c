@@ -1,12 +1,17 @@
 #include <stdio.h>
+#include <assert.h>
 
 #include "grid.h"
+#include "init.h"
 
 /* UNIT */
 
 void test_init_grid() {
-    struct Grid *g = NULL;
-    g = initGrid(g, 10, 10);
+    struct Grid *g = initGrid(10, 10);
+
+    assert(g != NULL);
+    assert(g->rows == 10);
+    assert(g->cols == 10);
 
     // is y = row is x = col
     // i guess we can assert all conditions with a for.
