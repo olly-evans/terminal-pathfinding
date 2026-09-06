@@ -55,7 +55,7 @@ struct Grid* initGrid(int rows, int cols) {
 		if (!g->cells[y]) die("initGrid() -> Malloc");
 
 		for (int x = 0; x < cols; x++) {
-			if (y == 0 || x == 0 || y == Con.screenrows - 1 || x == Con.screencols - 1) {
+			if (y == 0 || x == 0 || y == rows - 1 || x == cols - 1) {
 				g->cells[y][x].type = PERMANENT_BARRIER;
 			} else {
 				g->cells[y][x].type = EMPTY;	
