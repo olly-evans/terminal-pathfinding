@@ -13,7 +13,7 @@
 
 #define PERCENT_BARRIER 20 // % Chance of a cell being a barrier when we randomize the grid.
 
-void drawGrid(struct abuf *ab) {
+void drawGrid(struct Grid *g, struct abuf *ab) {
     
     /* Loop through the Cells in the row pointers and append their color and char to abuf. */
 

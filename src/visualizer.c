@@ -16,7 +16,7 @@ void drawPathfindingVisualizer() {
 
     struct abuf vis_ab = ABUF_INIT;
 
-    drawGrid(&vis_ab); 
+    drawGrid(g, &vis_ab); 
 
     char buf[32];
     snprintf(buf, sizeof(buf), "\x1b[%d;%dH", Con.cy + 1, Con.cx + 1);
