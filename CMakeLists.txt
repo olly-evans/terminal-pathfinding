@@ -25,15 +25,21 @@ endif()
 add_library(app_lib STATIC ${SRC_FILES})
 target_include_directories(app_lib PUBLIC ${CMAKE_SOURCE_DIR}/include)
 
-
-add_executable(main src/main.c)
-target_link_libraries(main PRIVATE app_lib)
+add_executable(path src/main.c)
+target_link_libraries(path PRIVATE app_lib)
 
 if(WIN32)
-    target_link_libraries(main PRIVATE kernel32)
+    target_link_libraries(path PRIVATE kernel32)
 else()
-    set_target_properties(main PROPERTIES SUFFIX ".out")
+    set_target_properties(path PROPERTIES SUFFIX ".out")
 endif()
+
+add_custom_target(run
+    COMMAND $<TARGET_FILE:path>
+    DEPENDS path
+    WORKING_DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}
+    USES_TERMINAL
+)
 
 enable_testing()
 add_subdirectory(test)
