@@ -20,12 +20,11 @@ void drawPathfindingVisualizer() {
 
     char buf[32];
     snprintf(buf, sizeof(buf), "\x1b[%d;%dH", Con.cy + 1, Con.cx + 1);
+
     abAppend(&vis_ab, buf, strlen(buf)); 
-
-
     abAppend(&vis_ab, SHOW_CURSOR, 6);
     
-    // Don't forget this is a linux file descriptor.
+    // Linux file descriptor.
     write(STDOUT_FILENO, vis_ab.b, vis_ab.len);
 
     abFree(&vis_ab);
