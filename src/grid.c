@@ -137,6 +137,7 @@ Grid* randomizeGrid(Grid *g, int *nBarriers) {
             numBarriers++;
         }
     }
+    
     *nBarriers = numBarriers;
 }
 
