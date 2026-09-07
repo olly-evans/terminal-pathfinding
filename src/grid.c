@@ -86,7 +86,7 @@ void freeGrid(Grid *g) {
     free(g);
 }
 
-Grid* randomizeGrid(Grid *g) {
+Grid* randomizeGrid(Grid *g, int *nBarriers) {
     srand(time(NULL));
 
     int startRow = 0;
@@ -98,6 +98,8 @@ Grid* randomizeGrid(Grid *g) {
     int minRowCol = 1;
     int maxRow = g->rows-2; // g->rows/cols init to screenrows-padding
     int maxCol = g->cols-2; // 2 should be a global config grid padding var.
+
+    int numBarriers = 0;
 
     // Generate two random independant coordinates for the start and end cell.
     while(startRow == endRow || startCol == endCol) {
@@ -132,9 +134,10 @@ Grid* randomizeGrid(Grid *g) {
             int toBarrier = rand() % (100 / PERCENT_BARRIER);
             if (toBarrier != 0) continue;
             curr->type = BARRIER;
-            Con.numBarriers++;
+            numBarriers++;
         }
     }
+    *nBarriers = numBarriers;
 }
 
 Grid* resetGrid(Grid* g) {

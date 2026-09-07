@@ -96,7 +96,7 @@ void dashProcessKeypress() {
         case 'h':
             // if (Con.state = VISUALIZATION;
             g = resetGrid(g);
-            randomizeGrid(g);
+            randomizeGrid(g, &Con.numBarriers);
             break;
         case 'r':
             // r press removes starts/ends or non-permanent barriers at cursor location.
