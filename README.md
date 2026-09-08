@@ -19,8 +19,10 @@ git clone https://github.com/olly-evans/terminal-pathfinding
 Change into the new directory using:
 
 ```console 
-cd foldername
+cd terminal-pathfinding
 ```
+
+The name of the folder may be different be careful.
 
 ## GNU Make
 

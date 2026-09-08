@@ -49,9 +49,10 @@ void init() {
 	if (!g) 
 		die("init() -> initGrid");
 
-	// Pointers to start/end cell.
-	g->start_cell = NULL;
-    g->end_cell = NULL;
+	// // Pointers to start/end cell.
+	// g->start_cell = NULL;
+    // g->end_cell = NULL;
 
 	write(STDOUT_FILENO, "\x1b[2 q", 5);
+	
 }

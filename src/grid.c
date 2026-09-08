@@ -72,6 +72,10 @@ Grid* initGrid(int rows, int cols) {
             g->cells[y][x].prev = NULL;
 		}
 	}
+
+    g->end_cell = NULL;
+    g->start_cell = NULL;
+    
 	return g;
 }
 
