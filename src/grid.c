@@ -32,8 +32,6 @@ void drawGrid(Grid *g, struct abuf *ab) {
             abAppend(ab, cell_color, strlen(cell_color));
             abAppend(ab, &c->ch, 1);
             abAppend(ab, RESET_F, 4);
-
-        if (y < g->rows - 1) abAppend(ab, "\r\n", 2);
         }
     }
 }
