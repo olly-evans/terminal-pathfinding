@@ -59,6 +59,7 @@ void test_draw_grid() {
 }
 
 int main(void) {
+    
     test_init_grid();
     test_draw_grid();
 
