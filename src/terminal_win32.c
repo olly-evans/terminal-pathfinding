@@ -60,9 +60,10 @@ void enableRawMode() {
     fdwRawMode = ~(ENABLE_ECHO_INPUT |
                 ENABLE_LINE_INPUT |
                 ENABLE_PROCESSED_INPUT |
-                ENABLE_VIRTUAL_TERMINAL_INPUT);
+                ENABLE_VIRTUAL_TERMINAL_INPUT |
+                ENABLE_WINDOW_INPUT);
 
-    fdwRawMode |= ENABLE_WINDOW_INPUT;
+    // fdwRawMode |= ENABLE_WINDOW_INPUT;
 
     SetConsoleMode(hStdin, fdwRawMode);
 }
@@ -71,8 +72,9 @@ int dashReadKey() {
 
     INPUT_RECORD record;
     DWORD events;
-
-    DWORD result = WaitForSingleObject(hStdin, 100);
+    
+    FlushConsoleInputBuffer(hStdin);
+    DWORD result = WaitForSingleObject(hStdin, INFINITE);
 
     if (result == WAIT_TIMEOUT)
         return -1;
