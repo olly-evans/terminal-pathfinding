@@ -36,7 +36,9 @@ void disableRawMode() {
         SHOW_CURSOR;
 
     DWORD written;
-    WriteConsoleA(hStdout, text, 21, &written, NULL);
+    
+    int lText = strlen(text);
+    WriteConsoleA(hStdout, text, lText, &written, NULL);
 
     showSearchStats();
 }

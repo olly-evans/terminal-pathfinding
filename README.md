@@ -7,9 +7,9 @@ A dynamic in-terminal pathfinding algorithm visualiser written in C. Demo below 
 If you would like the algorithm to run faster or slower you can change the `DRAW_DELAY_MICRO_SEC` macro in cell.h. Anything between 3000-8000 I've found to look best. Does depend on this algorithm though, for A* use something higher as there won't be as many cells searched.
 
 
-# Build
+# Build Linux
 
-As of right now only Linux is supported due to the termios library.
+If you're on a Linux device you have the option of using CMake or GNU Make to build, so feel free to choose the one you have on your machine - there are instructions for both options below.
 
 Clone the repository using:
 ```console
@@ -22,7 +22,7 @@ Change into the new directory using:
 cd foldername
 ```
 
-Use make to build the project:
+## GNU Make
 
 ```console 
 make run
@@ -36,8 +36,34 @@ make
 Make command alone will compile without running afterwards, the executable can then be found in the /bin/ folder and ran manually using:
 
 ```console
-./bin/main
+./bin/main.out
 ```
+
+## CMake 
+
+You can check your current version of CMake using: 
+
+```console
+cmake --version
+```
+
+This project requires a minimum version of 3.15.0.
+
+Now you know you have an appropriate CMake install you can establish a folder to place CMake's build files using:
+
+```console
+cmake -B build
+```
+
+We can then compile and execute a custom target - the main app.
+
+```console
+cmake --build build --target run
+```
+
+# Build Windows
+
+
 
 # Usage
 
