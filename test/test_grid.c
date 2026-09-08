@@ -54,14 +54,35 @@ void test_draw_grid() {
     assert(getSubStrNum(ab.b, HIDE_CURSOR) == 1);
     assert(getSubStrNum(ab.b, RESET_F) == rows*cols);
 
+    return;
+}
+
+void test_randomize_grid() {
+
+    Grid *g = initGrid(10, 10);
+
+    int numBarriers = 0;
+    g = randomizeGrid(g, &numBarriers);
+
+    assert(g);
+    // int startX = g->start_cell->x;
+    // int endX = g->end_cell->x;
+
+    // int startY = g->start_cell->y;
+    // int endY = g->end_cell->y;
+
+    assert(numBarriers != 0);
+    // assert(g->start_cell->x != g->end_cell->x);
+    // assert(g->start_cell->y != g->end_cell->y);
 
     return;
 }
 
 int main(void) {
-    
+
     test_init_grid();
     test_draw_grid();
+    test_randomize_grid();
 
     return 0;
 }
