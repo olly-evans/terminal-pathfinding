@@ -17,6 +17,8 @@ void drawGrid(Grid *g, struct abuf *ab) {
     
     /* Loop through the Cells in the row pointers and append their color and char to abuf. */
 
+    abAppend(ab, HIDE_CURSOR, 6);
+
     for (int y = 0; y < g->rows; y++) {
         for (int x = 0; x < g->cols; x++) {
 
@@ -28,7 +30,6 @@ void drawGrid(Grid *g, struct abuf *ab) {
 
             char *cell_color = getCellColor(c);
 
-            abAppend(ab, HIDE_CURSOR, 6);
             abAppend(ab, cell_color, strlen(cell_color));
             abAppend(ab, &c->ch, 1);
             abAppend(ab, RESET_F, 4);
