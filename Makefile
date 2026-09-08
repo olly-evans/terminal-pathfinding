@@ -18,7 +18,6 @@ CC_WIN := x86_64-w64-mingw32-gcc
 
 CFLAGS := -g -O0 -Iinclude -Wall -Wextra -std=c11
 
-# Same as CFLAGS for now but could require changes.
 WIN_CFLAGS := -g -O0 -Iinclude -Wall -Wextra -std=c11
 WIN_LDFLAGS := -lkernel32
 
@@ -54,7 +53,7 @@ clean:
 
 run: all
 	@./$(TARGET) -S
-
+  
 -include $(DEPS)
 
 .PHONY: all clean run

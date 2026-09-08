@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <unistd.h>
 #include <string.h>
 
 #include "config.h"
@@ -40,6 +41,7 @@ void init() {
 	// Allocate rows and cols of terminal, initialise grid with these values.
 	if (getWindowSize(&Con.screenrows, &Con.screencols) == -1) 
 		die("init() -> getWindowSize");
+		
 	if (Con.screenrows < MIN_ROWS || Con.screencols < MIN_COLS) 
 		die("Terminal window too small!");
 	
@@ -50,4 +52,6 @@ void init() {
 	// Pointers to start/end cell.
 	g->start_cell = NULL;
     g->end_cell = NULL;
+
+	write(STDOUT_FILENO, "\x1b[2 q", 5);
 }

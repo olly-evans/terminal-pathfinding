@@ -22,6 +22,7 @@ int main() {
             drawMenu();
         if (Con.state == VISUALIZATION) 
             drawPathfindingVisualizer();
+            
         dashProcessKeypress();  
     }
     
