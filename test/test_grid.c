@@ -85,7 +85,8 @@ void test_reset_grid() {
     Grid *g = initGrid(10, 10);
     
     // ci demo commit
-    
+    g = resetGrid(g);
+
     return;
 }
 
