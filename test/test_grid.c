@@ -6,6 +6,7 @@
 #include "init.h"
 #include "abuf.h"
 #include "terminal.h"
+#include "cell.h"
 
 
 int getSubStrNum(char *full, char *sub) {
@@ -65,6 +66,7 @@ void test_randomize_grid() {
     g = randomizeGrid(g, &numBarriers);
 
     assert(g);
+
     // int startX = g->start_cell->x;
     // int endX = g->end_cell->x;
 
@@ -78,11 +80,19 @@ void test_randomize_grid() {
     return;
 }
 
+void test_reset_grid() {
+
+    Grid *g = initGrid(10, 10);
+    
+    return;
+}
+
 int main(void) {
 
     test_init_grid();
     test_draw_grid();
     test_randomize_grid();
+    test_reset_grid();
 
     return 0;
 }
