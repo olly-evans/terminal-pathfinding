@@ -87,6 +87,8 @@ void test_reset_grid() {
     // ci demo commit
     g = resetGrid(g);
     
+    assert(g);
+    
     return;
 }
 
