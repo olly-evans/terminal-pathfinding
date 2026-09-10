@@ -2,10 +2,10 @@
 #include <assert.h>
 #include <string.h>
 
+#include "cell.h"
 #include "grid.h"
 #include "init.h"
 #include "terminal.h"
-#include "cell.h"
 
 
 int getSubStrNum(char *full, char *sub) {
@@ -46,15 +46,15 @@ void test_draw_grid() {
 
     Grid *g = initGrid(rows, cols);
 
-    struct abuf *t_ab = ABUF_INIT;
+    struct abuf t_ab = ABUF_INIT;
 
-    drawGrid(g, t_ab);
+    drawGrid(g, &t_ab);
 
 
-    assert(t_ab->b != NULL);
+    assert(t_ab.b != NULL);
 
-    assert(getSubStrNum(t_ab->b, HIDE_CURSOR) == 1);
-    assert(getSubStrNum(t_ab->b, RESET_F) == rows*cols);
+    assert(getSubStrNum(t_ab.b, HIDE_CURSOR) == 1);
+    assert(getSubStrNum(t_ab.b, RESET_F) == rows*cols);
 
     return;
 }
