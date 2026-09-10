@@ -7,6 +7,7 @@
 #include "cell.h"
 #include "grid.h"
 #include "terminal.h"
+#include "utils.h"
 
 void drawCell(struct Cell *cell) {
 
@@ -28,13 +29,11 @@ void drawCell(struct Cell *cell) {
     char *cell_color = getCellColor(cell);
 
     if (cell->type == PATH) {
-        usleep(DRAW_PATH_DELAY_MICRO_SEC);
+        sleep_ms(DRAW_PATH_DELAY_MILLI_SEC);
     } else {
-        usleep(DRAW_DELAY_MICRO_SEC);
+        sleep_ms(DRAW_DELAY_MILLI_SEC);
     }
         
-    usleep(DRAW_DELAY_MICRO_SEC); 
-
     abAppend(&cell_buf, HIDE_CURSOR, 6);
     abAppend(&cell_buf, cell_color, strlen(cell_color));
     abAppend(&cell_buf, &cell->ch, 1);
