@@ -1,6 +1,3 @@
-#ifndef _WIN32
-#include <unistd.h>
-#endif
 #include <string.h>
 #include <stdio.h>
 
@@ -8,6 +5,7 @@
 #include "config.h"
 #include "terminal.h"
 #include "grid.h"
+#include "platform.h"
 
 // const char *vis_controls_text =
 //     "Arrows"      BG_BLUE "Move/Scroll" RESET_F
@@ -27,7 +25,7 @@ void drawPathfindingVisualizer() {
     abAppend(&vis_ab, SHOW_CURSOR, 6);
     
     // Linux file descriptor.
-    write(STDOUT_FILENO, vis_ab.b, vis_ab.len);
+    platform_write(STDOUT_FILENO, vis_ab.b, vis_ab.len);
 
     abFree(&vis_ab);
 }

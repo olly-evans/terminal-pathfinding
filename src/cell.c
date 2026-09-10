@@ -1,15 +1,13 @@
 #include <stdio.h>  
 #include <string.h>
 #include <stdlib.h>
-#ifndef _WIN32
-#include <unistd.h>
-#endif
 
 #include "abuf.h"
 #include "cell.h"
 #include "grid.h"
 #include "terminal.h"
 #include "utils.h"
+#include "platform.h"
 
 void drawCell(struct Cell *cell) {
 
@@ -31,9 +29,9 @@ void drawCell(struct Cell *cell) {
     char *cell_color = getCellColor(cell);
 
     if (cell->type == PATH) {
-        sleep_ms(DRAW_PATH_DELAY_MILLI_SEC);
+        platform_sleep_ms(DRAW_PATH_DELAY_MILLI_SEC);
     } else {
-        sleep_ms(DRAW_DELAY_MILLI_SEC);
+        platform_sleep_ms(DRAW_DELAY_MILLI_SEC);
     }
         
     abAppend(&cell_buf, HIDE_CURSOR, 6);
@@ -42,7 +40,7 @@ void drawCell(struct Cell *cell) {
     abAppend(&cell_buf, RESET_F, 4);
     abAppend(&cell_buf, "\r\n", 2);
 
-    write(STDOUT_FILENO, cell_buf.b, cell_buf.len); 
+    platform_write(STDOUT_FILENO, cell_buf.b, cell_buf.len); 
     abFree(&cell_buf);
 }
 

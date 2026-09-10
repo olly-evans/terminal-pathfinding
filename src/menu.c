@@ -1,6 +1,3 @@
-#ifndef _WIN32
-#include <unistd.h>
-#endif
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -14,6 +11,7 @@
 #include "cell.h"
 #include "grid.h"
 #include "menu.h"
+#include "platform.h"
 
 // Add to this to display more controls at the bottom of menu.
 MenuControl controls[] = {
@@ -34,7 +32,8 @@ void drawMenu() {
 
     drawMenuItems(&wel_ab);
 
-    write(STDOUT_FILENO, wel_ab.b, wel_ab.len);
+    platform_write(STDOUT_FILENO, wel_ab.b, wel_ab.len);
+    
     abFree(&wel_ab);
 }
 

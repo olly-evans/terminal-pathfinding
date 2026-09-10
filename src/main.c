@@ -1,7 +1,4 @@
 #include <stdio.h>
-#ifndef _WIN32
-#include <unistd.h>
-#endif
 #include <errno.h>
 #include <ctype.h>
 
@@ -14,6 +11,7 @@
 #include "grid.h"
 #include "utils.h"
 #include "terminal.h"
+#include "platform.h"
 
 int main() {
     enableRawMode();

@@ -1,7 +1,4 @@
 #include <stdlib.h>
-#ifndef _WIN32
-#include <unistd.h>
-#endif
 #include <string.h>
 
 #include "config.h"
@@ -13,6 +10,7 @@
 #include "menu.h"
 #include "utils.h"
 #include "terminal.h"
+#include "platform.h"
 
 #define MIN_ROWS 7
 #define MIN_COLS 48
@@ -55,6 +53,6 @@ void init() {
 	// g->start_cell = NULL;
     // g->end_cell = NULL;
 
-	write(STDOUT_FILENO, "\x1b[2 q", 5);
+	platform_write(STDOUT_FILENO, "\x1b[2 q", 5);
 	
 }

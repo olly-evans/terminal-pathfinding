@@ -1,9 +1,6 @@
 #include <stdlib.h>
 #include <limits.h>
 #include <time.h>
-#ifndef _WIN32
-#include <unistd.h>
-#endif
 #include <stdio.h>
 #include <string.h>
 
