@@ -47,13 +47,15 @@ void test_draw_grid() {
 
     struct Grid *g = initGrid(rows, cols);
 
-    struct abuf ab = ABUF_INIT;
+    struct abuf t_ab = ABUF_INIT;
 
-    drawGrid(g, &ab);
-    assert(ab.b != NULL);
+    drawGrid(g, &t_ab);
 
-    assert(getSubStrNum(ab.b, HIDE_CURSOR) == 1);
-    assert(getSubStrNum(ab.b, RESET_F) == rows*cols);
+
+    assert(t_ab.b != NULL);
+
+    assert(getSubStrNum(t_ab.b, HIDE_CURSOR) == 1);
+    assert(getSubStrNum(t_ab.b, RESET_F) == rows*cols);
 
     return;
 }
