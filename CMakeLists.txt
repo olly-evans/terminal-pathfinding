@@ -8,6 +8,7 @@ set(CMAKE_C_EXTENSIONS OFF)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin)
 
 add_compile_options(-g -O0 -Wall -Wextra)
+add_compile_definitions(_POSIX_C_SOURCE=200809L)
 
 # Main executable.
 file(GLOB SRC_FILES CONFIGURE_DEPENDS ${CMAKE_SOURCE_DIR}/src/*.c)
