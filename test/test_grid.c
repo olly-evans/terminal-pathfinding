@@ -4,7 +4,6 @@
 
 #include "grid.h"
 #include "init.h"
-#include "abuf.h"
 #include "terminal.h"
 #include "cell.h"
 
@@ -45,7 +44,7 @@ void test_draw_grid() {
     int rows = 10;
     int cols = 10;
 
-    struct Grid *g = initGrid(rows, cols);
+    Grid *g = initGrid(rows, cols);
 
     struct abuf t_ab = ABUF_INIT;
 
