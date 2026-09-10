@@ -43,13 +43,11 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    - name: Set up MSYS2 (MinGW)
+    - name: Set up MinGW
       if: matrix.c_compiler == 'mingw'
-      uses: msys2/setup-msys2@v2
+      uses: egor-tensin/setup-mingw@v3
       with:
-        msystem: MINGW64
-        install: mingw-w64-x86_64-gcc mingw-w64-x86_64-cmake
-        path-type: inherit
+        platform: x64
 
     - name: Set reusable strings
       # Turn repeated input strings (such as the build output directory) into step outputs. These step outputs can be used throughout the workflow file.
