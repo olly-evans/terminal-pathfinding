@@ -5,8 +5,8 @@
 
 #include "abuf.h"
 
-#define DRAW_DELAY_MILLI_SEC 10
-#define DRAW_PATH_DELAY_MILLI_SEC 50
+#define DRAW_DELAY_MILLI_SEC 5
+#define DRAW_PATH_DELAY_MILLI_SEC 25
 
 enum CellTypes {
     START,
