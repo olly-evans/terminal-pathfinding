@@ -13,6 +13,7 @@
 #include "terminal.h"
 
 void dashMoveCursor(int key) {
+
     switch (key) {
         case ARROW_UP:
 
@@ -36,7 +37,7 @@ void dashMoveCursor(int key) {
             
             break;
         case ARROW_LEFT:
-        
+
             if (Con.state == MENU_) 
                 M.selection = (M.selection - 1 + M.algoCount) % M.algoCount;
 
@@ -57,30 +58,31 @@ void dashProcessKeypress() {
     
     // processKeyPress for RUN and VISUALIZATION seperately perhaps.
 
-    // TODO: Sort out this horrific switch.
+    if (Con.state == RUN)
+        return;
+
     switch (c) {
+
         case ('q'):
 
             freeGrid(g);
-
             if (Con.state == VISUALIZATION)
                 showSearchStats();     
 
-            exit(0); //not calling disable raw mode for some reason.
+            exit(0);
             
-        if (Con.state == RUN) 
-            break; // Dodge af.
-
         case 'c':
+
             g = resetGrid(g);
             break;
         
         // Enter is a carriage return in raw mode.
         case ('\r'):
+
             if (Con.state == MENU_) {
                 Con.state = VISUALIZATION;
 
-                Con.cy = Con.screenrows/2; // why is this here?
+                Con.cy = Con.screenrows/2;
                 Con.cx = Con.screencols/2;
                 break;
  
