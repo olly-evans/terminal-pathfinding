@@ -35,6 +35,7 @@ void test_init_grid() {
     assert(g->end_cell == NULL);
     assert(g->start_cell == NULL);
 
+    freeGrid(g);
     return;
 }
 
@@ -55,6 +56,8 @@ void test_draw_grid() {
     assert(getSubStrNum(t_ab.b, HIDE_CURSOR) == 1);
     assert(getSubStrNum(t_ab.b, RESET_F) == rows*cols);
 
+    freeGrid(g);
+    abFree(&t_ab);
     return;
 }
 
@@ -62,23 +65,19 @@ void test_randomize_grid() {
 
     Grid *g = initGrid(10, 10);
 
-    int numBarriers = 0;
-    g = randomizeGrid(g, &numBarriers);
+    int testNumBarriers = 0;
+    g = randomizeGrid(g, &testNumBarriers);
 
     assert(g);
+
     assert(g->start_cell != NULL);
     assert(g->end_cell != NULL);
 
-    // int startX = g->start_cell->x;
-    // int endX = g->end_cell->x;
-
-    // int startY = g->start_cell->y;
-    // int endY = g->end_cell->y;
-
-    assert(numBarriers != 0);
+    assert(testNumBarriers != 0);
     assert(g->start_cell->x != g->end_cell->x);
     assert(g->start_cell->y != g->end_cell->y);
 
+    freeGrid(g);
     return;
 }
 
@@ -91,6 +90,10 @@ void test_reset_grid() {
     
     assert(g);
     
+    assert(g->start_cell == NULL);
+    assert(g->end_cell == NULL);
+    
+    freeGrid(g);
     return;
 }
 
