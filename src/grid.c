@@ -1,7 +1,6 @@
 #include <stdlib.h>
 #include <limits.h>
 #include <time.h>
-#include <stdio.h>
 #include <string.h>
 
 #include "abuf.h"

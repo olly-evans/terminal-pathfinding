@@ -1,5 +1,4 @@
 #include <string.h>
-#include <stdio.h>
 
 #include "abuf.h"
 #include "config.h"
