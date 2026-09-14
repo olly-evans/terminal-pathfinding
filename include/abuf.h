@@ -1,6 +1,8 @@
 #ifndef ABUF_H
 #define ABUF_H
 
+#include <stdio.h>
+
 #define ABUF_INIT {NULL, 0}
 
 struct abuf {
