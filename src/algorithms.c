@@ -91,6 +91,7 @@ void astar(Grid *g) {
             drawCell(neighbour);
         }
     }
+
     freeHeap(hp);
     freeGrid(g);
 }
