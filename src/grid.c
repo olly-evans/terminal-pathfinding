@@ -142,6 +142,7 @@ Grid* randomizeGrid(Grid *g, int *nBarriers) {
     }
     
     *nBarriers = numBarriers;
+    return g;
 }
 
 Grid* resetGrid(Grid* g) {
