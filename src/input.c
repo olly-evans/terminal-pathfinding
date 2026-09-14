@@ -81,7 +81,8 @@ void dashProcessKeypress() {
 
             if (Con.state == MENU_) {
                 Con.state = VISUALIZATION;
-
+                
+                // new welcome menu in vis?
                 Con.cy = Con.screenrows/2;
                 Con.cx = Con.screencols/2;
                 break;
