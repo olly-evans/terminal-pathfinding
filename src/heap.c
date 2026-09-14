@@ -18,13 +18,13 @@ Heap* initHeap() {
     if (!hp) die("initHeap() -> malloc");
 
     hp->openSet = NULL;
-    hp->closed_set = NULL;
+    hp->closedSet = NULL;
 
     hp->openSetSize = 0;
     hp->closedSetSize = 0;
 
     hp->openSetCapacity = INIT_OS_CAP;
-    hp->cs_cap = INIT_CS_CAP;
+    hp->closedSetCapacity = INIT_CS_CAP;
 
     return hp;
 }
@@ -55,7 +55,8 @@ void heapInsert(Heap *hp, struct Cell *cell) {
 
     /* Add cell to the binary min-heap. */
 
-    if (cell->inOpenSet) return;
+    if (cell->inOpenSet)
+        return;
     
     Con.cellsSearched++;
     
@@ -145,14 +146,14 @@ void makeClosed(Heap *hp, struct Cell* curr) {
     if (curr->inClosedSet) return;
 
     if (hp->closedSetSize == 0) {
-        hp->closed_set = malloc(hp->cs_cap * sizeof(*hp->closed_set));
+        hp->closedSet = malloc(hp->closedSetCapacity * sizeof(*hp->closedSet));
     }
 
-    if (hp->closedSetSize == hp->cs_cap) {
-        hp->cs_cap *= 2;
-        hp->closed_set = realloc(hp->closed_set, hp->cs_cap * sizeof(*hp->closed_set )); 
+    if (hp->closedSetSize == hp->closedSetCapacity) {
+        hp->closedSetCapacity *= 2;
+        hp->closedSet = realloc(hp->closedSet, hp->closedSetCapacity * sizeof(*hp->closedSet )); 
     }
-    hp->closed_set[hp->closedSetSize++] = curr;
+    hp->closedSet[hp->closedSetSize++] = curr;
 
     if (curr != g->start_cell && curr != g->end_cell)
         curr->type = CLOSED;
@@ -180,8 +181,8 @@ void freeHeap(Heap *hp) {
     if (hp->openSet) free(hp->openSet);
     hp->openSet = NULL;
 
-    if (hp->closed_set) free(hp->closed_set);
-    hp->closed_set = NULL;
+    if (hp->closedSet) free(hp->closedSet);
+    hp->closedSet = NULL;
 
     free(hp);
 }

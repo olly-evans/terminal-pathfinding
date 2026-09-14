@@ -3,8 +3,6 @@
 
 #include <stdbool.h>
 
-#include "abuf.h"
-
 #define DRAW_DELAY_MILLI_SEC 5
 #define DRAW_PATH_DELAY_MILLI_SEC 25
 
@@ -39,10 +37,12 @@ struct Cell {
 
 void drawCell(struct Cell *cell);
 char* getCellColor(struct Cell *cell);
+
 bool isStartCell(struct Cell *c);
 bool isEndCell(struct Cell *c);
 bool isWalkableCell(struct Cell *c);
 bool isPermBarrier(struct Cell *c);
+
 int getManhattanDist(struct Cell *c1, struct Cell *end);
 
 #endif

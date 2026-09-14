@@ -11,8 +11,9 @@ enum editorKey {
   ARROW_DOWN
 };
 
-void dashMoveCursor(int key);
+void moveCursor(int key);
 void processKeypress();
+
 void handleSpacePress(struct Cell *curr_cell);
 void handleRPress(struct Cell *curr_cell);
 

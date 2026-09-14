@@ -12,9 +12,9 @@ typedef struct {
     int openSetSize;
     int openSetCapacity;
 
-    struct Cell **closed_set; // Closed set of explored cells.
+    struct Cell **closedSet; // Closed set of explored cells.
     int closedSetSize;
-    int cs_cap;
+    int closedSetCapacity;
 } Heap;
 
 struct Cell* heapExtract(Heap *hp);

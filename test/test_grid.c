@@ -5,6 +5,7 @@
 #include "grid.h"
 #include "init.h"
 #include "terminal.h"
+#include "abuf.h"
  
 int getSubStrNum(char *full, char *sub) {
 
