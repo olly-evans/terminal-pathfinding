@@ -56,13 +56,13 @@ void drawMenuItems(struct abuf *ab) {
     /* Algorithm Selection */
     int padding = (Con.screencols - strlen(M.algorithms[M.selection])) / 2;
     while(padding--) abAppend(ab, " ", 1);
+
     abAppend(ab, "<", 1);
-    
     abAppend(ab, TXT_BLUE"\x1b[1m", 9);
     abAppend(ab, M.algorithms[M.selection], strlen(M.algorithms[M.selection]));
     abAppend(ab, RESET_F, 4);
-
     abAppend(ab, ">", 1);
+    
     abAppend(ab, "\r\n\r\n", 4);
     
     /* Controls */
