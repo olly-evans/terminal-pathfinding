@@ -28,18 +28,21 @@ void dashMoveCursor(int key) {
             break;
         case ARROW_RIGHT:
 
-            if (Con.state == MENU_) M.selection = (M.selection + 1) % M.algoCount;
+            if (Con.state == MENU_) 
+                M.selection = (M.selection + 1) % M.algoCount;
 
-            if (Con.state == VISUALIZATION && Con.cx != Con.screencols - 1) {
+            if (Con.state == VISUALIZATION && Con.cx != Con.screencols - 1)
                 Con.cx++;
-            }
+            
             break;
         case ARROW_LEFT:
-            if (Con.state == MENU_) M.selection = (M.selection - 1 + M.algoCount) % M.algoCount;
+        
+            if (Con.state == MENU_) 
+                M.selection = (M.selection - 1 + M.algoCount) % M.algoCount;
 
-            if (Con.state == VISUALIZATION && Con.cx != 0) {
+            if (Con.state == VISUALIZATION && Con.cx != 0) 
                 Con.cx--;
-            }
+            
             break;
     }
 }
