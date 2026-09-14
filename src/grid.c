@@ -38,7 +38,7 @@ void drawGrid(Grid *g, struct abuf *ab) {
 }
 
 Grid* initGrid(int rows, int cols) {
-	g = Malloc(sizeof(Grid));
+	Grid *g = Malloc(sizeof(Grid));
 	if (!g) die("initGrid() -> Malloc");
 
 	g->rows = rows;

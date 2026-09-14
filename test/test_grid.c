@@ -76,8 +76,8 @@ void test_randomize_grid() {
     // int endY = g->end_cell->y;
 
     assert(numBarriers != 0);
-    // assert(g->start_cell->x != g->end_cell->x);
-    // assert(g->start_cell->y != g->end_cell->y);
+    assert(g->start_cell->x != g->end_cell->x);
+    assert(g->start_cell->y != g->end_cell->y);
 
     return;
 }

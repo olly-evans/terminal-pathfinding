@@ -1,6 +1,5 @@
 #include <stdlib.h>
 #include <stdio.h>
-#include <time.h>   
 
 void die(char *s) {
     fprintf(stderr, "%s", s);
