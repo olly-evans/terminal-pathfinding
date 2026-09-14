@@ -23,11 +23,11 @@ int main() {
         if (Con.state == VISUALIZATION) 
             drawPathfindingVisualizer();
             
-        dashProcessKeypress();  
+        processKeypress();  
     }
     
     // I don't like that drawing cells is within the algorithm functions.
-    
+
     // Perhaps we could call drawCell() upon some other condition.
     // updateGrid() ? Algorithm runs in one step. return cell, updateGrid(cell)
 

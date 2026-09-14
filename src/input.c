@@ -12,7 +12,7 @@
 #include "menu.h"
 #include "terminal.h"
 
-void dashMoveCursor(int key) {
+void moveCursor(int key) {
 
     switch (key) {
         case ARROW_UP:
@@ -48,7 +48,7 @@ void dashMoveCursor(int key) {
     }
 }
 
-void dashProcessKeypress() {
+void processKeypress() {
 
     int c = dashReadKey();
     
@@ -112,7 +112,7 @@ void dashProcessKeypress() {
         case ARROW_DOWN:
         case ARROW_RIGHT:
         case ARROW_LEFT:
-            dashMoveCursor(c);
+            moveCursor(c);
             break;
         default:
             return;
